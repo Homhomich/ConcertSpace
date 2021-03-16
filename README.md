@@ -6,14 +6,14 @@ Web-application for renting space for the concerts and buying tickets, that allo
 
 ## Developers
 
-[Elizaveta Koroteeva](https://github.com/insanisliz)
-[Kerill Kapkin](https://github.com/entrenadorcilo)
-[Anna Yankevich](https://github.com/Homhomich)
+- [Elizaveta Koroteeva](https://github.com/insanisliz)
+- [Kerill Kapkin](https://github.com/entrenadorcilo)
+- [Anna Yankevich](https://github.com/Homhomich)
 
 
 ## Links
 
-[Trello](https://trello.com/oncertspace)
-[Техническое задание]()
-[Курсовой проект]()
-[Miro]()
+- [Trello](https://trello.com/oncertspace)
+- [Техническое задание]()
+- [Курсовой проект]()
+- [Miro]()
