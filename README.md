@@ -13,7 +13,9 @@ Web-application for renting space for the concerts and buying tickets, that allo
 
 ## Links
 
+- [Техническое задание docx]()
+- [Техническое задание pdf]()
+- [Курсовой проект docx]()
+- [Курсовой проект pdf]()
 - [Trello](https://trello.com/oncertspace)
-- [Техническое задание]()
-- [Курсовой проект]()
-- [Miro]()
+- [Miro](https://miro.com/app/board/o9J_lPP0-_c=/)
