@@ -7,7 +7,7 @@ Web-application for renting space for the concerts and buying tickets, that allo
 ## Developers
 
 - [Elizaveta Koroteeva](https://github.com/insanisliz)
-- [Kerill Kapkin](https://github.com/entrenadorcilo)
+- [Kirill Kapkin](https://github.com/entrenadorcilo)
 - [Anna Yankevich](https://github.com/Homhomich)
 
 
