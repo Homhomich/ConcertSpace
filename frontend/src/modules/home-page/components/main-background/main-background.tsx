@@ -3,29 +3,48 @@ import {Style} from './styles';
 import ProductHeroLayout from './product-hero-layout';
 import Typography from '@material-ui/core/Typography';
 
-const backgroundImage = 'http://kudago.com/media/images/event/42/95/4295d87e9dc23dfc1b027d1959025474.jpg';
+export type Props = Style & InternalProps;
 
-export type Props = Style ;
-
+export interface InternalProps {
+	backgroundImage: string;
+	title: string;
+	subtitle: string;
+	middleText: string;
+	componentToShow: React.ReactNode;
+	backGroundStyle: string;
+}
 
 export function MainBackground(props: Props) {
-	const { classes } = props;
+	const { classes, backgroundImage, componentToShow, middleText, subtitle, title, backGroundStyle} = props;
 
 	return (
-		<ProductHeroLayout backgroundClassName={classes.background}>
+		<ProductHeroLayout backgroundClassName={backGroundStyle}>
 			<img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
 			<Typography color="inherit" align="center" variant="h2">
-                Upgrade your Fridays
+				{title}
 			</Typography>
 			<Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-                Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
+				{middleText}
 			</Typography>
-
-			<div className={classes.divider}></div>
-			<Typography variant="body2" color="inherit" className={classes.more}>
-                Discover the experience
+			{componentToShow}
+			<Typography variant="body1" color="inherit" className={classes.more}>
+				{subtitle}
 			</Typography>
 		</ProductHeroLayout>
 	);
 }
 
+/*<ProductHeroLayout backgroundClassName={classes.background}>
+	<img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
+	<Typography color="inherit" align="center" variant="h2">
+		Upgrade your Fridays
+	</Typography>
+	<Typography color="inherit" align="center" variant="h5" className={classes.h5}>
+		Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
+	</Typography>
+
+	<div className={classes.divider}></div>
+	<Typography variant="body2" color="inherit" className={classes.more}>
+		Discover the experience
+	</Typography>
+</ProductHeroLayout>*/
