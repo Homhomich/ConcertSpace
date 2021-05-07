@@ -5,12 +5,15 @@ import SearchIcon from '@material-ui/icons/Search';
 import {Button} from '@material-ui/core';
 import {Style} from './styles';
 
-export type Props = Style;
+export interface InternalProps {
+	title: string;
+}
+export type Props = Style & InternalProps;
 
 
 export class CustomizedSearch extends React.PureComponent<Props> {
 	public render(): ReactNode {
-		const { classes } = this.props;
+		const { classes, title } = this.props;
 		return (
 			<Paper component="form" className={classes.root}>
 				<div className={classes.iconButton} aria-label="menu">
@@ -18,11 +21,11 @@ export class CustomizedSearch extends React.PureComponent<Props> {
 				</div>
 				<InputBase
 					className={classes.input}
-					placeholder="Search the concert" //todo titile propp
+					placeholder={title}
 					inputProps={{ 'aria-label': 'search google maps' }}
 				/>
 				<Button type="submit" variant="contained" color="secondary" className={classes.button} aria-label="search">
-				Search
+					Найти
 				</Button>
 			</Paper>
 		);

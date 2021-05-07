@@ -1,5 +1,5 @@
 import {withStyles} from '@material-ui/core';
 import {styles} from './styles';
-import {TicketPage} from './ticket-page';
+import {ConcertPage} from './concert-page';
 
-export default withStyles(styles)(TicketPage);
+export default withStyles(styles)(ConcertPage);

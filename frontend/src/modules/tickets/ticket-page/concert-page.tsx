@@ -7,6 +7,7 @@ import {Row} from '@mui-treasury/components/flex';
 import {Info, InfoSubtitle, InfoTitle} from '@mui-treasury/components/info';
 import {useNewsInfoStyles} from '@mui-treasury/styles/info/news';
 import CloseIcon from '@material-ui/icons/Close';
+import BuyTicketPage from '../buy-ticket-dialog/index';
 
 export type Props = Styles & InternalProps;
 
@@ -15,15 +16,33 @@ interface InternalProps{
     onClose: () => void;
 }
 
-export class TicketPage extends React.PureComponent<Props> {
+interface State{
+	isBuyTicketDialogOpen: boolean;
+}
+
+export class ConcertPage extends React.PureComponent<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			isBuyTicketDialogOpen: false,
+		};
+	}
 	public render(): ReactNode {
 		const { onClose, isOpen , classes} = this.props;
+		const { isBuyTicketDialogOpen } = this.state;
+
 		return (
 			<div>
-				<Dialog maxWidth={'xl'} className={classes.main} onClose={onClose} aria-labelledby="simple-dialog-title" open={isOpen}>
+				<Dialog 
+					maxWidth={'xl'}
+					className={classes.main} 
+					onClose={onClose} 
+					aria-labelledby="simple-dialog-title" 
+					open={isOpen}
+				>
 					<div className={classes.title}>
 						<Typography  variant="h2"  id="simple-dialog-title">Монеточка</Typography>
-						<IconButton >
+						<IconButton onClick={onClose} >
 							<CloseIcon color={'secondary'}/>
 						</IconButton>
 					</div>
@@ -57,7 +76,12 @@ export class TicketPage extends React.PureComponent<Props> {
 											<InfoTitle variant="h2">VIP</InfoTitle>
 											<InfoSubtitle variant="h2">входной билет</InfoSubtitle>
 										</Info>
-										<Button className={classes.button} color={'secondary'} variant={'contained'}>
+										<Button 
+											onClick={()=> this.setState({isBuyTicketDialogOpen: true})}
+											className={classes.button}
+											color={'secondary'} 
+											variant={'contained'}
+										>
 											Купить
 											650р
 										</Button>
@@ -81,6 +105,10 @@ export class TicketPage extends React.PureComponent<Props> {
 						</div>
 					</div>
 				</Dialog>
+				<BuyTicketPage 
+					isOpen={isBuyTicketDialogOpen}
+					onClose={() => this.setState({isBuyTicketDialogOpen: false})} 
+				/>
 			</div>
 		);
 	}

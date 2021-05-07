@@ -3,44 +3,29 @@ import './App.css';
 import {CssBaseline, MuiThemeProvider} from '@material-ui/core';
 import theme from './theme';
 import 'fontsource-roboto';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import Header from './modules/home-page/components/header/index';
-import AllTicketsPage from './modules/tickets/all-tickets/index';
-import HomePage from './modules/home-page/index';
-import TicketPage from './modules/tickets/ticket-page/index';
-import BuyTicketPage from './modules/tickets/buy-ticket-dialog/index';
-import VenueCard from './modules/venues/components/venue-card/index';
-import AllVenuesPage from './modules/venues/all-venues/index';
-import VenuePage from './modules/venues/venue-page/index';
-import RentVenueDialog from './modules/venues/rent-venue-dialog/index';
+import moment from 'moment';
+import 'moment/locale/ru';
+import {BrowserRouter} from 'react-router-dom';
+import RouterContainer from './modules/router-container/index';
+import Footer from './modules/home-page/components/footer/index';
 
 function App() {
+	moment.locale('ru');
 	return (
 		<MuiThemeProvider theme={theme}>
-			<CssBaseline />
-			<Header />
-			{/*
-			<AllTicketsPage />
-*/}
-			{/*<HomePage />*/}
+			<MuiPickersUtilsProvider locale={'ru'} libInstance={moment} utils={MomentUtils}>
+				<BrowserRouter>
+					<CssBaseline />
+					<Header />
+					<RouterContainer />
+					<Footer />
+				</BrowserRouter>
+			</MuiPickersUtilsProvider>
 
-			{/*<TicketPage  isOpen={true} onClose={() => {console.log('close');}} />*/}
 
-			{/*
-			<AllVenuesPage />
-*/}
-
-			{/*
-			<VenuePage  isOpen={true} onClose={() => {console.log('close');}}  />
-*/}
-
-			{/*
-			<BuyTicketPage isOpen={true} />
-*/}
-
-			<RentVenueDialog isOpen={true} />
-
-			
-			
 		</MuiThemeProvider>
 
 	);

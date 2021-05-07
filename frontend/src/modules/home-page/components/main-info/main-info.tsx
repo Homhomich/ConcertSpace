@@ -26,11 +26,11 @@ export function MainInfo(props: Props) {
 								alt="suitcase"
 							/>
 							<Typography variant="h6" className={classes.title}>
-                                The best luxury hotels
+								ТЕПЛЕЙШИЕ КОНЦЕРТЫ
 							</Typography>
 							<Typography variant="subtitle1">
-								{'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-								{', go for a mini-vacation just a few subway stops away from your home.'}
+								{'Насладись выступлениями любимых исполнителей в' +
+								' атмосферном месте и насладись живой музыкой '}
 							</Typography>
 						</div>
 					</Grid>
@@ -42,11 +42,10 @@ export function MainInfo(props: Props) {
 								alt="graph"
 							/>
 							<Typography variant="h6" className={classes.title}>
-                                New experiences
+								НОВЫЕ ВПЕЧАТЛЕНИЯ
 							</Typography>
 							<Typography variant="subtitle1">
-								{'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-								{'your Sundays will not be alike.'}
+								{'Убеги от реальности и привычных шумных тусовок, окунувшись в рай из живой музыки и родных людей вокруг.'}
 							</Typography>
 						</div>
 					</Grid>
@@ -58,11 +57,10 @@ export function MainInfo(props: Props) {
 								alt="clock"
 							/>
 							<Typography variant="h6" className={classes.title}>
-                                Exclusive rates
+								ЭКСКЛЮЗИВНЫЙ ШАНС
 							</Typography>
 							<Typography variant="subtitle1">
-								{'By registering, you will access specially negotiated rates '}
-								{'that you will not find anywhere else.'}
+								{'Стань организатором концерта маленького исполнителя в твоем городе и подари кусочек рая на земле окружающим.'}
 							</Typography>
 						</div>
 					</Grid>

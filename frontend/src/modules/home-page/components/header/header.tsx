@@ -19,7 +19,7 @@ export class Header extends React.PureComponent<Props>  {
 							underline="none"
 							color="inherit"
 							className={classes.title}
-							href="/premium-themes/onepirate/"
+							href="/"
 						>
 							{'concert space'}
 						</Link>
@@ -29,17 +29,17 @@ export class Header extends React.PureComponent<Props>  {
 								variant="h6"
 								underline="none"
 								className={classes.rightLink}
-								href="/premium-themes/onepirate/sign-in/"
+								href="/tickets"
 							>
-								{'tickets'}
+								{'билеты'}
 							</Link>
 							<Link
 								variant="h6"
 								underline="none"
 								className={clsx(classes.rightLink, classes.linkSecondary)}
-								href="/premium-themes/onepirate/sign-up/"
+								href="/venues"
 							>
-								{'venues'}
+								{'площадки'}
 							</Link>
 						</div>
 					</Toolbar>

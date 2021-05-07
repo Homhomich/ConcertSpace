@@ -10,23 +10,36 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
+import RentVenueDialog from '../rent-venue-dialog/index';
 
 export type Props = Style & InternalProps;
+
+interface State{
+	isRentDialogOpen: boolean;
+}
 
 interface InternalProps{
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export class VenuePage extends React.PureComponent<Props> {
+export class VenuePage extends React.PureComponent<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			isRentDialogOpen: false,
+		};
+	}
 	public render(): ReactNode {
 		const { onClose, isOpen , classes} = this.props;
+		const {isRentDialogOpen} = this.state;
+
 		return (
 			<div>
 				<Dialog maxWidth={'xl'} className={classes.main} onClose={onClose} aria-labelledby="simple-dialog-title" open={isOpen}>
 					<div className={classes.title}>
 						<Typography  variant="h2"  id="simple-dialog-title">Boho loft</Typography>
-						<IconButton >
+						<IconButton onClick={onClose} >
 							<CloseIcon color={'secondary'}/>
 						</IconButton>
 					</div>
@@ -49,7 +62,7 @@ export class VenuePage extends React.PureComponent<Props> {
 									className={classes.cardMedia}
 									src="https://www.loft2rent.ru/upload_data/2021/4500/upldUsRJdR.jpeg.900x600.jpg"
 								/>
-								<Button className={classes.button} fullWidth color={'secondary'} variant={'contained'}>
+								<Button onClick={()=>this.setState({isRentDialogOpen: true})} className={classes.button} fullWidth color={'secondary'} variant={'contained'}>
 									Забронировать
 								</Button>
 							</div>
@@ -112,6 +125,10 @@ export class VenuePage extends React.PureComponent<Props> {
 						</div>
 					</div>
 				</Dialog>
+				<RentVenueDialog 
+					onClose={()=> {this.setState({isRentDialogOpen: false});} }
+					isOpen={isRentDialogOpen} 
+				/>
 			</div>
 		);
 	}

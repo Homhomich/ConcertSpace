@@ -27,14 +27,14 @@ export function Contacts(props: Props) {
 					<div className={classes.card}>
 						<form onSubmit={handleSubmit} className={classes.cardContent}>
 							<Typography variant="h2" component="h2" gutterBottom>
-                                Receive offers
+                                Мы на связи
 							</Typography>
 							<Typography variant="h5">
-                                Taste the holidays of the everyday close to home.
+                                Всегда готовы помочь с подбором площадки для твоего концерта или покупкой билета
 							</Typography>
-							<TextField variant={'outlined'} className={classes.textField} placeholder="Your email" />
+							<TextField variant={'outlined'} className={classes.textField} placeholder="Телефон" />
 							<Button type="submit" color="primary" variant="contained" className={classes.button}>
-                                Keep me updated
+                                перезвоните мне
 							</Button>
 						</form>
 					</div>
@@ -53,7 +53,7 @@ export function Contacts(props: Props) {
 			<Snackbar
 				open={open}
 				onClose={handleClose}
-				message="We will send you our best offers, once a week."
+				message="Наш оператор перезвонит вам в ближайшее время."
 			/>
 		</Container>
 	);

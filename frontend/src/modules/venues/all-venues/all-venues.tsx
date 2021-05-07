@@ -30,10 +30,10 @@ export class AllVenuesPage extends React.PureComponent<Props> {
 			<div>
 				<MainBackground
 					backgroundImage="https://image.kurier.at/images/cfs_landscape_616w_347h/2706293/46-110947826.jpg"
-					title="Upgrade your Fridays"
-					subtitle="Discover the experience"
-					middleText="Enjoy secret offers up to -70% off the best luxury hotels every Sunday."
-					componentToShow={<CustomizedSearch />}
+					title="ОРГАНИЗУЙ КОНЦЕРТ СВОЕЙ МЕЧТЫ"
+					subtitle=""
+					middleText="Бронируй площадку, продавай билеты, стань кузнецом своей зажигательной пятницы."
+					componentToShow={<CustomizedSearch title={'Найти площадку'} />}
 					backGroundStyle={classes.background}
 				/>
 

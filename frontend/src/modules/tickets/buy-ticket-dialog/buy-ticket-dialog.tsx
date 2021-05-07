@@ -16,6 +16,7 @@ import Review from './components/review/index';
 
 interface InternalProps{
 	isOpen: boolean;
+	onClose: () => void;
 }
 
 interface State{
@@ -33,11 +34,11 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 	private steps = ['Данные покупателя', 'Детали оплаты', 'Ваша покупка'];
 
 	public render(): ReactNode {
-		const  { classes , isOpen} = this.props;
+		const  { classes , isOpen, onClose} = this.props;
 
 		return (
 			<div>
-				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" open={isOpen}>
+				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" open={isOpen} onClose={onClose}>
 					<React.Fragment>
 						<CssBaseline />
 						<AppBar position="absolute" color="default" className={classes.appBar}>

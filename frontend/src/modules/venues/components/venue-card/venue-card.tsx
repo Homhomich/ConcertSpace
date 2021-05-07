@@ -8,19 +8,32 @@ import {Card} from '@material-ui/core';
 import {Style} from './styles';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import VenuePage from '../../venue-page/index';
 
 interface InternalProps{
 	image: string;
 }
 
+interface State{
+	isVenuePageOpen: boolean;
+}
+
 export type Props = Style & InternalProps;
 
-export class VenueCard extends React.PureComponent<Props> {
+export class VenueCard extends React.PureComponent<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			isVenuePageOpen: false,
+		};
+	}
+
 	public render(): ReactNode {
 		const {classes, image} = this.props;
+		const {isVenuePageOpen} = this.state;
 		return (
 			<>
-				<Card className={classes.card}>
+				<Card onClick={() => this.setState({isVenuePageOpen: true})} className={classes.card}>
 					<Box className={classes.main} minHeight={300} position={'relative'}>
 						<CardMedia
 							className={classes.cardMedia}
@@ -54,6 +67,10 @@ export class VenueCard extends React.PureComponent<Props> {
 					</Row>
 					<div className={classes.shadow}/>
 				</Card>
+				<VenuePage
+					isOpen={isVenuePageOpen}
+					onClose={() => this.setState({isVenuePageOpen: false})}
+				/>
 			</>
 		);
 	}

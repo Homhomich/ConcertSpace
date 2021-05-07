@@ -4,6 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {Checkbox, FormControlLabel} from '@material-ui/core';
+import {DatePicker} from '@material-ui/pickers';
+import {MaterialUiPickersDate} from '@material-ui/pickers/typings/date';
+import moment from 'moment';
+
+interface InternalProps{
+	disabledDates: string[];
+}
 
 interface State{
 	bar: boolean;
@@ -12,9 +19,10 @@ interface State{
 	shooting: boolean;
 	canBringLiquids: boolean;
 	hookah: boolean;
+	date: string | undefined;
 }
 
-export type Props = Style;
+export type Props = Style & InternalProps;
 
 export class VenueParameters extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
@@ -26,6 +34,7 @@ export class VenueParameters extends React.PureComponent<Props, State> {
 			shooting: false,
 			canBringLiquids: false,
 			hookah: false,
+			date: undefined,
 		};
 	}
 
@@ -91,17 +100,21 @@ export class VenueParameters extends React.PureComponent<Props, State> {
 								<Checkbox
 									checked={hookah}
 									onChange={() => this.setState({hookah: !hookah})}
-									color="primary" />
+									color={'primary'} />
 							}
 							label="Кальяны" />
 					</Grid>
 
 					<Grid item xs={12}>
-						<TextField
-							id="comment"
-							name="comment"
-							label="Комментарий к бронированию"
-							fullWidth
+						<DatePicker
+							required
+							value={undefined}
+							label="Дата бронирования"
+							disablePast={true}
+							shouldDisableDate={this.shouldDisableDate}
+							onChange={this.handleDateChange}
+							animateYearScrolling
+							variant={'inline'}
 						/>
 					</Grid>
 
@@ -116,6 +129,31 @@ export class VenueParameters extends React.PureComponent<Props, State> {
 				</Grid>
 			</React.Fragment>
 		);
+	}
+	
+	private handleDateChange = (date: MaterialUiPickersDate) => {
+		if (!date) {
+			this.setState({date: undefined});
+			return;
+		}
+		const ISODate = moment(date).toISOString(true);
+		this.setState({date: ISODate});
+	}
+
+
+	private shouldDisableDate =(chosenDate: MaterialUiPickersDate): boolean => {
+		const {disabledDates} = this.props;
+		disabledDates.forEach(date => {
+			const ISODate = moment(date).toISOString(false);
+			const chosenISODate = moment(chosenDate).toISOString(false);
+			console.log(chosenISODate);
+
+			if(moment(chosenISODate).isSame(ISODate)) {
+				console.log('here');
+				return true;
+			}
+		});
+		return false;
 	}
 }
 

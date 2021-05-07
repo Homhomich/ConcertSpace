@@ -3,4 +3,6 @@ export interface TicketModel{
 	name: string;
 	description: string;
 	price: number;
+
+
 }

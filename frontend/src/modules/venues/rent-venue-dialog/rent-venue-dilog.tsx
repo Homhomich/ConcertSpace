@@ -18,6 +18,7 @@ import VenueParameters from './components/venue-parameters/index';
 
 interface InternalProps{
 	isOpen: boolean;
+	onClose: () => void;
 }
 
 interface State{
@@ -32,14 +33,14 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 		this.state = {activeStep: 1};
 	}
 
-	private steps = ['Данные арендатора',  'Параметры площадки', 'Параметры концерта', 'Детали оплаты', 'Ваша бронь'];
+	private steps = ['Данные арендатора',  'Параметры площадки', 'Параметры концерта', 'Ваша бронь'];
 
 	public render(): ReactNode {
-		const  { classes , isOpen} = this.props;
+		const  { classes , isOpen, onClose} = this.props;
 
 		return (
 			<div>
-				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" open={isOpen}>
+				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" onClose={onClose} open={isOpen}>
 					<React.Fragment>
 						<CssBaseline />
 						<AppBar position="absolute" color="default" className={classes.appBar}>
@@ -86,7 +87,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 													onClick={this.handleNext}
 													className={classes.button}
 												>
-													{this.state.activeStep === this.steps.length - 1 ? 'Place order' : 'Next'}
+													{this.state.activeStep === this.steps.length - 1 ? 'Забронировать' : 'Дальше'}
 												</Button>
 											</div>
 										</React.Fragment>
@@ -109,11 +110,17 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	};
 
 	private getStepContent(step: number) {
+		const dd = [
+			new Date('2021-04-26').toISOString(),
+			new Date('2021-04-27').toISOString(),
+			new Date('2021-04-28').toISOString(),
+		];
+
 		switch (step) {
 		case 0:
 			return <UserInfo />;
 		case 1:
-			return <VenueParameters />;
+			return <VenueParameters disabledDates={dd} />;
 		case 2:
 			return <ConcertParameters />;
 		case 3:
@@ -137,8 +144,6 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 				}
 				}
 			/>;
-		case 4:
-			return <PaymentForm />;
 
 		default:
 			throw new Error('Unknown step');
