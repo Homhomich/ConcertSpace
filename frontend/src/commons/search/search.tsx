@@ -7,28 +7,55 @@ import {Style} from './styles';
 
 export interface InternalProps {
 	title: string;
+	getSearchedContent: (search: string) => void;
 }
+
 export type Props = Style & InternalProps;
 
+interface State {
+	inputSearch: string;
+}
 
-export class CustomizedSearch extends React.PureComponent<Props> {
+export class CustomizedSearch extends React.PureComponent<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {inputSearch: ''};
+	}
+
 	public render(): ReactNode {
-		const { classes, title } = this.props;
+		const {classes, title} = this.props;
 		return (
 			<Paper component="form" className={classes.root}>
 				<div className={classes.iconButton} aria-label="menu">
-					<SearchIcon />
+					<SearchIcon/>
 				</div>
 				<InputBase
 					className={classes.input}
 					placeholder={title}
-					inputProps={{ 'aria-label': 'search google maps' }}
+					onChange={this.handleInputChange}
+					inputProps={{'aria-label': 'search google maps'}}
 				/>
-				<Button type="submit" variant="contained" color="secondary" className={classes.button} aria-label="search">
+				<Button
+					onClick={this.handleSearch}
+					type="submit" variant="contained"
+					color="secondary"
+					className={classes.button}
+					aria-label="search"
+				>
 					Найти
 				</Button>
 			</Paper>
 		);
 	}
+
+	private handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({inputSearch: event.target.value});
+	};
+
+	private handleSearch = () => {
+		const {getSearchedContent} = this.props;
+		const {inputSearch} = this.state;
+		getSearchedContent(inputSearch);
+	};
 }
 

@@ -9,9 +9,10 @@ import {Style} from './styles';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import VenuePage from '../../venue-page/index';
+import {VenueModel} from '../../../../models/venue-model';
 
 interface InternalProps{
-	image: string;
+	venue: VenueModel;
 }
 
 interface State{
@@ -29,7 +30,7 @@ export class VenueCard extends React.PureComponent<Props, State> {
 	}
 
 	public render(): ReactNode {
-		const {classes, image} = this.props;
+		const {classes, venue} = this.props;
 		const {isVenuePageOpen} = this.state;
 		return (
 			<>
@@ -37,7 +38,7 @@ export class VenueCard extends React.PureComponent<Props, State> {
 					<Box className={classes.main} minHeight={300} position={'relative'}>
 						<CardMedia
 							className={classes.cardMedia}
-							image={image}
+							image={venue.imgPath}
 						/>
 						<div className={classes.content}>
 							<div className={classes.tag}>Loft</div>
@@ -52,15 +53,16 @@ export class VenueCard extends React.PureComponent<Props, State> {
 						bgcolor={'common.white'}
 					>
 						<Info position={'middle'} useStyles={useNewsInfoStyles}>
-							<InfoTitle >Baby ROOM</InfoTitle>
-							<div className={classes.divider}></div>
-							<InfoSubtitle>ул. Электродная, д.32</InfoSubtitle>
+							<InfoTitle >{venue.name}</InfoTitle>
+							<div className={classes.divider}/>
+							<InfoSubtitle>{venue.location}</InfoSubtitle>
 							<InfoSubtitle className={classes.subtitle} variant="h3">
 								<PeopleIcon  className={classes.icon} fontSize={'small'} />
-									20 чел
+								{venue.capacity}
 							</InfoSubtitle>
 							<InfoSubtitle className={classes.subtitle} variant="h3">
-								<LocalOfferIcon  className={classes.icon} fontSize={'small'}  /> 10000 р/день
+								<LocalOfferIcon  className={classes.icon} fontSize={'small'}  />
+								{venue.rentPerHour}
 							</InfoSubtitle>
 
 						</Info>
@@ -68,6 +70,7 @@ export class VenueCard extends React.PureComponent<Props, State> {
 					<div className={classes.shadow}/>
 				</Card>
 				<VenuePage
+					venue={venue}
 					isOpen={isVenuePageOpen}
 					onClose={() => this.setState({isVenuePageOpen: false})}
 				/>

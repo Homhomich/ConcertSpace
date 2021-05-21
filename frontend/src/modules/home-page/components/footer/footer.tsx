@@ -37,7 +37,7 @@ export class Footer extends React.PureComponent<Props> {
 							>
 								<Grid item className={classes.icons}>
 									<a href="https://github.com/Homhomich/ConcertSpace" className={classes.icon}>
-										<img style={{width: '80px'}} alt={'Github'} src={'https://logos-world.net/wp-content/uploads/2020/11/GitHub-Logo.png'} /></a>
+										<img style={{width: '50px'}} alt={'Github'} src={'https://pngimg.com/uploads/github/github_PNG19.png'} /></a>
 								</Grid>
 								<Grid item>
 									<Copyright />

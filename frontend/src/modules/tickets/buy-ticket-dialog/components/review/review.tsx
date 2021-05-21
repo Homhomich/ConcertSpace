@@ -10,7 +10,7 @@ import {UserModel} from '../../../../../models/user-model';
 
 interface InternalProps{
 	ticket: TicketModel;
-	userInfo: UserModel;
+	userInfo: Partial<UserModel>;
 }
 
 export type Props = Style & InternalProps;

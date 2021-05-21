@@ -53,6 +53,7 @@ export function Contacts(props: Props) {
 			<Snackbar
 				open={open}
 				onClose={handleClose}
+				resumeHideDuration={4000}
 				message="Наш оператор перезвонит вам в ближайшее время."
 			/>
 		</Container>

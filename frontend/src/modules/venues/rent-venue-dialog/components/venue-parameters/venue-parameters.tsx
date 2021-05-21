@@ -1,46 +1,21 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import {Style} from './styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {Checkbox, FormControlLabel} from '@material-ui/core';
-import {DatePicker} from '@material-ui/pickers';
-import {MaterialUiPickersDate} from '@material-ui/pickers/typings/date';
-import moment from 'moment';
+import {VenueParametersModel} from '../../../../../models/venue-parameters';
 
-interface InternalProps{
-	disabledDates: string[];
-}
-
-interface State{
-	bar: boolean;
-	snacks: boolean;
-	lightShow: boolean;
-	shooting: boolean;
-	canBringLiquids: boolean;
-	hookah: boolean;
-	date: string | undefined;
+interface InternalProps {
+	handleSetVenueParameters: (venueParameters: VenueParametersModel) => void;
+	venueParameters: VenueParametersModel;
 }
 
 export type Props = Style & InternalProps;
 
-export class VenueParameters extends React.PureComponent<Props, State> {
-	constructor(props: Props) {
-		super(props);
-		this.state ={
-			bar: false,
-			snacks: false,
-			lightShow:false,
-			shooting: false,
-			canBringLiquids: false,
-			hookah: false,
-			date: undefined,
-		};
-	}
-
+export class VenueParameters extends React.PureComponent<Props> {
 	public render(): ReactNode {
-		const  { classes } = this.props;
-		const {bar, lightShow, canBringLiquids, hookah, shooting, snacks} = this.state;
+		const {venueParameters} = this.props;
 
 		return (
 			<React.Fragment>
@@ -48,73 +23,70 @@ export class VenueParameters extends React.PureComponent<Props, State> {
 					Введите данные владельца билета
 				</Typography>
 				<Grid container spacing={3}>
-					<Grid container item  >
+					<Grid container item>
 						<FormControlLabel
+							label="Бар + бармен"
 							control={
 								<Checkbox
-									checked={bar}
-									onChange={() => this.setState({bar: !bar})}
-									color="primary" />
+									checked={venueParameters.bar}
+									onChange={this.handleChangeVenueParameter('bar', !venueParameters.bar)}
+									color="primary"
+								/>
 							}
-							label="Бар + бармен" />
+
+						/>
 						<FormControlLabel
+							label="Закуски"
 							control={
 								<Checkbox
-									checked={snacks}
-									onChange={() => this.setState({snacks: !snacks})}
-									color="primary" />
+									checked={venueParameters.snacks}
+									onChange={this.handleChangeVenueParameter('snacks', !venueParameters.snacks)}
+									color="primary"
+								/>
 							}
-							label="Закуски" />
+						/>
 					</Grid>
 
-					<Grid container item >
+					<Grid container item>
 						<FormControlLabel
 							control={
 								<Checkbox
-									checked={lightShow}
-									onChange={() => this.setState({lightShow: !lightShow})}
-									color="primary" />
+									checked={venueParameters.lightShow}
+									onChange={this.handleChangeVenueParameter('lightShow', !venueParameters.lightShow)}
+									color="primary"/>
 							}
-							label="Световое шоу" />
+							label="Световое шоу"/>
 						<FormControlLabel
+							label="Фейерверк"
 							control={
 								<Checkbox
-									checked={shooting}
-									onChange={() => this.setState({shooting: !shooting})}
-									color="primary" />
+									checked={venueParameters.shooting}
+									onChange={this.handleChangeVenueParameter('shooting', !venueParameters.shooting)}
+									color="primary"
+								/>
 							}
-							label="Фейерверк" />
+
+						/>
 					</Grid>
 
-					<Grid container item  >
+					<Grid container item>
 						<FormControlLabel
 							control={
 								<Checkbox
-									checked={canBringLiquids}
-									onChange={() => this.setState({canBringLiquids: !canBringLiquids})}
-									color="primary" />
+									checked={venueParameters.canBringLiquids}
+									onChange={this.handleChangeVenueParameter('canBringLiquids', !venueParameters.canBringLiquids)}
+									color="primary"/>
 							}
-							label="Разрешение на пронос своих напитков" />
+							label="Разрешение на пронос своих напитков"/>
 						<FormControlLabel
+							label="Кальяны"
 							control={
 								<Checkbox
-									checked={hookah}
-									onChange={() => this.setState({hookah: !hookah})}
-									color={'primary'} />
+									checked={venueParameters.hookah}
+									onChange={this.handleChangeVenueParameter('hookah', !venueParameters.hookah)}
+									color={'primary'}
+								/>
 							}
-							label="Кальяны" />
-					</Grid>
-
-					<Grid item xs={12}>
-						<DatePicker
-							required
-							value={undefined}
-							label="Дата бронирования"
-							disablePast={true}
-							shouldDisableDate={this.shouldDisableDate}
-							onChange={this.handleDateChange}
-							animateYearScrolling
-							variant={'inline'}
 						/>
 					</Grid>
 
@@ -130,31 +102,15 @@ export class VenueParameters extends React.PureComponent<Props, State> {
 			</React.Fragment>
 		);
 	}
-	
-	private handleDateChange = (date: MaterialUiPickersDate) => {
-		if (!date) {
-			this.setState({date: undefined});
-			return;
-		}
-		const ISODate = moment(date).toISOString(true);
-		this.setState({date: ISODate});
-	}
 
+	private handleChangeVenueParameter = (key: keyof VenueParametersModel, changeValue: boolean) => () => {
+		const {venueParameters} = this.props;
+		const {handleSetVenueParameters} = this.props;
 
-	private shouldDisableDate =(chosenDate: MaterialUiPickersDate): boolean => {
-		const {disabledDates} = this.props;
-		disabledDates.forEach(date => {
-			const ISODate = moment(date).toISOString(false);
-			const chosenISODate = moment(chosenDate).toISOString(false);
-			console.log(chosenISODate);
-
-			if(moment(chosenISODate).isSame(ISODate)) {
-				console.log('here');
-				return true;
-			}
+		this.setState({
+			venueParameters: Object.assign({}, venueParameters, {[key]: changeValue})
 		});
-		return false;
-	}
+		handleSetVenueParameters(venueParameters);
+	};
 }
-
 

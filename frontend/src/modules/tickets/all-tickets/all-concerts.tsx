@@ -2,9 +2,9 @@ import React, {ReactNode} from 'react';
 import {Style} from './styles';
 import CustomizedSearch from '../../../commons/search/index';
 import MainBackground from '../../home-page/components/main-background/index';
-import CustomizedCard from '../ticket-card/index';
+import CustomizedCard from '../concert-card/index';
 import {ConcertModel} from '../../../models/concert-model';
-import {getAllTickets} from './all-concerts-service';
+import {getAllConcerts, getSearchedConcerts} from '../../../services/concert-service';
 
 export type Props = Style;
 
@@ -20,29 +20,14 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 		};
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	componentDidMount() {
-		getAllTickets().then(concerts => this.setState({concerts: concerts}));
+		getAllConcerts().then(concerts => this.setState({concerts: concerts}));
 	}
 
 	public render(): ReactNode {
 		const {classes} = this.props;
-		const arr = [
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-			{a: '1'},
-		];
+		const {concerts} = this.state;
+
 		return (
 			<div>
 				<MainBackground
@@ -50,13 +35,21 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 					title="НЕ ПРОПУСТИ КОНЦЕРТ СВОЕЙ МЕЧТЫ"
 					subtitle="Стань самым преданным фанатом"
 					middleText="Окунись в атмосферу ламповых лофт-концертов."
-					componentToShow={<CustomizedSearch title={'Наити концерт'}/>}
+					componentToShow={
+						<CustomizedSearch
+							getSearchedContent={this.getSearchedConcerts}
+							title={'Наити концерт'}
+						/>}
 					backGroundStyle={classes.background}
 				/>
 
 				<div className={classes.cards}>
-					{arr.map((item, index) => {
-						return (<div className={classes.cardItem} key={index}><CustomizedCard/></div>);
+					{concerts.map((concert, index) => {
+						return (
+							<div className={classes.cardItem} key={index}>
+								<CustomizedCard concert={concert}/>
+							</div>
+						);
 					})}
 				</div>
 
@@ -64,6 +57,11 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 			</div>
 		);
 	}
+
+	private getSearchedConcerts = (search: string) => {
+		getSearchedConcerts(search).then(concerts => this.setState({concerts: concerts}));
+	};
+
 }
 
 

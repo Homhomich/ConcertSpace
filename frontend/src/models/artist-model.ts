@@ -1,5 +1,5 @@
 export interface ArtistModel{
-	id: number;
+	id?: number;
 	name: string;
 	genre: string;
 }

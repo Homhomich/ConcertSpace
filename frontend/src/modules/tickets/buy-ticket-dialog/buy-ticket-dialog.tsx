@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import {Style} from './styles';
 import {Dialog} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,14 +13,23 @@ import Typography from '@material-ui/core/Typography';
 import UserInfo from './components/user-info/index';
 import PaymentForm from './components/payment-form/index';
 import Review from './components/review/index';
+import {TicketModel} from '../../../models/ticket-model';
+import {UserModel} from '../../../models/user-model';
+import {checkUserInfo} from '../../../services/validation-service';
+import {UserErrorModel} from '../../../models/user-error-model';
+import {putNewBoughtTicket} from '../../../services/concert-service';
 
-interface InternalProps{
+interface InternalProps {
+	ticket: TicketModel;
+	concertId: number;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-interface State{
+interface State {
 	activeStep: number;
+	userInfo: Partial<UserModel>;
+	errorFormModel: UserErrorModel;
 }
 
 export type Props = Style & InternalProps;
@@ -28,19 +37,19 @@ export type Props = Style & InternalProps;
 export class BuyTicketPage extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		this.state = {activeStep: 0};
+		this.state = {activeStep: 0, userInfo: {}, errorFormModel: {}};
 	}
 
 	private steps = ['Данные покупателя', 'Детали оплаты', 'Ваша покупка'];
 
 	public render(): ReactNode {
-		const  { classes , isOpen, onClose} = this.props;
+		const {classes, isOpen, onClose} = this.props;
 
 		return (
 			<div>
 				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" open={isOpen} onClose={onClose}>
 					<React.Fragment>
-						<CssBaseline />
+						<CssBaseline/>
 						<AppBar position="absolute" color="default" className={classes.appBar}>
 							<Toolbar>
 								<Typography variant="h6" color="inherit" noWrap>
@@ -67,7 +76,8 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 												Спасибо за покупку!
 											</Typography>
 											<Typography variant="subtitle1">
-												Мы отправим ваш билет вам на почту. Если в организации концерта произойдут изменения, уведомление также поступит на почту.
+												Мы отправим ваш билет вам на почту. Если в организации концерта
+												произойдут изменения, уведомление также поступит на почту.
 											</Typography>
 										</React.Fragment>
 									) : (
@@ -75,7 +85,11 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 											{this.getStepContent(this.state.activeStep)}
 											<div className={classes.buttons}>
 												{this.state.activeStep !== 0 && (
-													<Button onClick={this.handleBack} color={'primary'} className={classes.button}>
+													<Button
+														onClick={this.handleBack}
+														color={'primary'}
+														className={classes.button}
+													>
 														Назад
 													</Button>
 												)}
@@ -85,7 +99,7 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 													onClick={this.handleNext}
 													className={classes.button}
 												>
-													{this.state.activeStep === this.steps.length - 1 ? 'Place order' : 'Next'}
+													{this.state.activeStep === this.steps.length - 1 ? 'Купить' : 'Далее'}
 												</Button>
 											</div>
 										</React.Fragment>
@@ -100,39 +114,43 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 	}
 
 	private handleNext = () => {
-		this.setState({activeStep: this.state.activeStep + 1});
+		if (this.state.activeStep === this.steps.length - 1 && checkUserInfo(this.state.userInfo, this.setErrorFormModel)) {
+			const {concertId, ticket} = this.props;
+			if (!ticket.id) {
+				return;
+			}
+			putNewBoughtTicket(concertId, ticket.id, this.state.userInfo)
+				.catch(() => alert('Произошла ошибка при покупке билета, пожалуйсста, попробуйте еще раз!'));
+		} else {
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
+	};
+
+	private setErrorFormModel = (errorFormModel: UserErrorModel) => {
+		this.setState({errorFormModel: errorFormModel});
 	};
 
 	private handleBack = () => {
 		this.setState({activeStep: this.state.activeStep - 1});
 	};
 
+	private handleSetUserInfo = (userInfo: Partial<UserModel>) => {
+		this.setState({userInfo: Object.assign({}, this.state.userInfo, userInfo)});
+	};
+
 	private getStepContent(step: number) {
+		const {ticket} = this.props;
+		const {userInfo} = this.state;
+
 		switch (step) {
 		case 0:
-			return <UserInfo />;
+			return <UserInfo userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
 		case 1:
-			return <PaymentForm />;
+			return <PaymentForm userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
 		case 2:
-			return <Review 
-				ticket={{
-					id: 1,
-					name: 'Meladze',
-					description: 'The concert',
-					price: 1200,
-				}}
-				userInfo={{
-					id: 1,
-					firstName: 'Anna',
-					lastName: 'Ivanova',
-					email: 'email@mail.ru',
-					phoneNumber: '12789765',
-					cardNumber: '1111222233334444',
-					cvv: 233,
-					nameOnCard: 'Anna Ivanova',
-					expireDate: '2021-03-21',
-				}
-				}
+			return <Review
+				ticket={ticket}
+				userInfo={userInfo}
 			/>;
 		default:
 			throw new Error('Unknown step');
