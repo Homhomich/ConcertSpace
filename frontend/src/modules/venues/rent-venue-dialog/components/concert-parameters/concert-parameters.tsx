@@ -34,7 +34,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={concert.name}
+							value={concert.name ? concert.name : ''}
 							error={concertErrorModel.name}
 							helperText={concertErrorModel.name ? 'Обязательное поле' : undefined}
 							id="concertName"
@@ -47,7 +47,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={concert.imgPath}
+							value={concert.imgPath ? concert.imgPath : ''}
 							error={concertErrorModel.imgPath}
 							helperText={concertErrorModel.imgPath ? 'Обязательное поле' : undefined}
 							id="img"
@@ -60,7 +60,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							required
-							value={concert.description}
+							value={concert.description ? concert.description : ''}
 							error={concertErrorModel.description}
 							helperText={concertErrorModel.description ? 'Обязательное поле' : undefined}
 							id="description"
@@ -75,7 +75,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item>
 						<TextField
 							required
-							value={concert.artist?.name}
+							value={concert.artist?.name ? concert.artist.name : ''}
 							error={concertErrorModel.artistName}
 							helperText={concertErrorModel.artistName ? 'Обязательное поле' : undefined}
 							id="address"
@@ -87,7 +87,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						/>
 						<TextField
 							required
-							value={concert.artist?.genre}
+							value={concert.artist?.genre ? concert.artist.genre : ''}
 							error={concertErrorModel.genre}
 							helperText={concertErrorModel.genre ? 'Обязательное поле' : undefined}
 							id="genre"
@@ -100,7 +100,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<DatePicker
 							required
-							value={concert.date}
+							value={concert.date ? concert.date : ''}
 							error={concertErrorModel.date}
 							helperText={concertErrorModel.date ? 'Обязательное поле' : undefined}
 							label="Дата бронирования"

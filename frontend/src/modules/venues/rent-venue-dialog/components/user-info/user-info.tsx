@@ -26,7 +26,7 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={userInfo.firstName}
+							value={userInfo.firstName ? userInfo.firstName : ''}
 							error={userErrorModel.firstName}
 							helperText={userErrorModel.firstName ? 'Обязательное поле' : undefined}
 							id="firstName"
@@ -40,7 +40,7 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={userInfo.lastName}
+							value={userInfo.lastName ? userInfo.lastName : ''}
 							error={userErrorModel.lastName}
 							helperText={userErrorModel.lastName ? 'Обязательное поле' : undefined}
 							id="lastName"
@@ -54,7 +54,7 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							required
-							value={userInfo.email}
+							value={userInfo.email ? userInfo.email : ''}
 							error={userErrorModel.email?.error}
 							helperText={userErrorModel.email?.helperText}
 							id="email"
@@ -69,7 +69,7 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							required
-							value={userInfo.phoneNumber}
+							value={userInfo.phoneNumber ? userInfo.phoneNumber : ''}
 							error={userErrorModel.phoneNumber?.error}
 							helperText={userErrorModel.phoneNumber?.helperText}
 							id="phone"

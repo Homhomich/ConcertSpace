@@ -4,17 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {UserModel} from '../../../../../models/user-model';
+import {UserErrorModel} from '../../../../../models/user-error-model';
 
 interface InternalProps{
 	handleSetUserInfo: (userInfo: Partial<UserModel>) => void;
 	userInfo: Partial<UserModel>;
+	errorFormModel: UserErrorModel;
 }
 
 export type Props = InternalProps & Style;
 
 export class UserInfo extends React.PureComponent<Props> {
 	public render(): ReactNode {
-		const {userInfo}  =this.props;
+		const {userInfo, errorFormModel}  =this.props;
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
@@ -24,7 +26,9 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={userInfo.firstName}
+							value={userInfo.firstName? userInfo.firstName : ''}
+							error={errorFormModel.firstName}
+							helperText={errorFormModel.firstName ? 'Обязательное поле': undefined}
 							id="firstName"
 							name="firstName"
 							label="Имя"
@@ -36,7 +40,9 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12} sm={6}>
 						<TextField
 							required
-							value={userInfo.lastName}
+							value={userInfo.lastName ? userInfo.lastName : ''}
+							error={errorFormModel.lastName}
+							helperText={errorFormModel.lastName ? 'Обязательное поле': undefined}
 							id="lastName"
 							name="lastName"
 							label="Фамилия"
@@ -48,7 +54,9 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							required
-							value={userInfo.email}
+							value={userInfo.email ? userInfo.email : ''}
+							error={errorFormModel.email?.error}
+							helperText={errorFormModel.email?.helperText}
 							id="email"
 							name="email"
 							label="Email"
@@ -61,7 +69,9 @@ export class UserInfo extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							required
-							value={userInfo.phoneNumber}
+							value={userInfo.phoneNumber ? userInfo.phoneNumber: ''}
+							error={errorFormModel.phoneNumber?.error}
+							helperText={errorFormModel.phoneNumber?.helperText}
 							id="phone"
 							name="phone"
 							label="Номер телефона"

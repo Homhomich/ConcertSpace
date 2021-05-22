@@ -5,7 +5,7 @@ export interface UserModel {
 	email: string;
 	phoneNumber: string;
 	cardNumber: string;
-	cvv: number;
+	cvv: string;
 	nameOnCard: string;
 	expireDate: string;
 }

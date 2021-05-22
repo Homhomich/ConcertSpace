@@ -15,7 +15,7 @@ import PaymentForm from './components/payment-form/index';
 import Review from './components/review/index';
 import {TicketModel} from '../../../models/ticket-model';
 import {UserModel} from '../../../models/user-model';
-import {checkUserInfo} from '../../../services/validation-service';
+import {checkUserCard, checkUserInfo} from '../../../services/validation-service';
 import {UserErrorModel} from '../../../models/user-error-model';
 import {putNewBoughtTicket} from '../../../services/concert-service';
 
@@ -114,14 +114,21 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 	}
 
 	private handleNext = () => {
-		if (this.state.activeStep === this.steps.length - 1 && checkUserInfo(this.state.userInfo, this.setErrorFormModel)) {
+		if (this.state.activeStep === 0 && !checkUserInfo(this.state.userInfo, this.setErrorFormModel)) {
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
+
+		if (this.state.activeStep === 1 && !checkUserCard(this.state.userInfo, this.setErrorFormModel)) {
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
+
+		if (this.state.activeStep === this.steps.length - 1) {
 			const {concertId, ticket} = this.props;
 			if (!ticket.id) {
 				return;
 			}
 			putNewBoughtTicket( ticket.id, this.state.userInfo, concertId)
-				.catch(() => alert('Произошла ошибка при покупке билета, пожалуйсста, попробуйте еще раз!'));
-		} else {
+				.catch(() => alert('Произошла ошибка при покупке билета, пожалуйста, попробуйте еще раз!'));
 			this.setState({activeStep: this.state.activeStep + 1});
 		}
 	};
@@ -140,13 +147,13 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 
 	private getStepContent(step: number) {
 		const {ticket} = this.props;
-		const {userInfo} = this.state;
+		const {userInfo, errorFormModel} = this.state;
 
 		switch (step) {
 		case 0:
-			return <UserInfo userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
+			return <UserInfo errorFormModel={errorFormModel}  userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
 		case 1:
-			return <PaymentForm userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
+			return <PaymentForm errorFormModel={errorFormModel} userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
 		case 2:
 			return <Review
 				ticket={ticket}

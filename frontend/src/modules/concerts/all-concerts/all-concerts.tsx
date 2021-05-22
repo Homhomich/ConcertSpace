@@ -46,7 +46,7 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 				<div className={classes.cards}>
 					{concerts.map((concert, index) => {
 						return (
-							<div className={classes.cardItem} key={index}>
+							<div className={classes.cardItem} key={concert.id}>
 								<CustomizedCard concert={concert}/>
 							</div>
 						);
