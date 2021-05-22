@@ -31,6 +31,7 @@ interface InternalProps {
 
 interface State {
 	activeStep: number;
+	rentComment: string;
 	userInfo: Partial<UserModel>;
 	concertInfo: Partial<ConcertModel>;
 	venueParameters: VenueParametersModel;
@@ -44,7 +45,8 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			activeStep: 1,
+			activeStep: 0,
+			rentComment: '',
 			userInfo: {},
 			userErrorModel: {},
 			concertErrorModel: {},
@@ -95,11 +97,11 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 									{this.state.activeStep === this.steps.length ? (
 										<React.Fragment>
 											<Typography variant="h5" gutterBottom>
-												Спасибо за покупку!
+												Спасибо за бронь!
 											</Typography>
 											<Typography variant="subtitle1">
-												Мы отправим ваш билет вам на почту. Если в организации концерта
-												произойдут изменения, уведомление также поступит на почту.
+												Мы свяжемся с вами по телефону для подтверждения бронирования. Ожидайте
+												звонка нашего оператора.
 											</Typography>
 										</React.Fragment>
 									) : (
@@ -134,18 +136,34 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	}
 
 	private handleNext = () => {
-		const {userInfo, concertInfo, venueParameters} = this.state;
+		const {userInfo, concertInfo, venueParameters, rentComment} = this.state;
 		const {venue} = this.props;
 
-		if (this.state.activeStep === this.steps.length - 1) {
-			if (checkUserInfoWithoutCard(userInfo, this.setUserErrorModel)
-				&& checkConcertParameters(concertInfo, this.setConcertErrorModel)) {
-				putRentedVenue(venue.id, {userInfo, concert: concertInfo, venueRentParameters: venueParameters})
-					.catch(() => alert('Произошла ошибка при аренде площадки'));
-			}
+		if (this.state.activeStep === 0 && !checkUserInfoWithoutCard(userInfo, this.setUserErrorModel)){
+			this.setState({activeStep: this.state.activeStep + 1});
 		}
 
-		this.setState({activeStep: this.state.activeStep + 1});
+		console.log(this.state.activeStep);
+
+		if (this.state.activeStep === 2 &&  !checkConcertParameters(concertInfo, this.setConcertErrorModel)){
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
+
+		if(this.state.activeStep === 1){
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
+		if (this.state.activeStep === this.steps.length - 1) {
+			if (!checkUserInfoWithoutCard(userInfo, this.setUserErrorModel) &&  !checkConcertParameters(concertInfo, this.setConcertErrorModel)) {
+				putRentedVenue(venue.id, {
+					userInfo,
+					concert: concertInfo,
+					venueRentParameters: venueParameters,
+					rentComment: rentComment
+				})
+					.catch(() => alert('Произошла ошибка при аренде площадки'));
+			}
+			this.setState({activeStep: this.state.activeStep + 1});
+		}
 	};
 
 	private setUserErrorModel = (userErrorModel: UserErrorModel) => {
@@ -165,29 +183,40 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	};
 
 	private handleSetVenueParameters = (venueParameters: VenueParametersModel) => {
-		this.setState({userInfo: Object.assign({}, this.state.userInfo, venueParameters)});
+		this.setState({venueParameters: Object.assign({}, this.state.venueParameters, venueParameters)});
 	};
 
 	private handleSetConcertInfo = (concertInfo: Partial<ConcertModel>) => {
-		this.setState({userInfo: Object.assign({}, this.state.concertInfo, concertInfo)});
+		this.setState({concertInfo: Object.assign({}, this.state.concertInfo, concertInfo)});
+	};
+
+	private handleSetRentComment = (rentComment: string) => {
+		this.setState({rentComment: rentComment});
 	};
 
 	private getStepContent(step: number) {
 		const {venue} = this.props;
-		const {userInfo, venueParameters, concertInfo} = this.state;
+		const {userInfo, venueParameters, concertInfo, rentComment, userErrorModel, concertErrorModel} = this.state;
 
 		switch (step) {
 		case 0:
-			return <UserInfo userInfo={userInfo} handleSetUserInfo={this.handleSetUserInfo}/>;
+			return <UserInfo
+				userInfo={userInfo}
+				userErrorModel={userErrorModel}
+				handleSetUserInfo={this.handleSetUserInfo}
+			/>;
 		case 1:
 			return <VenueParameters
 				venueParameters={venueParameters}
+				rentComment={rentComment}
 				handleSetVenueParameters={this.handleSetVenueParameters}
+				handleSetRentComment={this.handleSetRentComment}
 			/>;
 		case 2:
 			return (
 				<ConcertParameters
 					concert={concertInfo}
+					concertErrorModel={concertErrorModel}
 					handleSetConcertInfo={this.handleSetConcertInfo}
 					disabledDates={venue.disabledDates}
 				/>

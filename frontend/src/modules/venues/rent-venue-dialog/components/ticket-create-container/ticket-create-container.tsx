@@ -38,6 +38,7 @@ export class TicketsCreateContainer extends React.PureComponent<Props, State> {
 			key: 0,
 			snackBarOpen: false,
 		};
+		props.handleTicketTypeAdd(Array.from(this.state.tickets.values()));
 	}
 
 	public render(): ReactNode {
@@ -88,7 +89,7 @@ export class TicketsCreateContainer extends React.PureComponent<Props, State> {
 				<Snackbar
 					open={snackBarOpen}
 					resumeHideDuration={4000}
-					onClose={()=>this.setState({snackBarOpen: false})}
+					onClose={() => this.setState({snackBarOpen: false})}
 					color={'red'}
 					message="Сначала заполните существующий билет."
 				/>
@@ -98,6 +99,7 @@ export class TicketsCreateContainer extends React.PureComponent<Props, State> {
 
 	private handleNewTicketAdd = () => {
 		const {tickets, key} = this.state;
+		const {handleTicketTypeAdd} =this.props;
 		const current = tickets.get(key);
 
 		if (current && (!current.name || !current.description || !current.price)) {
@@ -113,6 +115,7 @@ export class TicketsCreateContainer extends React.PureComponent<Props, State> {
 				key: key + 1,
 			}
 		);
+		handleTicketTypeAdd(Array.from(newTickets.values()));
 	};
 
 	private handleNameChange = (key: number) => (event: React.ChangeEvent<HTMLInputElement>) => {

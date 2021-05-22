@@ -1,9 +1,15 @@
 import axios from 'axios';
 import {VenueRentModel} from '../models/venue-rent-model';
 import {VenueModel} from '../models/venue-model';
+import {venues} from './test-values';
 
 export async function getAllVenues(): Promise<VenueModel[]> {
-	return await axios.get('venues/all').then((response) => response.data);
+	const promise = new Promise<VenueModel[]>((resolve) => {
+		setTimeout(() => resolve(venues), 2000);
+	});
+	return promise.then(result => result);
+	
+	//return await axios.get('venues/all').then((response) => response.data);
 }
 
 export async function getSearchedVenues(search: string): Promise<VenueModel[]> {

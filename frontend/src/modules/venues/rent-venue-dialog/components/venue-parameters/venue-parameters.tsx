@@ -8,14 +8,16 @@ import {VenueParametersModel} from '../../../../../models/venue-parameters';
 
 interface InternalProps {
 	handleSetVenueParameters: (venueParameters: VenueParametersModel) => void;
+	handleSetRentComment: (rentComment: string) => void;
 	venueParameters: VenueParametersModel;
+	rentComment: string;
 }
 
 export type Props = Style & InternalProps;
 
 export class VenueParameters extends React.PureComponent<Props> {
 	public render(): ReactNode {
-		const {venueParameters} = this.props;
+		const {venueParameters, handleSetRentComment, rentComment} = this.props;
 
 		return (
 			<React.Fragment>
@@ -93,9 +95,11 @@ export class VenueParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<TextField
 							id="comment"
+							value={rentComment}
 							name="comment"
 							label="Комментарий к бронированию"
 							fullWidth
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleSetRentComment(event.target.value)}
 						/>
 					</Grid>
 				</Grid>
@@ -107,10 +111,7 @@ export class VenueParameters extends React.PureComponent<Props> {
 		const {venueParameters} = this.props;
 		const {handleSetVenueParameters} = this.props;
 
-		this.setState({
-			venueParameters: Object.assign({}, venueParameters, {[key]: changeValue})
-		});
-		handleSetVenueParameters(venueParameters);
+		handleSetVenueParameters(Object.assign({}, venueParameters, {[key]: changeValue}));
 	};
 }
 

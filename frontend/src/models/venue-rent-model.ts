@@ -6,4 +6,5 @@ export interface VenueRentModel{
 	concert: Partial<ConcertModel>;
 	venueRentParameters: VenueParametersModel;
 	userInfo: Partial<UserModel>;
+	rentComment: string;
 }

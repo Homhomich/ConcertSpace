@@ -8,3 +8,8 @@ export interface ConcertErrorModel{
 	tickets?: number[];
 	imgPath?: boolean;
 }
+
+export interface ErrorModel{
+	error: boolean;
+	helperText: string;
+}

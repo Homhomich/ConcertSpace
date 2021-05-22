@@ -66,8 +66,8 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 									image="https://vokrug.tv/pic/news/d/c/2/3/dc23153d1ed611cf38abdfe861e4d309.jpg"
 								/>
 							</Box>
-							<div>	
-								<Typography variant='body1' className={classes.cardMedia}>
+							<div className={classes.descriptionContainer}>
+								<Typography variant='body1' className={classes.description}>
 									{concert.description}
 								</Typography>
 								<div className={classes.item}>
@@ -99,12 +99,13 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						color={'secondary'}
 						variant={'contained'}
 					>
-						Купить
+						Купить {'\n'}
 						{ticket.price}
 					</Button>
 				</div>
 				<Divider/>
 				<BuyTicketPage
+					concertId={concert.id}
 					ticket={ticket}
 					isOpen={isBuyTicketDialogOpen}
 					onClose={() => this.setState({isBuyTicketDialogOpen: false})}

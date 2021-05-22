@@ -11,7 +11,6 @@ import 'moment/locale/ru';
 import {BrowserRouter} from 'react-router-dom';
 import RouterContainer from './modules/router-container/index';
 import Footer from './modules/home-page/components/footer/index';
-import RentVenueDialog from './modules/venues/rent-venue-dialog/index';
 
 function App() {
 	moment.locale('ru');
@@ -21,23 +20,7 @@ function App() {
 				<BrowserRouter>
 					<CssBaseline/>
 					<Header/>
-
-					<RentVenueDialog venue={{
-						id: 1,
-						name: 'Bob Marly',
-						type: 'loft', // например лофт или студия или танцпол+сцена
-						location: 'First dtreet',
-						description: 'skcsbnchsssssssssssssssssss',
-						rentPerHour: 1200,
-						capacity: 20,
-						ownerPhone: '1234567890',
-						ownerEmail: 'string@,ailm',
-						square: '29', // в ер диаграмме этого нет((
-						imgPath: 'https://www.loft2rent.ru/upload_data/2019/8922/upldOKMFeD.jpg.900x600.jpg',
-						disabledDates: [],
-
-					}} isOpen={true} onClose={() => console.log('hi')}/>
-					{/*	<RouterContainer />*/}
+					<RouterContainer />
 					<Footer/>
 				</BrowserRouter>
 			</MuiPickersUtilsProvider>

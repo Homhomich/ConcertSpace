@@ -13,11 +13,11 @@ export const styles = (theme: Theme) => createStyles({
 	cards:{
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'center',
+		justifyContent: 'flex-start',
 		flexFlow: 'wrap',
 	},
 	cardItem :{
 		marginTop: theme.spacing(3),
-		flexBasis: '26%',
+		marginLeft: '12%',
 	},
 });

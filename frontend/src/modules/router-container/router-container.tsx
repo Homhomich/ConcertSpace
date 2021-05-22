@@ -3,7 +3,7 @@ import {Style} from './styles';
 import {Redirect, RedirectProps, Route, Switch} from 'react-router';
 import {Path} from './routes';
 import HomePage from '../home-page/index';
-import AllTicketsPage from '../tickets/all-tickets/index';
+import AllTicketsPage from '../concerts/all-concerts/index';
 import AllVenuesPage from '../venues/all-venues/index';
 
 export type Props = Style;

@@ -10,11 +10,13 @@ import TicketsCreateContainer from '../ticket-create-container/index';
 import {ConcertModel} from '../../../../../models/concert-model';
 import {TicketKeyModel} from '../ticket-create-container/ticket-create-container';
 import {TicketModel} from '../../../../../models/ticket-model';
+import {ConcertErrorModel} from '../../../../../models/concert-error-model';
 
 interface InternalProps {
 	concert: Partial<ConcertModel>;
 	disabledDates: string[];
 	handleSetConcertInfo: (concertInfo: Partial<ConcertModel>) => void;
+	concertErrorModel: ConcertErrorModel;
 }
 
 export type Props = Style & InternalProps;
@@ -22,7 +24,7 @@ export type Props = Style & InternalProps;
 export class ConcertParameters extends React.PureComponent<Props> {
 
 	public render(): ReactNode {
-		const  {concert}= this.props;
+		const  {concert, concertErrorModel}= this.props;
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
@@ -33,6 +35,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={concert.name}
+							error={concertErrorModel.name}
+							helperText={concertErrorModel.name ? 'Обязательное поле' : undefined}
 							id="concertName"
 							name="concertName"
 							label="Название концерта"
@@ -44,6 +48,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={concert.imgPath}
+							error={concertErrorModel.imgPath}
+							helperText={concertErrorModel.imgPath ? 'Обязательное поле' : undefined}
 							id="img"
 							name="img"
 							label="Постер концерта"
@@ -55,6 +61,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={concert.description}
+							error={concertErrorModel.description}
+							helperText={concertErrorModel.description ? 'Обязательное поле' : undefined}
 							id="description"
 							name="description"
 							label="Описание концерта"
@@ -68,6 +76,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={concert.artist?.name}
+							error={concertErrorModel.artistName}
+							helperText={concertErrorModel.artistName ? 'Обязательное поле' : undefined}
 							id="address"
 							name="address"
 							label="Артист"
@@ -78,6 +88,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={concert.artist?.genre}
+							error={concertErrorModel.genre}
+							helperText={concertErrorModel.genre ? 'Обязательное поле' : undefined}
 							id="genre"
 							name="genre"
 							label="Жанр"
@@ -88,7 +100,9 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<DatePicker
 							required
-							value={undefined}
+							value={concert.date}
+							error={concertErrorModel.date}
+							helperText={concertErrorModel.date ? 'Обязательное поле' : undefined}
 							label="Дата бронирования"
 							disablePast={true}
 							shouldDisableDate={this.shouldDisableDate}
@@ -152,11 +166,15 @@ export class ConcertParameters extends React.PureComponent<Props> {
 
 	private handleDateChange = (date: MaterialUiPickersDate) => {
 		if (!date) {
-			this.setState({date: undefined});
 			return;
 		}
 		const ISODate = moment(date).toISOString(true);
-		this.setState({date: ISODate});
+		const newConcertModel: Partial<ConcertModel> = {
+			date: ISODate,
+		};
+		console.log(newConcertModel);
+
+		this.props.handleSetConcertInfo(newConcertModel);
 	};
 
 
@@ -165,10 +183,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 		disabledDates.forEach(date => {
 			const ISODate = moment(date).toISOString(false);
 			const chosenISODate = moment(chosenDate).toISOString(false);
-			console.log(chosenISODate);
 
 			if (moment(chosenISODate).isSame(ISODate)) {
-				console.log('here');
 				return true;
 			}
 		});

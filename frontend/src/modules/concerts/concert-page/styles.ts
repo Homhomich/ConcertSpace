@@ -23,6 +23,16 @@ export const styles = (theme: Theme) => createStyles({
 		height: '500px',
 		fontSize: 20,
 	},
+	description:{
+		margin: theme.spacing(3),
+		width: '500px',
+		fontSize: 20,
+	},
+	descriptionContainer:{
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+	},
 	title:{
 		marginTop: theme.spacing(1),
 		marginLeft: theme.spacing(1),

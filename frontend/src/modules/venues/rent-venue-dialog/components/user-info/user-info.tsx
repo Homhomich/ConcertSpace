@@ -4,17 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {UserModel} from '../../../../../models/user-model';
+import {UserErrorModel} from '../../../../../models/user-error-model';
 
 interface InternalProps {
 	handleSetUserInfo: (userInfo: Partial<UserModel>) => void;
 	userInfo: Partial<UserModel>;
+	userErrorModel: UserErrorModel;
 }
 
 export type Props = InternalProps & Style;
 
 export class UserInfo extends React.PureComponent<Props> {
 	public render(): ReactNode {
-		const {userInfo} = this.props;
+		const {userInfo, userErrorModel} = this.props;
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
@@ -25,6 +27,8 @@ export class UserInfo extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={userInfo.firstName}
+							error={userErrorModel.firstName}
+							helperText={userErrorModel.firstName ? 'Обязательное поле' : undefined}
 							id="firstName"
 							name="firstName"
 							label="Имя"
@@ -37,6 +41,8 @@ export class UserInfo extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={userInfo.lastName}
+							error={userErrorModel.lastName}
+							helperText={userErrorModel.lastName ? 'Обязательное поле' : undefined}
 							id="lastName"
 							name="lastName"
 							label="Фамилия"
@@ -49,6 +55,8 @@ export class UserInfo extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={userInfo.email}
+							error={userErrorModel.email?.error}
+							helperText={userErrorModel.email?.helperText}
 							id="email"
 							name="email"
 							label="Email"
@@ -62,6 +70,8 @@ export class UserInfo extends React.PureComponent<Props> {
 						<TextField
 							required
 							value={userInfo.phoneNumber}
+							error={userErrorModel.phoneNumber?.error}
+							helperText={userErrorModel.phoneNumber?.helperText}
 							id="phone"
 							name="phone"
 							label="Номер телефона"

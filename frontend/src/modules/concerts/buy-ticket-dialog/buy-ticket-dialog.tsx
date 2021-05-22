@@ -21,7 +21,7 @@ import {putNewBoughtTicket} from '../../../services/concert-service';
 
 interface InternalProps {
 	ticket: TicketModel;
-	concertId: number;
+	concertId?: number;
 	isOpen: boolean;
 	onClose: () => void;
 }
@@ -119,7 +119,7 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 			if (!ticket.id) {
 				return;
 			}
-			putNewBoughtTicket(concertId, ticket.id, this.state.userInfo)
+			putNewBoughtTicket( ticket.id, this.state.userInfo, concertId)
 				.catch(() => alert('Произошла ошибка при покупке билета, пожалуйсста, попробуйте еще раз!'));
 		} else {
 			this.setState({activeStep: this.state.activeStep + 1});
