@@ -6,7 +6,6 @@ export type Styles = WithStyles<typeof styles>;
 
 export const styles = (theme: Theme) => createStyles({
 	main:{
-
 	},
 	content:{
 		display: 'flex',

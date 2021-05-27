@@ -24,7 +24,7 @@ export type Props = Style & InternalProps;
 export class ConcertParameters extends React.PureComponent<Props> {
 
 	public render(): ReactNode {
-		const  {concert, concertErrorModel}= this.props;
+		const {concert, concertErrorModel} = this.props;
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
@@ -112,7 +112,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						/>
 					</Grid>
 					<Grid item>
-						<TicketsCreateContainer handleTicketTypeAdd={this.handleTicketTypeAdd} />
+						<TicketsCreateContainer handleTicketTypeAdd={this.handleTicketTypeAdd}/>
 					</Grid>
 				</Grid>
 			</React.Fragment>
@@ -172,23 +172,19 @@ export class ConcertParameters extends React.PureComponent<Props> {
 		const newConcertModel: Partial<ConcertModel> = {
 			date: ISODate,
 		};
-		console.log(newConcertModel);
-
 		this.props.handleSetConcertInfo(newConcertModel);
 	};
 
 
 	private shouldDisableDate = (chosenDate: MaterialUiPickersDate): boolean => {
 		const {disabledDates} = this.props;
+		let isDisabled = false;
 		disabledDates.forEach(date => {
-			const ISODate = moment(date).toISOString(false);
-			const chosenISODate = moment(chosenDate).toISOString(false);
-
-			if (moment(chosenISODate).isSame(ISODate)) {
-				return true;
+			if (date === moment(chosenDate).format('DD.MM.YYYY')) {
+				isDisabled = true;
 			}
 		});
-		return false;
+		return isDisabled;
 	};
 }
 

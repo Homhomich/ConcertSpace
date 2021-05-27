@@ -1,41 +1,40 @@
 import React, {ReactNode} from 'react';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Row } from '@mui-treasury/components/flex';
-import { Info, InfoSubtitle, InfoTitle } from '@mui-treasury/components/info';
-import { useNewsInfoStyles } from '@mui-treasury/styles/info/news';
+import {Row} from '@mui-treasury/components/flex';
+import {Info, InfoSubtitle, InfoTitle} from '@mui-treasury/components/info';
+import {useNewsInfoStyles} from '@mui-treasury/styles/info/news';
 import {Card} from '@material-ui/core';
 import {Style} from './styles';
 import {ConcertModel} from '../../../models/concert-model';
 import ConcertPage from '../concert-page/index';
 
-interface InternalProps{
+interface InternalProps {
 	concert: ConcertModel;
 }
 
 export type Props = InternalProps & Style;
 
-interface State{
-	isTicketCardOpen: boolean;
+interface State {
+	isConcertCardOpen: boolean;
 }
 
 
-export class ConcertCard extends React.PureComponent<Props,State> {
+export class ConcertCard extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			isTicketCardOpen: false,
+			isConcertCardOpen: false,
 		};
 	}
 
 	public render(): ReactNode {
-		// eslint-disable-next-line no-mixed-spaces-and-tabs
-	    const {classes, concert} = this.props;
-		const {isTicketCardOpen} = this.state;
+		const {classes, concert} = this.props;
+		const {isConcertCardOpen} = this.state;
 
 		return (
 			<>
-				<Card onClick={()=> this.setState({isTicketCardOpen: true})} className={classes.card}>
+				<Card onClick={() => this.setState({isConcertCardOpen: true})} className={classes.card}>
 					<Box className={classes.main} minHeight={300} position={'relative'}>
 						<CardMedia
 							className={classes.cardMedia}
@@ -54,7 +53,7 @@ export class ConcertCard extends React.PureComponent<Props,State> {
 						bgcolor={'common.white'}
 					>
 						<Info position={'middle'} useStyles={useNewsInfoStyles}>
-							<InfoTitle >{concert.artist.name}</InfoTitle>
+							<InfoTitle>{concert.artist.name}</InfoTitle>
 							<div className={classes.divider}/>
 							<InfoSubtitle>{concert.date}</InfoSubtitle>
 							<InfoSubtitle variant="h3">{concert.location}</InfoSubtitle>
@@ -64,12 +63,19 @@ export class ConcertCard extends React.PureComponent<Props,State> {
 
 					<div className={classes.shadow}/>
 				</Card>
-				<ConcertPage
-					concert={concert}
-					isOpen={isTicketCardOpen}
-					onClose={()=> this.setState( {isTicketCardOpen: false})}
-				/>
+				{isConcertCardOpen ? this.getConcertPage() : undefined}
 			</>
 		);
 	}
+
+	private getConcertPage = (): ReactNode => {
+		const {concert} = this.props;
+		const {isConcertCardOpen} = this.state;
+
+		return <ConcertPage
+			concert={concert}
+			isOpen={isConcertCardOpen}
+			onClose={() => this.setState({isConcertCardOpen: false})}
+		/>;
+	};
 }

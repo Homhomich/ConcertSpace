@@ -5,7 +5,7 @@ import {venues} from './test-values';
 
 export async function getAllVenues(): Promise<VenueModel[]> {
 	const promise = new Promise<VenueModel[]>((resolve) => {
-		setTimeout(() => resolve(venues), 2000);
+		setTimeout(() => resolve(venues), 500);
 	});
 	return promise.then(result => result);
 	

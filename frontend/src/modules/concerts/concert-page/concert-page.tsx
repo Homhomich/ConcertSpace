@@ -34,11 +34,11 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 
 		return (
 			<div>
-				<Dialog 
+				<Dialog
 					maxWidth={'xl'}
-					className={classes.main} 
-					onClose={onClose} 
-					aria-labelledby="simple-dialog-title" 
+					className={classes.main}
+					onClose={onClose}
+					aria-labelledby="simple-dialog-title"
 					open={isOpen}
 				>
 					<div className={classes.title}>
@@ -63,12 +63,12 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 							<Box  position={'relative'}>
 								<CardMedia
 									className={classes.cardMedia}
-									image="https://vokrug.tv/pic/news/d/c/2/3/dc23153d1ed611cf38abdfe861e4d309.jpg"
+									image={concert.imgPath}
 								/>
 							</Box>
 							<div className={classes.descriptionContainer}>
-								<Typography variant='body1' className={classes.description}>
-									{concert.description}
+								<Typography variant="body1" className={classes.description}>
+									{concert?.description}
 								</Typography>
 								<div className={classes.item}>
 									{this.getTickets()}
@@ -81,9 +81,9 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 		);
 	}
 
-	private getTickets = () : ReactNode => {
-		const { classes, concert} = this.props;
-		const { isBuyTicketDialogOpen } = this.state;
+	private getTickets = (): ReactNode => {
+		const {classes, concert} = this.props;
+		const {isBuyTicketDialogOpen} = this.state;
 
 		return concert.tickets.map((ticket) =>
 			<div key={ticket.id}>
@@ -112,7 +112,7 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 				/>
 			</div>
 		);
-	}
+	};
 }
 
 
