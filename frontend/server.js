@@ -10,6 +10,9 @@ const app = express();
 // eslint-disable-next-line
 app.use(favicon(__dirname + '/build/favicon.png'));
 
+// eslint-disable-next-line no-undef
+const port = process.env.PORT;
+
 //здесь наше приложение отдаёт статику
 // eslint-disable-next-line
 app.use(express.static(__dirname));
@@ -26,4 +29,4 @@ app.get('/*', function (req, res) {
 	// eslint-disable-next-line
 	res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.listen(3000);
+app.listen(port);
