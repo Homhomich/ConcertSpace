@@ -1,8 +1,7 @@
 package com.model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 @Entity
 @Table(name = "venue_schedule", schema = "public")
@@ -11,17 +10,14 @@ public class VenueSchedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToMany(mappedBy = "venue_schedule")
-    private List<Venue> venues;
+    @ManyToOne
+    @JoinColumn(name = "venue_id", referencedColumnName = "id")
+    private Venue venueSch;
 
     @Column
     private Date date;
 
     public VenueSchedule() {
-    }
-
-    public VenueSchedule(Date date) {
-        this.date = date;
     }
 
     public int getId() {
@@ -38,5 +34,13 @@ public class VenueSchedule {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Venue getVenueSch() {
+        return venueSch;
+    }
+
+    public void setVenueSch(Venue venueSch) {
+        this.venueSch = venueSch;
     }
 }

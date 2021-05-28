@@ -1,7 +1,6 @@
 package com.model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -14,42 +13,40 @@ public class Venue {
     @OneToMany(mappedBy = "venue")
     private List<Concert> concerts;
 
-    @ManyToOne
-    @JoinColumn(name = "venue_schedule_id", referencedColumnName = "id")
-    private VenueSchedule venue_schedule;
+    @OneToMany(mappedBy = "venueSch")
+    private List<VenueSchedule> disabledDates;
 
-    @Column
-    private String venue_name;
+    @Column(name = "venue_name")
+    private String venueName;
     @Column
     private String location;
     @Column
     private String type;
     @Column
-    private String path;
+    private String imgPath;
     @Column
-    private String venue_email;
+    private String ownerEmail;
     @Column
     private int capacity;
-    @Column
-    private BigDecimal rent_per_hour;
+    @Column(name = "rent_per_hour")
+    private int rentPerHour;
     @Column
     private int square;
     @Column
-    private int venue_phone_number;
+    private int ownerPhone;
     @Column
     private String description;
-    @Column
-    private String short_description;
+    
 
     public Venue() {
     }
 
-    public String getVenue_name() {
-        return venue_name;
+    public String getVenueName() {
+        return venueName;
     }
 
-    public void setVenue_name(String venue_name) {
-        this.venue_name = venue_name;
+    public void setVenueName(String venueName) {
+        this.venueName = venueName;
     }
 
     public String getLocation() {
@@ -68,12 +65,12 @@ public class Venue {
         this.type = type;
     }
 
-    public String getPath() {
-        return path;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
     public int getCapacity() {
@@ -84,20 +81,12 @@ public class Venue {
         this.capacity = capacity;
     }
 
-    public String getShort_description() {
-        return short_description;
+    public int getRentPerHour() {
+        return rentPerHour;
     }
 
-    public void setShort_description(String short_description) {
-        this.short_description = short_description;
-    }
-
-    public BigDecimal getRent_per_hour() {
-        return rent_per_hour;
-    }
-
-    public void setRent_per_hour(BigDecimal rent_per_hour) {
-        this.rent_per_hour = rent_per_hour;
+    public void setRentPerHour(int rentPerHour) {
+        this.rentPerHour = rentPerHour;
     }
 
     public int getId() {
@@ -116,12 +105,12 @@ public class Venue {
         this.description = description;
     }
 
-    public String getVenue_email() {
-        return venue_email;
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
 
-    public void setVenue_email(String venue_email) {
-        this.venue_email = venue_email;
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public int getSquare() {
@@ -132,11 +121,27 @@ public class Venue {
         this.square = square;
     }
 
-    public int getVenue_phone_number() {
-        return venue_phone_number;
+    public int getOwnerPhone() {
+        return ownerPhone;
     }
 
-    public void setVenue_phone_number(int venue_phone_number) {
-        this.venue_phone_number = venue_phone_number;
+    public void setOwnerPhone(int ownerPhone) {
+        this.ownerPhone = ownerPhone;
+    }
+
+    public List<Concert> getConcerts() {
+        return concerts;
+    }
+
+    public void setConcerts(List<Concert> concerts) {
+        this.concerts = concerts;
+    }
+
+    public List<VenueSchedule> getDisabledDates() {
+        return disabledDates;
+    }
+
+    public void setDisabledDates(List<VenueSchedule> disabledDates) {
+        this.disabledDates = disabledDates;
     }
 }

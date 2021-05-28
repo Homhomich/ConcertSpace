@@ -13,15 +13,10 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<Concert> concerts;
 
-    @Column
-    private String artist_name;
+    @Column(name = "artist_name")
+    private String artistName;
     @Column
     private String genre;
-
-    public Artist(String artist_name, String genre) {
-        this.artist_name = artist_name;
-        this.genre = genre;
-    }
 
     public Artist() {
     }
@@ -34,12 +29,12 @@ public class Artist {
         this.id = id;
     }
 
-    public String getArtist_name() {
-        return artist_name;
+    public String getArtistName() {
+        return artistName;
     }
 
-    public void setArtist_name(String artist_name) {
-        this.artist_name = artist_name;
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     public String getGenre() {
@@ -48,5 +43,13 @@ public class Artist {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public List<Concert> getConcerts() {
+        return concerts;
+    }
+
+    public void setConcerts(List<Concert> concerts) {
+        this.concerts = concerts;
     }
 }

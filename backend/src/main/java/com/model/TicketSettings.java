@@ -1,7 +1,6 @@
 package com.model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -19,9 +18,9 @@ public class TicketSettings {
     private List<Ticket> tickets;
 
     @Column
-    private BigDecimal price;
+    private int price;
     @Column
-    private String ticket_description;
+    private String type;
 
     public TicketSettings() {
     }
@@ -34,19 +33,35 @@ public class TicketSettings {
         this.id = id;
     }
 
-    public BigDecimal getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getTicket_description() {
-        return ticket_description;
+    public String getType() {
+        return type;
     }
 
-    public void setTicket_description(String ticket_description) {
-        this.ticket_description = ticket_description;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Concert getConcert() {
+        return concert;
+    }
+
+    public void setConcert(Concert concert) {
+        this.concert = concert;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

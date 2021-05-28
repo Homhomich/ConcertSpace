@@ -10,7 +10,7 @@ public class ConcertOrganization {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToMany(mappedBy = "concert_organization")
+    @OneToMany(mappedBy = "concertOrganization")
     private List<Concert> concerts;
 
     @ManyToOne
@@ -87,5 +87,21 @@ public class ConcertOrganization {
 
     public void setHookah(boolean hookah) {
         this.hookah = hookah;
+    }
+
+    public List<Concert> getConcerts() {
+        return concerts;
+    }
+
+    public void setConcerts(List<Concert> concerts) {
+        this.concerts = concerts;
+    }
+
+    public User getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(User organizer) {
+        this.organizer = organizer;
     }
 }

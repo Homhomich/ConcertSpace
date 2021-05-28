@@ -42,4 +42,28 @@ public class Ticket {
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
+
+    public Concert getConcert() {
+        return concert;
+    }
+
+    public void setConcert(Concert concert) {
+        this.concert = concert;
+    }
+
+    public TicketSettings getTicket_settings() {
+        return ticket_settings;
+    }
+
+    public void setTicket_settings(TicketSettings ticket_settings) {
+        this.ticket_settings = ticket_settings;
+    }
+
+    public List<CustomerTickets> getCustomerTickets() {
+        return customerTickets;
+    }
+
+    public void setCustomerTickets(List<CustomerTickets> customerTickets) {
+        this.customerTickets = customerTickets;
+    }
 }

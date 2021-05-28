@@ -1,7 +1,7 @@
 package com.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -21,7 +21,7 @@ public class Concert {
 
     @ManyToOne
     @JoinColumn(name = "concert_organization_id", referencedColumnName = "id")
-    private ConcertOrganization concert_organization;
+    private ConcertOrganization concertOrganization;
 
     @OneToMany(mappedBy = "concert")
     private List<Ticket> tickets;
@@ -31,12 +31,12 @@ public class Concert {
 
     @Column
     private Date date;
+    @Column(name = "concert_name")
+    private String concertName;
     @Column
-    private String concert_name;
+    private String description;
     @Column
-    private String short_descrition;
-    @Column
-    private String descrition;;
+    private String location;
 
     public Concert() {
     }
@@ -57,27 +57,67 @@ public class Concert {
         this.date = date;
     }
 
-    public String getConcert_name() {
-        return concert_name;
+    public String getConcertName() {
+        return concertName;
     }
 
-    public void setConcert_name(String concert_name) {
-        this.concert_name = concert_name;
+    public void setConcertName(String concertName) {
+        this.concertName = concertName;
     }
 
-    public String getShort_descrition() {
-        return short_descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setShort_descrition(String short_descrition) {
-        this.short_descrition = short_descrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getLocation() {
+        return location;
     }
 
-    public void setDescrition(String descrition) {
-        this.descrition = descrition;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
+    }
+
+    public ConcertOrganization getConcertOrganization() {
+        return concertOrganization;
+    }
+
+    public void setConcertOrganization(ConcertOrganization concertOrganization) {
+        this.concertOrganization = concertOrganization;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<TicketSettings> getTicketSettings() {
+        return ticketSettings;
+    }
+
+    public void setTicketSettings(List<TicketSettings> ticketSettings) {
+        this.ticketSettings = ticketSettings;
     }
 }

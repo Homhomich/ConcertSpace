@@ -21,12 +21,12 @@ public class User {
     @Column
     private String email;
     @Column
-    private int phone_number;
+    private int phoneNumber;
 
-    public User(String name, String email, int phone_number) {
+    public User(String name, String email, int phoneNumber) {
         this.name = name;
         this.email = email;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     public User() {
@@ -56,11 +56,27 @@ public class User {
         this.email = email;
     }
 
-    public int getPhone_number() {
-        return phone_number;
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(int phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public List<ConcertOrganization> getConcertOrganizations() {
+        return concertOrganizations;
+    }
+
+    public void setConcertOrganizations(List<ConcertOrganization> concertOrganizations) {
+        this.concertOrganizations = concertOrganizations;
+    }
+
+    public List<CustomerTickets> getCustomerTickets() {
+        return customerTickets;
+    }
+
+    public void setCustomerTickets(List<CustomerTickets> customerTickets) {
+        this.customerTickets = customerTickets;
     }
 }
