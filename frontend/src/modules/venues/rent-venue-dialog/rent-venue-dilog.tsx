@@ -45,7 +45,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			activeStep: 2,
+			activeStep: 0,
 			rentComment: '',
 			userInfo: {},
 			userErrorModel: {},

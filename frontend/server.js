@@ -11,7 +11,7 @@ const app = express();
 app.use(favicon(__dirname + '/build/favicon.png'));
 
 // eslint-disable-next-line no-undef
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 //здесь наше приложение отдаёт статику
 // eslint-disable-next-line
