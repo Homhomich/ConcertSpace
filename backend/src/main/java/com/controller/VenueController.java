@@ -1,13 +1,12 @@
 package com.controller;
 
 import com.dto.*;
-import com.model.Venue;
-import com.model.VenueSchedule;
-import com.service.VenueScheduleService;
-import com.service.VenueService;
+import com.model.Concert;
+import com.model.ConcertOrganization;
+import com.model.User;
+import com.service.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +15,21 @@ import java.util.List;
 public class VenueController {
 
     private final VenueService venueService;
-    
-    private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+    private final ConcertService concertService;
+    private final ConcertOrganizationService orgService;
+    private final UserService userService;
 
-    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService) {
+    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService) {
         this.venueService = venueService;
+        this.concertService = concertService;
+        this.orgService = orgService;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
     public List<VenueDTO> readAllVenues(){
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAll().forEach(x->dtoList.add(getVenueDTOWithCorrectDate(x)));
+        venueService.findAll().forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
@@ -34,7 +37,7 @@ public class VenueController {
             path = "/venue/{id}"
     )
     public VenueDTO readVenue(@PathVariable Integer id){
-        return getVenueDTOWithCorrectDate(venueService.getById(id));
+        return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
     }
 
     @GetMapping("?search={searchable}")
@@ -48,20 +51,10 @@ public class VenueController {
             path = "/venue/rent?venueId={id}"
     )
     public void rentVenue(@PathVariable Integer id, @RequestBody VenueRentDTO dto) {
-        Venue venue = venueService.getById(id);
-        List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
-        VenueSchedule venueSchedule = new VenueSchedule(venue, dto.getConcert().getDate());
-        venueScheduleList.add(venueSchedule);
-
-        venueService.update(id, venue);
-    }
-
-    public VenueDTO getVenueDTOWithCorrectDate(Venue venue){
-        List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
-        List<String> dateList = new ArrayList<>();
-        for (VenueSchedule venueSchedule: venueScheduleList) {
-            dateList.add(format.format(venueSchedule.getDate()));
-        }
-        return new VenueDTO(venue, dateList);
+        ConcertDTO concertDTO = dto.getConcert();
+        venueService.addDisabledDataForVenue(id, concertDTO.getDate());
+        Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(id), dto.getVenueRentParameters(), concertDTO.getTickets());
+        User user = userService.createUserFromDTO(dto.getUserInfo());
+        orgService.addUser(user, concert);
     }
 }

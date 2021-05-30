@@ -1,9 +1,16 @@
 package com.controller;
 
 import com.dto.ConcertDTO;
-import com.model.Concert;
-import com.service.ConcertOrganizationService;
+import com.dto.TicketDTO;
+import com.dto.UserDTO;
+import com.model.*;
 import com.service.ConcertService;
+import com.service.CustomerTicketsService;
+import com.service.TicketService;
+import com.service.UserService;
+import org.jboss.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,44 +20,60 @@ import java.util.List;
 @RequestMapping("/concerts")
 public class ConcertController {
 
-    private final ConcertService concertService;
+    private Logger log = Logger.getLogger(this.getClass());
 
-    public ConcertController(ConcertService concertService) {
+    private final ConcertService concertService;
+    private final TicketService ticketService;
+    private final UserService userService;
+    private final CustomerTicketsService customerTicketsService;
+
+    public ConcertController(ConcertService concertService, TicketService ticketService, UserService userService, CustomerTicketsService customerTicketsService) {
         this.concertService = concertService;
+        this.ticketService = ticketService;
+        this.userService = userService;
+        this.customerTicketsService = customerTicketsService;
     }
 
     @GetMapping("/all")
-    public List<ConcertDTO> readAllConcerts(){
+    public List<ConcertDTO> readAllConcerts() {
         List<ConcertDTO> dtoList = new ArrayList<>();
-        concertService.findAll().forEach((x) -> dtoList.add(new ConcertDTO(x)));
+        concertService.findAll()
+                .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));
         return dtoList;
     }
 
     @PostMapping(
             path = "/concert/{id}"
     )
-    public ConcertDTO readConcert(@PathVariable Integer id){
-
+    public ConcertDTO readConcert(@PathVariable Integer id) {
         Concert concert = concertService.getById(id);
-        ConcertDTO concertDTO = new ConcertDTO();
         if (concert != null) {
-            concertDTO = new ConcertDTO(concert);
+            return new ConcertDTO(concert, concert.getVenue(), concertService.getTypeOfTickets(concert));
         }
-        return concertDTO;
+        return null;
     }
 
     @GetMapping("?search={searchable}")
-    public List<ConcertDTO> searchConcerts(@PathVariable String searchable){
+    //что делать с location, которого нет?
+    public List<ConcertDTO> searchConcerts(@PathVariable String searchable) {
         List<ConcertDTO> dtoList = new ArrayList<>();
-        concertService.findAllByNameOrLocation(searchable).forEach((x) -> dtoList.add(new ConcertDTO(x)));
+        concertService.findAllByNameOrLocation(searchable)
+                .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));
         return dtoList;
     }
 
     @PostMapping(
             path = "/buy"
     )
-    public void buyTicket(){
-
+    public ResponseEntity buyTicket(@RequestParam Integer concertId, @RequestParam Integer ticketId, @RequestBody UserDTO dto) {
+        log.info("Get request from /buy");
+        Concert concert = concertService.getById(concertId);
+        Ticket ticket = ticketService.getById(ticketId);
+        User user = userService.createUserFromDTO(dto);
+        customerTicketsService.create(ticket, user);
+        //уменьшение кол-ва билетов
+        concertService.createEmailFromUser(concert, ticket, user);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
