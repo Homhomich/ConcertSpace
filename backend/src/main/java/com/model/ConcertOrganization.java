@@ -1,5 +1,7 @@
 package com.model;
 
+import com.dto.ConcertOrganizationDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 @Table(name = "concert_organization", schema = "public")
 public class ConcertOrganization {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToMany(mappedBy = "concertOrganization")
@@ -31,6 +33,15 @@ public class ConcertOrganization {
     private boolean hookah;
 
     public ConcertOrganization() {
+    }
+
+    public ConcertOrganization(ConcertOrganizationDTO dto){
+        this.bar = dto.isBar();
+        this.snack = dto.isSnack();
+        this.shooting = dto.isShooting();
+        this.lightShow = dto.isLightShow();
+        this.canBringLiquids = dto.isCanBringLiquids();
+        this.hookah = dto.isHookah();
     }
 
     public int getId() {

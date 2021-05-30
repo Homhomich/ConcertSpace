@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "customer_tickets", schema = "public")
 public class CustomerTickets {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -18,6 +18,11 @@ public class CustomerTickets {
     private User user;
 
     public CustomerTickets() {
+    }
+
+    public CustomerTickets(Ticket ticket, User user){
+        this.ticket = ticket;
+        this.user = user;
     }
 
     public int getId() {

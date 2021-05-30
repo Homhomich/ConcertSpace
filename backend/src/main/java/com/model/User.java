@@ -7,8 +7,8 @@ import java.util.List;
 @Table(name = "user", schema = "public")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToMany(mappedBy = "organizer")
     private List<ConcertOrganization> concertOrganizations;
@@ -32,7 +32,19 @@ public class User {
     public User() {
     }
 
-    public int getId() {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", concertOrganizations=" + concertOrganizations +
+                ", customerTickets=" + customerTickets +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
+    }
+
+    public Integer getId() {
         return id;
     }
 

@@ -1,5 +1,7 @@
 package com.model;
 
+import com.dto.ArtistDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 @Table(name = "artist", schema = "public")
 public class Artist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToMany(mappedBy = "artist")
@@ -19,6 +21,11 @@ public class Artist {
     private String genre;
 
     public Artist() {
+    }
+
+    public Artist(ArtistDTO dto){
+        this.artistName = dto.getName();
+        this.genre = dto.getGenre();
     }
 
     public int getId() {

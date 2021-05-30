@@ -7,7 +7,7 @@ import java.sql.Date;
 @Table(name = "venue_schedule", schema = "public")
 public class VenueSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne

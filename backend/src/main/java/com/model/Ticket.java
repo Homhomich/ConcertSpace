@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "ticket", schema = "public")
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne

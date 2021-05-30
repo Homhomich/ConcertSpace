@@ -1,14 +1,18 @@
 package com.model;
 
+import com.dto.ArtistDTO;
+import com.dto.TicketSettingsDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "concert", schema = "public")
 public class Concert {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -33,6 +37,8 @@ public class Concert {
     private String concertName;
     @Column
     private String description;
+    @Column
+    private Date date;
 
     public Concert() {
     }
@@ -61,6 +67,13 @@ public class Concert {
         this.description = description;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Artist getArtist() {
         return artist;
@@ -96,6 +109,14 @@ public class Concert {
 
     public List<TicketSettings> getTicketSettings() {
         return ticketSettings;
+    }
+
+    public void setTicketSettingsFrom(List<TicketSettingsDTO> dtoList){
+        List<TicketSettings> list = new ArrayList<>();
+        for (TicketSettingsDTO tsd: dtoList) {
+            list.add(new TicketSettings(tsd));
+        }
+        this.ticketSettings = list;
     }
 
     public void setTicketSettings(List<TicketSettings> ticketSettings) {

@@ -1,5 +1,7 @@
 package com.model;
 
+import com.dto.TicketSettingsDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 @Table(name = "ticket_settings", schema = "public")
 public class TicketSettings {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -22,9 +24,18 @@ public class TicketSettings {
     @Column
     private String type;
     @Column
+    private String description;
+    @Column
     private int amount;
 
     public TicketSettings() {
+    }
+
+    public TicketSettings(TicketSettingsDTO dto) {
+        this.price = dto.getPrice();
+        this.type = dto.getName();
+        this.description = dto.getDescription();
+        this.amount = dto.getAmount();
     }
 
     public int getId() {
@@ -49,6 +60,14 @@ public class TicketSettings {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getAmount() {
