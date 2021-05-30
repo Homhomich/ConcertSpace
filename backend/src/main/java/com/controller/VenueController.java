@@ -3,12 +3,11 @@ package com.controller;
 import com.dto.*;
 import com.model.Venue;
 import com.model.VenueSchedule;
-import com.service.ConcertOrganizationService;
-import com.service.ConcertService;
-import com.service.UserService;
+import com.service.VenueScheduleService;
 import com.service.VenueService;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +16,17 @@ import java.util.List;
 public class VenueController {
 
     private final VenueService venueService;
+    
+    private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
-    public VenueController(VenueService venueService) {
+    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService) {
         this.venueService = venueService;
     }
 
     @GetMapping("/all")
     public List<VenueDTO> readAllVenues(){
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAll().forEach((x) -> dtoList.add(new VenueDTO(x)));
+        venueService.findAll().forEach(x->dtoList.add(getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
@@ -33,19 +34,13 @@ public class VenueController {
             path = "/venue/{id}"
     )
     public VenueDTO readVenue(@PathVariable Integer id){
-
-        Venue venue = venueService.getById(id);
-        VenueDTO venueDTO = new VenueDTO();
-        if (venue != null) {
-            venueDTO = new VenueDTO(venue);
-        }
-        return venueDTO;
+        return getVenueDTOWithCorrectDate(venueService.getById(id));
     }
 
     @GetMapping("?search={searchable}")
     public List<VenueDTO> searchConcerts(@PathVariable String searchable){
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAllByVenueNameOrLocation(searchable).forEach((x) -> dtoList.add(new VenueDTO(x)));
+        //venueService.findAllByVenueNameOrLocation(searchable).forEach((x) -> dtoList.add(new VenueDTO(x)));
         return dtoList;
     }
 
@@ -57,6 +52,16 @@ public class VenueController {
         List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
         VenueSchedule venueSchedule = new VenueSchedule(venue, dto.getConcert().getDate());
         venueScheduleList.add(venueSchedule);
+
         venueService.update(id, venue);
+    }
+
+    public VenueDTO getVenueDTOWithCorrectDate(Venue venue){
+        List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
+        List<String> dateList = new ArrayList<>();
+        for (VenueSchedule venueSchedule: venueScheduleList) {
+            dateList.add(format.format(venueSchedule.getDate()));
+        }
+        return new VenueDTO(venue, dateList);
     }
 }

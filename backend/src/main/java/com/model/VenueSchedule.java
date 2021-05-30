@@ -20,6 +20,11 @@ public class VenueSchedule {
     public VenueSchedule() {
     }
 
+    public VenueSchedule(Venue venueSch, Date date) {
+        this.venueSch = venueSch;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }

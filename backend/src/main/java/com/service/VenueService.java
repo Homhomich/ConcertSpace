@@ -55,7 +55,7 @@ public class VenueService {
         }
     }
 
-    public void createVenueFromDTO(VenueDTO venueDTO, List<VenueSchedule> venueScheduleList){
+        public void readVenueFromDTO(VenueDTO venueDTO){
         Venue venue = new Venue();
         venue.setCapacity(venueDTO.getCapacity());
         venue.setDescription(venueDTO.getDescription());
@@ -67,7 +67,7 @@ public class VenueService {
         venue.setVenueName(venueDTO.getName());
         venue.setOwnerEmail(venueDTO.getOwnerEmail());
         venue.setOwnerPhone(venueDTO.getOwnerPhone());
-        venue.setDisabledDates(venueScheduleList);
+        //venue.setDisabledDates(venueScheduleList);
         save(venue);
     }
 }

@@ -2,6 +2,7 @@ package com.dto;
 
 import com.model.Venue;
 
+import java.sql.Date;
 import java.util.List;
 
 public class VenueDTO {
@@ -45,7 +46,7 @@ public class VenueDTO {
         this.disabledDates = disabledDates;
     }
 
-    public VenueDTO(Venue venue){
+    public VenueDTO(Venue venue, List<String> dates){
         this.id = venue.getId();
         this.name = venue.getVenueName();
         this.location = venue.getLocation();
@@ -57,7 +58,7 @@ public class VenueDTO {
         this.capacity = venue.getCapacity();
         this.square = venue.getSquare();
         this.rentPerHour = venue.getRentPerHour();
-        //this.disabledDates = venue.getDisabledDates().
+        this.disabledDates = dates;
     }
 
 

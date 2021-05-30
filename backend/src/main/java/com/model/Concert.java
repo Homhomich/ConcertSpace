@@ -29,14 +29,10 @@ public class Concert {
     @OneToMany(mappedBy = "concert")
     private List<TicketSettings> ticketSettings;
 
-    @Column
-    private Date date;
     @Column(name = "concert_name")
     private String concertName;
     @Column
     private String description;
-    @Column
-    private String location;
 
     public Concert() {
     }
@@ -47,14 +43,6 @@ public class Concert {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getConcertName() {
@@ -73,13 +61,6 @@ public class Concert {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public Artist getArtist() {
         return artist;

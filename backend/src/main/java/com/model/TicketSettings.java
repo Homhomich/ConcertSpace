@@ -21,6 +21,8 @@ public class TicketSettings {
     private int price;
     @Column
     private String type;
+    @Column
+    private int amount;
 
     public TicketSettings() {
     }
@@ -47,6 +49,14 @@ public class TicketSettings {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public Concert getConcert() {
