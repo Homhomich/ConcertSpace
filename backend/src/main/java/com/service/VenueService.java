@@ -35,7 +35,7 @@ public class VenueService {
     }
 
     public List<Venue> findAllByVenueNameOrLocation(String venueNameOrLocation) {
-        return repository.findVenuesByVenueNameOrLocationContains(venueNameOrLocation, venueNameOrLocation);
+        return repository.findVenuesByVenueNameContainsOrLocationContains(venueNameOrLocation, venueNameOrLocation);
     }
 
     public void save(Venue venue) {
@@ -59,22 +59,6 @@ public class VenueService {
             updated.setDisabledDates(venue.getDisabledDates());
             repository.save(updated);
         }
-    }
-
-    public void readVenueFromDTO(VenueDTO venueDTO){
-        Venue venue = new Venue();
-        venue.setCapacity(venueDTO.getCapacity());
-        venue.setDescription(venueDTO.getDescription());
-        venue.setLocation(venueDTO.getLocation());
-        venue.setImgPath(venueDTO.getImgPath());
-        venue.setRentPerHour(venueDTO.getRentPerHour());
-        venue.setSquare(venueDTO.getSquare());
-        venue.setType(venueDTO.getType());
-        venue.setVenueName(venueDTO.getName());
-        venue.setOwnerEmail(venueDTO.getOwnerEmail());
-        venue.setOwnerPhone(venueDTO.getOwnerPhone());
-        //venue.setDisabledDates(venueScheduleList);
-        save(venue);
     }
 
     public VenueDTO getVenueDTOWithCorrectDate(Venue venue){

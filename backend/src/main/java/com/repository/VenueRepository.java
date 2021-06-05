@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface VenueRepository extends JpaRepository<Venue, Integer> {
-    List<Venue> findVenuesByVenueNameOrLocationContains(String venue_name, String location);
+    List<Venue> findVenuesByVenueNameContainsOrLocationContains(String venue_name, String location);
 }

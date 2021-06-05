@@ -32,16 +32,7 @@ public class CustomerTicketsService {
         repository.save(customerTickets);
     }
 
-    public void update(Integer id, CustomerTickets customerTickets){
-        CustomerTickets updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setTicket(customerTickets.getTicket());
-            updated.setUser(customerTickets.getUser());
-            repository.save(updated);
-        }
-    }
-
-    public void create(Ticket ticket, User user){
+    public void addLinkBetweenTicketsAndUsers(Ticket ticket, User user){
         CustomerTickets customerTickets = new CustomerTickets();
         customerTickets.setUser(user);
         customerTickets.setTicket(ticket);

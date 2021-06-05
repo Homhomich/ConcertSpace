@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ConcertRepository extends JpaRepository<Concert, Integer> {
-    List<Concert> findConcertsByConcertNameContains(String concert_name);
+    List<Concert> findConcertsByConcertNameContainsOrVenue_LocationContains(String concert_name, String venue_location);
 }

@@ -1,8 +1,9 @@
 package com.controller;
 
-import com.dto.*;
+import com.dto.ConcertDTO;
+import com.dto.VenueDTO;
+import com.dto.VenueRentDTO;
 import com.model.Concert;
-import com.model.ConcertOrganization;
 import com.model.User;
 import com.service.*;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,8 @@ public class VenueController {
     @GetMapping("/all")
     public List<VenueDTO> readAllVenues(){
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAll().forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
+        venueService.findAll()
+                .forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
@@ -40,10 +42,10 @@ public class VenueController {
         return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
     }
 
-    @GetMapping("?search={searchable}")
-    public List<VenueDTO> searchConcerts(@PathVariable String searchable){
+    @GetMapping("/search")
+    public List<VenueDTO> searchVenues(@RequestParam String search){
         List<VenueDTO> dtoList = new ArrayList<>();
-        //venueService.findAllByVenueNameOrLocation(searchable).forEach((x) -> dtoList.add(new VenueDTO(x)));
+        venueService.findAllByVenueNameOrLocation(search).forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 

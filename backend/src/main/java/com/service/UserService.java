@@ -35,18 +35,6 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void update(Integer id, User user){
-        User updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setName(user.getName());
-            updated.setPhoneNumber(user.getPhoneNumber());
-            updated.setEmail(user.getEmail());
-            updated.setConcertOrganizations(user.getConcertOrganizations());
-            updated.setCustomerTickets(user.getCustomerTickets());
-            repository.save(updated);
-        }
-    }
-
     public User createUserFromDTO(UserDTO dto){
         log.info("creating user from DTO " + dto.toString());
         User user = new User();

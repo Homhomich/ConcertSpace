@@ -1,13 +1,10 @@
 package com.service;
 
-import com.dto.VenueScheduleDTO;
-import com.model.Venue;
 import com.model.VenueSchedule;
 import com.repository.VenueScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
 @Service

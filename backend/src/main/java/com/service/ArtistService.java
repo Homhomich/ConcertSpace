@@ -40,11 +40,4 @@ public class ArtistService {
             repository.save(updated);
         }
     }
-
-    public void createArtistFromDTO(ArtistDTO artistDTO){
-        Artist artist = new Artist();
-        artist.setArtistName(artistDTO.getName());
-        artist.setGenre(artistDTO.getGenre());
-        save(artist);
-    }
 }

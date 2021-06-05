@@ -1,9 +1,11 @@
 package com.service;
 
-import com.dto.*;
+import com.dto.ArtistDTO;
+import com.dto.ConcertDTO;
+import com.dto.ConcertOrganizationDTO;
+import com.dto.TicketSettingsDTO;
 import com.model.*;
 import com.repository.ArtistRepository;
-import com.repository.ConcertOrganizationRepository;
 import com.repository.ConcertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,29 +36,12 @@ public class ConcertService {
         return repository.findAll();
     }
 
-    public List<Concert> findAllByNameOrLocation(String concertName) {
-        return repository.findConcertsByConcertNameContains(concertName);
+    public List<Concert> findAllByNameOrLocation(String string) {
+        return repository.findConcertsByConcertNameContainsOrVenue_LocationContains(string, string);
     }
 
     public void save(Concert concert) {
         repository.save(concert);
-    }
-
-    public void update(Integer id, Concert concert){
-        Concert updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setConcertName(concert.getConcertName());
-            updated.setDescription(concert.getDescription());
-            //updated.setLocation(concert.getLocation());
-            updated.setDate(concert.getDate());
-            updated.setArtist(concert.getArtist());
-            updated.setConcertOrganization(concert.getConcertOrganization());
-            updated.setTickets(concert.getTickets());
-            updated.setTicketSettings(concert.getTicketSettings());
-            updated.setVenue(concert.getVenue());
-            updated.setTickets(concert.getTickets());
-            repository.save(updated);
-        }
     }
 
     public Concert createConcertFromDTO(ConcertDTO concertDTO, ArtistDTO artistDTO, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketsDTO){

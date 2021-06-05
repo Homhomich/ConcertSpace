@@ -1,6 +1,5 @@
 package com.service;
 
-import com.dto.ConcertOrganizationDTO;
 import com.model.Concert;
 import com.model.ConcertOrganization;
 import com.model.User;
@@ -32,21 +31,6 @@ public class ConcertOrganizationService {
 
     public void save(ConcertOrganization concertOrganization) {
         repository.save(concertOrganization);
-    }
-
-    public void update(Integer id, ConcertOrganization concertOrganization){
-        ConcertOrganization updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setBar(concertOrganization.isBar());
-            updated.setHookah(concertOrganization.isHookah());
-            updated.setCanBringLiquids(concertOrganization.isCanBringLiquids());
-            updated.setLightShow(concertOrganization.isLightShow());
-            updated.setShooting(concertOrganization.isShooting());
-            updated.setSnack(concertOrganization.isSnack());
-            updated.setConcerts(concertOrganization.getConcerts());
-            updated.setOrganizer(concertOrganization.getOrganizer());
-            repository.save(updated);
-        }
     }
 
     public void addUser(User user, Concert concert){
