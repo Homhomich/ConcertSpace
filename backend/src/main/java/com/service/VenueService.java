@@ -7,10 +7,16 @@ import com.repository.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class VenueService {
+
+    private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
     private VenueRepository repository;
 
     @Autowired
@@ -55,7 +61,7 @@ public class VenueService {
         }
     }
 
-        public void readVenueFromDTO(VenueDTO venueDTO){
+    public void readVenueFromDTO(VenueDTO venueDTO){
         Venue venue = new Venue();
         venue.setCapacity(venueDTO.getCapacity());
         venue.setDescription(venueDTO.getDescription());
@@ -69,5 +75,22 @@ public class VenueService {
         venue.setOwnerPhone(venueDTO.getOwnerPhone());
         //venue.setDisabledDates(venueScheduleList);
         save(venue);
+    }
+
+    public VenueDTO getVenueDTOWithCorrectDate(Venue venue){
+        List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
+        List<String> dateList = new ArrayList<>();
+        for (VenueSchedule venueSchedule: venueScheduleList) {
+            dateList.add(format.format(venueSchedule.getDate()));
+        }
+        return new VenueDTO(venue, dateList);
+    }
+
+    public void addDisabledDataForVenue(Integer id, Date date){
+        Venue venue = getById(id);
+        List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
+        VenueSchedule venueSchedule = new VenueSchedule(venue, date);
+        venueScheduleList.add(venueSchedule);
+        update(id, venue);
     }
 }

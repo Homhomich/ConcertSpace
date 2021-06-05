@@ -10,23 +10,33 @@ public class UserDTO {
 
     private String email;
 
-    private int phone_number;
+    private int phoneNumber;
 
     public UserDTO(User user){
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.phone_number = user.getPhoneNumber();
+        this.phoneNumber = user.getPhoneNumber();
     }
 
-    public UserDTO(Integer id, String name, String email, int phone_number) {
+    public UserDTO(Integer id, String name, String email, int phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     public UserDTO() {
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
     }
 
     public Integer getId() {
@@ -41,7 +51,7 @@ public class UserDTO {
         return email;
     }
 
-    public int getPhone_number() {
-        return phone_number;
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 }

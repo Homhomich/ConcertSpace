@@ -1,7 +1,9 @@
 package com.service;
 
+import com.dto.UserDTO;
 import com.model.User;
 import com.repository.UserRepository;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,9 @@ import java.util.List;
 
 @Service
 public class UserService {
+
+    private Logger log = Logger.getLogger(this.getClass());
+
     private UserRepository repository;
 
     @Autowired
@@ -26,8 +31,8 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void save(User user) {
-        repository.save(user);
+    public User save(User user) {
+        return repository.save(user);
     }
 
     public void update(Integer id, User user){
@@ -40,5 +45,16 @@ public class UserService {
             updated.setCustomerTickets(user.getCustomerTickets());
             repository.save(updated);
         }
+    }
+
+    public User createUserFromDTO(UserDTO dto){
+        log.info("creating user from DTO " + dto.toString());
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setName(dto.getName());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        log.info("saving user " + user);
+        log.info("user saved " + save(user).toString());
+        return user;
     }
 }

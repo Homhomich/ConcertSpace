@@ -1,12 +1,14 @@
 package com.service;
 
 import com.dto.ConcertOrganizationDTO;
+import com.model.Concert;
 import com.model.ConcertOrganization;
 import com.model.User;
 import com.repository.ConcertOrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,15 +49,15 @@ public class ConcertOrganizationService {
         }
     }
 
-    public void createConcertOrganizationFromDTO(ConcertOrganizationDTO concertOrganizationDTO, User organizer){
-        ConcertOrganization concertOrganization = new ConcertOrganization();
-        concertOrganization.setBar(concertOrganizationDTO.isBar());
-        concertOrganization.setSnack(concertOrganizationDTO.isSnack());
-        concertOrganization.setCanBringLiquids(concertOrganizationDTO.isCanBringLiquids());
-        concertOrganization.setHookah(concertOrganizationDTO.isHookah());
-        concertOrganization.setShooting(concertOrganizationDTO.isShooting());
-        concertOrganization.setLightShow(concertOrganizationDTO.isLightShow());
-        concertOrganization.setOrganizer(organizer);
-        save(concertOrganization);
+    public void addUser(User user, Concert concert){
+        Integer id = concert.getConcertOrganization().getId();
+        ConcertOrganization org = repository.findById(id).orElse(null);
+        if (org!=null) {
+            org.setOrganizer(user);
+            List<Concert> list = new ArrayList<>();
+            list.add(concert);
+            org.setConcerts(list);
+            repository.save(org);
+        }
     }
 }

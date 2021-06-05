@@ -44,11 +44,12 @@ public class TicketService {
         }
     }
 
-    public void createTicketFromDTO(TicketDTO ticketDTO, Concert concert, TicketSettings ticketSettings){
+    /*public void createTicketFromDTO(TicketDTO ticketDTO, Concert concert, TicketSettings ticketSettings){
         Ticket ticket = new Ticket();
         ticket.setSerialNumber(ticketDTO.getSerialNumber());
         ticket.setTicket_settings(ticketSettings);
         ticket.setConcert(concert);
         save(ticket);
     }
+    */
 }

@@ -35,18 +35,14 @@ public class TicketSettingsService {
     public void update(Integer id, TicketSettings ticketSettings){
         TicketSettings updated = repository.findById(id).orElse(null);
         if (updated != null){
+            updated.setAmount(ticketSettings.getAmount());
             updated.setPrice(ticketSettings.getPrice());
             updated.setType(ticketSettings.getType());
+            updated.setDescription(ticketSettings.getDescription());
             updated.setConcert(ticketSettings.getConcert());
             updated.setTickets(ticketSettings.getTickets());
             repository.save(updated);
         }
     }
 
-    public void createTicketSettingsFromDTO(TicketSettingsDTO ticketSettingsDTO, Concert concert){
-        TicketSettings ticketSettings = new TicketSettings();
-        ticketSettings.setPrice(ticketSettingsDTO.getPrice());
-        ticketSettings.setType(ticketSettingsDTO.getTicket_description());
-        ticketSettings.setConcert(concert);
-    }
 }
