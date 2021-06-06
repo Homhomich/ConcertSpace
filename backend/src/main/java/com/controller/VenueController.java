@@ -19,12 +19,14 @@ public class VenueController {
     private final ConcertService concertService;
     private final ConcertOrganizationService orgService;
     private final UserService userService;
+    private final TicketService ticketService;
 
-    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService) {
+    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
         this.venueService = venueService;
         this.concertService = concertService;
         this.orgService = orgService;
         this.userService = userService;
+        this.ticketService = ticketService;
     }
 
     @GetMapping("/all")
@@ -56,6 +58,7 @@ public class VenueController {
         ConcertDTO concertDTO = dto.getConcert();
         venueService.addDisabledDataForVenue(id, concertDTO.getDate());
         Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(id), dto.getVenueRentParameters(), concertDTO.getTickets());
+        ticketService.addTickets(concert);
         User user = userService.createUserFromDTO(dto.getUserInfo());
         orgService.addUser(user, concert);
     }

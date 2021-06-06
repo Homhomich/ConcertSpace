@@ -23,7 +23,7 @@ public class VenueDTO {
 
     private String imgPath;
 
-    private int ownerPhone;
+    private String ownerPhone;
 
     private String ownerEmail;
 
@@ -31,7 +31,7 @@ public class VenueDTO {
 
     private List<String> disabledDates;
 
-    public VenueDTO(Integer id, String name, String type, String location, String description, int rentPerHour, int capacity, String imgPath, int ownerPhone, String ownerEmail, int square, List<String> disabledDates) {
+    public VenueDTO(Integer id, String name, String type, String location, String description, int rentPerHour, int capacity, String imgPath, String ownerPhone, String ownerEmail, int square, List<String> disabledDates) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -85,7 +85,7 @@ public class VenueDTO {
         return imgPath;
     }
 
-    public int getOwnerPhone() {
+    public String getOwnerPhone() {
         return ownerPhone;
     }
 

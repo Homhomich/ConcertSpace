@@ -30,4 +30,10 @@ public class TicketSettingsService {
         repository.save(ticketSettings);
     }
 
+    public void decreaseAmount(TicketSettings ts){
+        int amount = ts.getAmount();
+        ts.setAmount(--amount);
+        save(ts);
+    }
+
 }

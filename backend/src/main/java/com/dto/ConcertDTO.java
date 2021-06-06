@@ -4,10 +4,13 @@ import com.model.Concert;
 import com.model.Venue;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConcertDTO {
+
+    private final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
     private Integer id;
 
@@ -80,5 +83,9 @@ public class ConcertDTO {
 
     public String getImgPath() {
         return imgPath;
+    }
+
+    public String getDateToString(Date date){
+        return format.format(date);
     }
 }

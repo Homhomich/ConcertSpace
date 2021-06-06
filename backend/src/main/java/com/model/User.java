@@ -21,9 +21,9 @@ public class User {
     @Column
     private String email;
     @Column
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public User(String name, String email, int phoneNumber) {
+    public User(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -68,11 +68,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String  phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

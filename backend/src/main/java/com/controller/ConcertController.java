@@ -70,8 +70,8 @@ public class ConcertController {
         Ticket ticket = ticketService.getById(ticketId);
         User user = userService.createUserFromDTO(dto);
         customerTicketsService.addLinkBetweenTicketsAndUsers(ticket, user);
-        //уменьшение кол-ва билетов
         concertService.createEmailFromUser(concert, ticket, user);
+        ticketService.deleteTicket(ticket);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

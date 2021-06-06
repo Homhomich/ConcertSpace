@@ -35,7 +35,7 @@ public class ConcertOrganizationService {
 
     public void addUser(User user, Concert concert){
         Integer id = concert.getConcertOrganization().getId();
-        ConcertOrganization org = repository.findById(id).orElse(null);
+        ConcertOrganization org = getById(id);
         if (org!=null) {
             org.setOrganizer(user);
             List<Concert> list = new ArrayList<>();

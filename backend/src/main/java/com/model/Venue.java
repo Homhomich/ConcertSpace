@@ -33,7 +33,7 @@ public class Venue {
     @Column
     private int square;
     @Column
-    private int ownerPhone;
+    private String ownerPhone;
     @Column
     private String description;
     
@@ -121,11 +121,11 @@ public class Venue {
         this.square = square;
     }
 
-    public int getOwnerPhone() {
+    public String getOwnerPhone() {
         return ownerPhone;
     }
 
-    public void setOwnerPhone(int ownerPhone) {
+    public void setOwnerPhone(String ownerPhone) {
         this.ownerPhone = ownerPhone;
     }
 

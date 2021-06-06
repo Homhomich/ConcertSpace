@@ -10,7 +10,7 @@ public class UserDTO {
 
     private String email;
 
-    private int phoneNumber;
+    private String  phoneNumber;
 
     public UserDTO(User user){
         this.id = user.getId();
@@ -19,7 +19,7 @@ public class UserDTO {
         this.phoneNumber = user.getPhoneNumber();
     }
 
-    public UserDTO(Integer id, String name, String email, int phoneNumber) {
+    public UserDTO(Integer id, String name, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -51,7 +51,7 @@ public class UserDTO {
         return email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 }
