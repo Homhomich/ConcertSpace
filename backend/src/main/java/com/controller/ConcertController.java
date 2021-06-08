@@ -10,11 +10,15 @@ import com.service.*;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("/concerts")
 public class ConcertController {
@@ -22,15 +26,13 @@ public class ConcertController {
     private Logger log = Logger.getLogger(this.getClass());
 
     private final ConcertService concertService;
-    private final TicketService ticketService;
     private final TicketSettingsService ticketSettingsService;
     private final UserService userService;
     private final CustomerTicketsService customerTicketsService;
 
-    public ConcertController(ConcertService concertService, TicketService ticketService, TicketSettingsService ticketSettingsService, UserService userService, CustomerTicketsService customerTicketsService) {
+    public ConcertController(ConcertService concertService, TicketSettingsService ticketSettingsService, UserService userService, CustomerTicketsService customerTicketsService) {
         this.concertService = concertService;
         this.ticketSettingsService = ticketSettingsService;
-        this.ticketService = ticketService;
         this.userService = userService;
         this.customerTicketsService = customerTicketsService;
     }
@@ -65,19 +67,25 @@ public class ConcertController {
     @PostMapping(
             path = "/buy"
     )
-    public ResponseEntity buyTicket(@RequestParam Integer concertId, @RequestParam Integer ticketId, @RequestBody UserDTO dto) {
+    public ResponseEntity buyTicket(@RequestParam Integer concertId, @RequestParam Integer ticketSettingsId, @RequestBody UserDTO dto) {
         log.info("Get request from /buy");
         Concert concert = concertService.getById(concertId);
-        Ticket ticket = ticketService.getById(ticketId);
-        TicketSettings ts = ticketService.getById(ticketId).getTicket_settings();
+        TicketSettings ts = ticketSettingsService.getById(ticketSettingsId);
+
+        ts.setConcert(concert);
+        ticketSettingsService.save(ts);
+
         ticketSettingsService.decreaseAmount(ts);
         log.info("decrease amount of tickets");
         User user = userService.createUserFromDTO(dto);
+        Ticket ticket = ticketSettingsService.getBySettings(ts);
         customerTicketsService.addLinkBetweenTicketsAndUsers(ticket, user);
         log.info("send email");
-        concertService.createEmailFromUser(concert, ticket, user);
+        try {
+            concertService.sendEmailForUser(ticket, user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-
 }

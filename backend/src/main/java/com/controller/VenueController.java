@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("/venues")
 public class VenueController {
@@ -64,13 +66,14 @@ public class VenueController {
         ConcertDTO concertDTO = dto.getConcert();
         log.info("get ConcertDTO from VenueRentDTO");
         venueService.addDisabledDataForVenue(venueId, concertDTO.getDate());
-        log.info("addDisabledDataForVenue");
+        log.info("add disabled data for Venue");
         Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(venueId), dto.getVenueRentParameters(), concertDTO.getTickets());
         log.info("add " + concert.toString());
-        ticketService.addTickets(concert);
-        log.info("Get request from /buy");
+//        ticketService.addTickets(concert);
+//        log.info("Get request from /buy");
+        log.info("create or get user");
         User user = userService.createUserFromDTO(dto.getUserInfo());
-        log.info("Get request from /buy");
+        log.info("get " + user.toString());
         orgService.addUser(user, concert);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
