@@ -116,18 +116,18 @@ public class ConcertService {
         contentStream.beginText();
         contentStream.setFont(PDType1Font.TIMES_ROMAN, 16);
         contentStream.setLeading(14.5f);
-        contentStream.newLineAtOffset(50, 50);
+        contentStream.newLineAtOffset(50, 550);
         contentStream.showText(s1);
         contentStream.newLine();
-        contentStream.showText(s2);
+//        contentStream.tex(s2);
 //        contentStream.newLine();
-//        contentStream.showText(s3);
+//        contentStream.drawString(s3);
 //        contentStream.newLine();
-//        contentStream.showText(s4);
+//        contentStream.drawString(s4);
 //        contentStream.newLine();
-//        contentStream.showText(s5);
+//        contentStream.drawString(s5);
 //        contentStream.newLine();
-//        contentStream.showText(s6);
+//        contentStream.drawString(s6);
 
         contentStream.endText();
         contentStream.close();
