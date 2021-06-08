@@ -99,7 +99,6 @@ public class TicketSettings {
         return "TicketSettings{" +
                 "id=" + id +
                 ", concert=" + concert +
-                ", tickets=" + tickets +
                 ", price=" + price +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +

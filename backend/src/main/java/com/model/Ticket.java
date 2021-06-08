@@ -73,7 +73,6 @@ public class Ticket {
                 "id=" + id +
                 ", concert=" + concert +
                 ", ticket_settings=" + ticket_settings +
-                ", customerTickets=" + customerTickets +
                 ", serialNumber='" + serialNumber + '\'' +
                 '}';
     }

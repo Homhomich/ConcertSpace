@@ -120,8 +120,6 @@ public class ConcertOrganization {
     public String toString() {
         return "ConcertOrganization{" +
                 "id=" + id +
-                ", concerts=" + concerts +
-                ", organizer=" + organizer +
                 ", bar=" + bar +
                 ", snack=" + snack +
                 ", shooting=" + shooting +

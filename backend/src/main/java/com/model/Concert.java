@@ -120,8 +120,6 @@ public class Concert {
                 ", artist=" + artist +
                 ", venue=" + venue +
                 ", concertOrganization=" + concertOrganization +
-                ", tickets=" + tickets +
-                ", ticketSettings=" + ticketSettings +
                 ", concertName='" + concertName + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +

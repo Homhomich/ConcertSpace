@@ -149,8 +149,6 @@ public class Venue {
     public String toString() {
         return "Venue{" +
                 "id=" + id +
-                ", concerts=" + concerts +
-                ", disabledDates=" + disabledDates +
                 ", venueName='" + venueName + '\'' +
                 ", location='" + location + '\'' +
                 ", type='" + type + '\'' +

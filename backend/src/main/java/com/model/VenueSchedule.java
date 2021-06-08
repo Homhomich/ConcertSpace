@@ -53,7 +53,6 @@ public class VenueSchedule {
     public String toString() {
         return "VenueSchedule{" +
                 "id=" + id +
-                ", venueSch=" + venueSch +
                 ", date=" + date +
                 '}';
     }

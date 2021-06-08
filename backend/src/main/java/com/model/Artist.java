@@ -64,7 +64,6 @@ public class Artist {
     public String toString() {
         return "Artist{" +
                 "id=" + id +
-                ", concerts=" + concerts +
                 ", artistName='" + artistName + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
