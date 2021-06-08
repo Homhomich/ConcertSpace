@@ -48,4 +48,13 @@ public class VenueSchedule {
     public void setVenueSch(Venue venueSch) {
         this.venueSch = venueSch;
     }
+
+    @Override
+    public String toString() {
+        return "VenueSchedule{" +
+                "id=" + id +
+                ", venueSch=" + venueSch +
+                ", date=" + date +
+                '}';
+    }
 }

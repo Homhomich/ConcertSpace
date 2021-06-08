@@ -115,4 +115,19 @@ public class ConcertOrganization {
     public void setOrganizer(User organizer) {
         this.organizer = organizer;
     }
+
+    @Override
+    public String toString() {
+        return "ConcertOrganization{" +
+                "id=" + id +
+                ", concerts=" + concerts +
+                ", organizer=" + organizer +
+                ", bar=" + bar +
+                ", snack=" + snack +
+                ", shooting=" + shooting +
+                ", lightShow=" + lightShow +
+                ", canBringLiquids=" + canBringLiquids +
+                ", hookah=" + hookah +
+                '}';
+    }
 }

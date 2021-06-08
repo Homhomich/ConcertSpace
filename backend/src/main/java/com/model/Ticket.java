@@ -66,4 +66,15 @@ public class Ticket {
     public void setCustomerTickets(List<CustomerTickets> customerTickets) {
         this.customerTickets = customerTickets;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", concert=" + concert +
+                ", ticket_settings=" + ticket_settings +
+                ", customerTickets=" + customerTickets +
+                ", serialNumber='" + serialNumber + '\'' +
+                '}';
+    }
 }

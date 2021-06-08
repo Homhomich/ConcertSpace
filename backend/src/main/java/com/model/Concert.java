@@ -1,7 +1,5 @@
 package com.model;
 
-import com.dto.ArtistDTO;
-import com.dto.TicketSettingsDTO;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -111,15 +109,22 @@ public class Concert {
         return ticketSettings;
     }
 
-    public void setTicketSettingsFrom(List<TicketSettingsDTO> dtoList){
-        List<TicketSettings> list = new ArrayList<>();
-        for (TicketSettingsDTO tsd: dtoList) {
-            list.add(new TicketSettings(tsd));
-        }
-        this.ticketSettings = list;
-    }
-
     public void setTicketSettings(List<TicketSettings> ticketSettings) {
         this.ticketSettings = ticketSettings;
+    }
+
+    @Override
+    public String toString() {
+        return "Concert{" +
+                "id=" + id +
+                ", artist=" + artist +
+                ", venue=" + venue +
+                ", concertOrganization=" + concertOrganization +
+                ", tickets=" + tickets +
+                ", ticketSettings=" + ticketSettings +
+                ", concertName='" + concertName + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

@@ -59,4 +59,14 @@ public class Artist {
     public void setConcerts(List<Concert> concerts) {
         this.concerts = concerts;
     }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "id=" + id +
+                ", concerts=" + concerts +
+                ", artistName='" + artistName + '\'' +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
 }

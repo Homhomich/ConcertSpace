@@ -144,4 +144,23 @@ public class Venue {
     public void setDisabledDates(List<VenueSchedule> disabledDates) {
         this.disabledDates = disabledDates;
     }
+
+    @Override
+    public String toString() {
+        return "Venue{" +
+                "id=" + id +
+                ", concerts=" + concerts +
+                ", disabledDates=" + disabledDates +
+                ", venueName='" + venueName + '\'' +
+                ", location='" + location + '\'' +
+                ", type='" + type + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
+                ", capacity=" + capacity +
+                ", rentPerHour=" + rentPerHour +
+                ", square=" + square +
+                ", ownerPhone='" + ownerPhone + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

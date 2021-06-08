@@ -93,4 +93,17 @@ public class TicketSettings {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+
+    @Override
+    public String toString() {
+        return "TicketSettings{" +
+                "id=" + id +
+                ", concert=" + concert +
+                ", tickets=" + tickets +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }
