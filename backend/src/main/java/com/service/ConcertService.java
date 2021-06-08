@@ -6,6 +6,7 @@ import com.dto.ConcertOrganizationDTO;
 import com.dto.TicketSettingsDTO;
 import com.model.*;
 import com.repository.ArtistRepository;
+import com.repository.ConcertOrganizationRepository;
 import com.repository.ConcertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ConcertService {
     private ConcertRepository repository;
     private ArtistRepository artistRepository;
+    private ConcertOrganizationService concertOrganizationService;
+    private TicketSettingsService ticketSettingsService;
 
     @Autowired
     public void setRepository(ConcertRepository repository){this.repository = repository;}
@@ -24,6 +27,12 @@ public class ConcertService {
     @Autowired
     public void setArtistRepository(ArtistRepository artistRepository){this.artistRepository = artistRepository;}
 
+    @Autowired
+    public void setConcertOrganizationService(ConcertOrganizationService concertOrganizationService){this.concertOrganizationService = concertOrganizationService;}
+
+    @Autowired
+    public void setTicketSettingsService(TicketSettingsService ticketSettingsService){this.ticketSettingsService = ticketSettingsService;};
+    
     public Concert getById(Integer id) {
         return repository.findById(id).orElse(null);
     }
@@ -44,15 +53,15 @@ public class ConcertService {
         repository.save(concert);
     }
 
-    public Concert createConcertFromDTO(ConcertDTO concertDTO, ArtistDTO artistDTO, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketsDTO){
+    public Concert createConcertFromDTO(ConcertDTO concertDTO, ArtistDTO artistDTO, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketSettingsDTO){
         Concert concert = new Concert();
         concert.setConcertName(concertDTO.getName());
         concert.setDescription(concertDTO.getDescription());
         concert.setDate(concertDTO.getDate());
         concert.setArtist(artistRepository.findArtistByArtistName(artistDTO.getName()));
-        concert.setConcertOrganization(new ConcertOrganization((organizationDTO)));
+        concert.setConcertOrganization(concertOrganizationService.save(new ConcertOrganization(organizationDTO)));
         concert.setVenue(venue);
-        concert.setTicketSettingsFrom(ticketsDTO);
+        concert.setTicketSettings(ticketSettingsService.saveAll(ticketSettingsDTO));
         save(concert);
         return concert;
     }

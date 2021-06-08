@@ -41,21 +41,10 @@ public class TicketService {
                 ticket.setConcert(concert);
                 ticket.setTicket_settings(ts);
                 ticket.setSerialNumber(serial);
+                save(ticket);
             }
         }
 
-    }
-
-    public void deleteTicket(Ticket ticket){
-        if (ticket.getTicket_settings().getAmount() > 0){
-            deleteChosenTicket(ticket);
-        }
-    }
-
-    public void deleteChosenTicket(Ticket ticket){
-        TicketSettingsService tss = new TicketSettingsService();
-        tss.decreaseAmount(ticket.getTicket_settings());
-        delete(ticket.getId());
     }
 
     public String getSerialNumber(TicketSettings ts){

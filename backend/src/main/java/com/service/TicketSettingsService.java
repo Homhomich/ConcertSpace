@@ -1,11 +1,13 @@
 package com.service;
 
+import com.dto.TicketSettingsDTO;
 import com.model.TicketSettings;
 import com.repository.TicketSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketSettingsService {
@@ -32,8 +34,13 @@ public class TicketSettingsService {
 
     public void decreaseAmount(TicketSettings ts){
         int amount = ts.getAmount();
-        ts.setAmount(--amount);
-        save(ts);
+        if (amount>0) {
+            ts.setAmount(--amount);
+            save(ts);
+        }
     }
 
+    public List<TicketSettings> saveAll(List<TicketSettingsDTO> ticketSettingsDTO) {
+        return repository.saveAll(ticketSettingsDTO.stream().map(TicketSettings::new).collect(Collectors.toList()));
+    }
 }

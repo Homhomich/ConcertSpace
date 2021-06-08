@@ -4,6 +4,7 @@ import com.dto.ConcertDTO;
 import com.dto.UserDTO;
 import com.model.Concert;
 import com.model.Ticket;
+import com.model.TicketSettings;
 import com.model.User;
 import com.service.*;
 import org.jboss.logging.Logger;
@@ -21,14 +22,14 @@ public class ConcertController {
     private Logger log = Logger.getLogger(this.getClass());
 
     private final ConcertService concertService;
-    private final VenueService venueService;
     private final TicketService ticketService;
+    private final TicketSettingsService ticketSettingsService;
     private final UserService userService;
     private final CustomerTicketsService customerTicketsService;
 
-    public ConcertController(ConcertService concertService, VenueService venueService, TicketService ticketService, UserService userService, CustomerTicketsService customerTicketsService) {
+    public ConcertController(ConcertService concertService, TicketService ticketService, TicketSettingsService ticketSettingsService, UserService userService, CustomerTicketsService customerTicketsService) {
         this.concertService = concertService;
-        this.venueService = venueService;
+        this.ticketSettingsService = ticketSettingsService;
         this.ticketService = ticketService;
         this.userService = userService;
         this.customerTicketsService = customerTicketsService;
@@ -68,10 +69,13 @@ public class ConcertController {
         log.info("Get request from /buy");
         Concert concert = concertService.getById(concertId);
         Ticket ticket = ticketService.getById(ticketId);
+        TicketSettings ts = ticketService.getById(ticketId).getTicket_settings();
+        ticketSettingsService.decreaseAmount(ts);
+        log.info("decrease amount of tickets");
         User user = userService.createUserFromDTO(dto);
         customerTicketsService.addLinkBetweenTicketsAndUsers(ticket, user);
+        log.info("send email");
         concertService.createEmailFromUser(concert, ticket, user);
-        ticketService.deleteTicket(ticket);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

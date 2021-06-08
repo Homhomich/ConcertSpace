@@ -4,6 +4,7 @@ import com.dto.VenueDTO;
 import com.model.Venue;
 import com.model.VenueSchedule;
 import com.repository.VenueRepository;
+import com.repository.VenueScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,17 @@ public class VenueService {
 
     private VenueRepository repository;
 
+    private final VenueScheduleRepository venueScheduleRepository;
+
+    public VenueService(VenueScheduleRepository venueScheduleRepository) {
+        this.venueScheduleRepository = venueScheduleRepository;
+    }
+
     @Autowired
     public void setRepository(VenueRepository repository){this.repository = repository;}
+
+//    @Autowired
+//    public void setVenueScheduleRepository(VenueScheduleRepository venueScheduleRepository){this.venueScheduleRepository =venueScheduleRepository;}
 
     public Venue getById(Integer id) {
         return repository.findById(id).orElse(null);
@@ -73,8 +83,9 @@ public class VenueService {
     public void addDisabledDataForVenue(Integer id, Date date){
         Venue venue = getById(id);
         List<VenueSchedule> venueScheduleList = venue.getDisabledDates();
-        VenueSchedule venueSchedule = new VenueSchedule(venue, date);
+        VenueSchedule venueSchedule = venueScheduleRepository.save(new VenueSchedule(venue, date));
         venueScheduleList.add(venueSchedule);
-        update(id, venue);
+        venue.setDisabledDates(venueScheduleList);
+        save(venue);
     }
 }

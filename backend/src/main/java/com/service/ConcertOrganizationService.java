@@ -29,8 +29,8 @@ public class ConcertOrganizationService {
         return repository.findAll();
     }
 
-    public void save(ConcertOrganization concertOrganization) {
-        repository.save(concertOrganization);
+    public ConcertOrganization save(ConcertOrganization concertOrganization) {
+        return repository.save(concertOrganization);
     }
 
     public void addUser(User user, Concert concert){

@@ -6,6 +6,9 @@ import com.dto.VenueRentDTO;
 import com.model.Concert;
 import com.model.User;
 import com.service.*;
+import org.jboss.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/venues")
 public class VenueController {
+
+    private Logger log = Logger.getLogger(this.getClass());
 
     private final VenueService venueService;
     private final ConcertService concertService;
@@ -52,14 +57,21 @@ public class VenueController {
     }
 
     @PostMapping(
-            path = "/venue/rent?venueId={id}"
+            path = "/venue/rent"
     )
-    public void rentVenue(@PathVariable Integer id, @RequestBody VenueRentDTO dto) {
+    public ResponseEntity rentVenue(@RequestParam Integer venueId, @RequestBody VenueRentDTO dto) {
+        log.info("get request from /rent");
         ConcertDTO concertDTO = dto.getConcert();
-        venueService.addDisabledDataForVenue(id, concertDTO.getDate());
-        Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(id), dto.getVenueRentParameters(), concertDTO.getTickets());
+        log.info("get ConcertDTO from VenueRentDTO");
+        venueService.addDisabledDataForVenue(venueId, concertDTO.getDate());
+        log.info("addDisabledDataForVenue");
+        Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(venueId), dto.getVenueRentParameters(), concertDTO.getTickets());
+        log.info("add " + concert.toString());
         ticketService.addTickets(concert);
+        log.info("Get request from /buy");
         User user = userService.createUserFromDTO(dto.getUserInfo());
+        log.info("Get request from /buy");
         orgService.addUser(user, concert);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
