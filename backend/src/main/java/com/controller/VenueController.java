@@ -37,30 +37,29 @@ public class VenueController {
     }
 
     @GetMapping("/all")
-    public List<VenueDTO> readAllVenues(){
+    public List<VenueDTO> readAllVenues() {
         List<VenueDTO> dtoList = new ArrayList<>();
         venueService.findAll()
-                .forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
+                .forEach(x -> dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
     @PostMapping(
             path = "/venue/{id}"
     )
-    public VenueDTO readVenue(@PathVariable Integer id){
+    public VenueDTO readVenue(@PathVariable Integer id) {
         return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
     }
 
     @GetMapping("/search")
-    public List<VenueDTO> searchVenues(@RequestParam String search){
+    public List<VenueDTO> searchVenues(@RequestParam String search) {
+        log.info("search: "+search);
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAllByVenueNameOrLocation(search).forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
+        venueService.findAllByVenueNameOrLocation(search).forEach(x -> dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
-    @PostMapping(
-            path = "/venue/rent"
-    )
+    @PostMapping(path = "/venue/rent")
     public ResponseEntity rentVenue(@RequestParam Integer venueId, @RequestBody VenueRentDTO dto) {
         log.info("get request from /rent");
         ConcertDTO concertDTO = dto.getConcert();
