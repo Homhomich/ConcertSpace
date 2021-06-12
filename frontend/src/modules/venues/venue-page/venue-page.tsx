@@ -39,8 +39,7 @@ export class VenuePage extends React.PureComponent<Props, State> {
 
 		return (
 			<div>
-				<Dialog maxWidth={'xl'} className={classes.main} onClose={onClose} aria-labelledby="simple-dialog-title"
-					open={isOpen}>
+				<Dialog maxWidth={'xl'} className={classes.main} onClose={onClose} aria-labelledby="simple-dialog-title" open={isOpen}>
 					<div className={classes.title}>
 						<Typography variant="h2" id="simple-dialog-title">{venue.name}</Typography>
 						<IconButton onClick={onClose}>
@@ -66,8 +65,7 @@ export class VenuePage extends React.PureComponent<Props, State> {
 									className={classes.cardMedia}
 									src={venue.imgPath}
 								/>
-								<Button onClick={() => this.setState({isRentDialogOpen: true})}
-									className={classes.button} fullWidth color={'secondary'} variant={'contained'}>
+								<Button onClick={() => this.setState({isRentDialogOpen: true})} className={classes.button} fullWidth color={'secondary'} variant={'contained'}>
 									Забронировать
 								</Button>
 							</div>
@@ -106,16 +104,22 @@ export class VenuePage extends React.PureComponent<Props, State> {
 						</div>
 					</div>
 				</Dialog>
-				<RentVenueDialog
-					venue={venue}
-					onClose={
-						() => {this.setState({isRentDialogOpen: false});}
-					}
-					isOpen={isRentDialogOpen}
-				/>
+				{isRentDialogOpen ? this.getComp() : null}
 			</div>
 		);
 	}
+
+	private getComp = () => {
+		const {venue} = this.props;
+		const {isRentDialogOpen} = this.state;
+		return <RentVenueDialog
+			venue={venue}
+			onClose={() => {
+				this.setState({isRentDialogOpen: false});
+			}}
+			isOpen={isRentDialogOpen}
+		/>;
+	};
 }
 
 
