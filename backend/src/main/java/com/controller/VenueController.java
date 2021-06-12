@@ -70,9 +70,7 @@ public class VenueController {
         return dtoList;
     }
 
-    @PostMapping(
-            path = "/venue/rent"
-    )
+    @PostMapping(path = "/venue/rent")
     public ResponseEntity rentVenue(@RequestParam Integer venueId, @RequestBody VenueRentDTO dto) {
         log.info("get request from /rent");
         ConcertDTO concertDTO = dto.getConcert();
