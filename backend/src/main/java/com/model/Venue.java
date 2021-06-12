@@ -34,7 +34,7 @@ public class Venue {
     private int square;
     @Column
     private String ownerPhone;
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     
 

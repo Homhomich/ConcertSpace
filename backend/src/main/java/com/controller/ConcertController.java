@@ -58,6 +58,8 @@ public class ConcertController {
 
     @GetMapping("/search")
     public List<ConcertDTO> searchConcerts(@RequestParam String search) {
+        log.info("get request from /search");
+        log.info("search by " + search);
         List<ConcertDTO> dtoList = new ArrayList<>();
         concertService.findAllByNameOrLocation(search)
                 .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));

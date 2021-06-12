@@ -26,14 +26,12 @@ public class VenueController {
     private final ConcertService concertService;
     private final ConcertOrganizationService orgService;
     private final UserService userService;
-    private final TicketService ticketService;
 
-    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
+    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
         this.venueService = venueService;
         this.concertService = concertService;
         this.orgService = orgService;
         this.userService = userService;
-        this.ticketService = ticketService;
     }
 
     @GetMapping("/all")
@@ -53,6 +51,8 @@ public class VenueController {
 
     @GetMapping("/search")
     public List<VenueDTO> searchVenues(@RequestParam String search){
+        log.info("get request from /search");
+        log.info("search by " + search);
         List<VenueDTO> dtoList = new ArrayList<>();
         venueService.findAllByVenueNameOrLocation(search).forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
