@@ -3,4 +3,5 @@ export interface TicketModel {
 	name: string; // тип билета, например, VIP или танцпол
 	description: string; // например: входной билет или сидячее место
 	price: number;
+	amount: number;
 }

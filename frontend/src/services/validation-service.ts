@@ -2,6 +2,7 @@ import {UserModel} from '../models/user-model';
 import {UserErrorModel} from '../models/user-error-model';
 import {ConcertModel} from '../models/concert-model';
 import {ConcertErrorModel, ErrorModel} from '../models/concert-error-model';
+import {TicketModel} from '../models/ticket-model';
 
 export function checkUserCard(userInfo: Partial<UserModel>, setErrorFormModel: (errorFormModel: UserErrorModel) => void): boolean {
 	const userErrorModel: UserErrorModel = {};
@@ -50,6 +51,19 @@ export function checkConcertParameters(concert: Partial<ConcertModel>, setConcer
 	return !concert.name || !concert.artist?.name || !concert.artist?.genre || !concert.date
 		|| !concert.location || !concert.imgPath || !concert.description || !!concertErrors.tickets;
 
+}
+
+export function checkTicketsAmount(tickets: TicketModel[] | undefined, maxAmount: number): boolean {
+	if(!tickets){
+		return false;
+	}
+	let remainder = maxAmount;
+	tickets.forEach(ticket => {
+		if (ticket.amount) {
+			remainder -= ticket.amount;
+		}
+	});
+	return remainder <= 0;
 }
 
 export function checkPhoneNumber(phoneNumber: string | undefined): ErrorModel {

@@ -17,6 +17,7 @@ interface InternalProps {
 	disabledDates: string[];
 	handleSetConcertInfo: (concertInfo: Partial<ConcertModel>) => void;
 	concertErrorModel: ConcertErrorModel;
+	venueCapacity: number;
 }
 
 export type Props = Style & InternalProps;
@@ -24,7 +25,7 @@ export type Props = Style & InternalProps;
 export class ConcertParameters extends React.PureComponent<Props> {
 
 	public render(): ReactNode {
-		const {concert, concertErrorModel} = this.props;
+		const {concert, concertErrorModel, venueCapacity} = this.props;
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
@@ -82,7 +83,6 @@ export class ConcertParameters extends React.PureComponent<Props> {
 							name="address"
 							label="Артист"
 							fullWidth
-							autoComplete="address"
 							onChange={this.handleConcertArtistChange}
 						/>
 						<TextField
@@ -112,7 +112,10 @@ export class ConcertParameters extends React.PureComponent<Props> {
 						/>
 					</Grid>
 					<Grid item>
-						<TicketsCreateContainer handleTicketTypeAdd={this.handleTicketTypeAdd}/>
+						<TicketsCreateContainer
+							tickets={concert.tickets}
+							max={venueCapacity}
+							handleTicketTypeAdd={this.handleTicketTypeAdd}/>
 					</Grid>
 				</Grid>
 			</React.Fragment>
@@ -122,8 +125,8 @@ export class ConcertParameters extends React.PureComponent<Props> {
 	private handleTicketTypeAdd = (tickets: TicketKeyModel[]) => {
 		const newTickets: TicketModel[] = [];
 		tickets.forEach(t => {
-			if (t.name && t.price && t.description) {
-				newTickets.push({name: t.name, price: t.price, description: t.description});
+			if (t.name && t.price && t.description && t.amount) {
+				newTickets.push({name: t.name, price: t.price, description: t.description, amount: t.amount});
 			}
 		});
 		const newConcertModel: Partial<ConcertModel> = {

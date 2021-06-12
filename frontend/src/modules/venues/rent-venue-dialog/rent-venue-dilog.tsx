@@ -20,7 +20,7 @@ import {UserModel} from '../../../models/user-model';
 import {VenueParametersModel} from '../../../models/venue-parameters';
 import {UserErrorModel} from '../../../models/user-error-model';
 import {ConcertErrorModel} from '../../../models/concert-error-model';
-import {checkConcertParameters, checkUserInfo} from '../../../services/validation-service';
+import {checkConcertParameters, checkTicketsAmount, checkUserInfo} from '../../../services/validation-service';
 import {putRentedVenue} from '../../../services/venue-service';
 
 interface InternalProps {
@@ -139,19 +139,21 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 		const {userInfo, concertInfo, venueParameters, rentComment} = this.state;
 		const {venue} = this.props;
 
-		if (this.state.activeStep === 0 && !checkUserInfo(userInfo, this.setUserErrorModel)){
+		if (this.state.activeStep === 0 && !checkUserInfo(userInfo, this.setUserErrorModel)) {
 			this.setState({activeStep: this.state.activeStep + 1});
 		}
 
-		if (this.state.activeStep === 2 &&  !checkConcertParameters(concertInfo, this.setConcertErrorModel)){
+		console.log( !checkTicketsAmount(concertInfo.tickets, venue.capacity));
+		if (this.state.activeStep === 2 && !checkConcertParameters(concertInfo, this.setConcertErrorModel)
+			&& !checkTicketsAmount(concertInfo.tickets, venue.capacity)) {
 			this.setState({activeStep: this.state.activeStep + 1});
 		}
 
-		if(this.state.activeStep === 1){
+		if (this.state.activeStep === 1) {
 			this.setState({activeStep: this.state.activeStep + 1});
 		}
 		if (this.state.activeStep === this.steps.length - 1) {
-			if (!checkUserInfo(userInfo, this.setUserErrorModel) &&  !checkConcertParameters(concertInfo, this.setConcertErrorModel)) {
+			if (!checkUserInfo(userInfo, this.setUserErrorModel) && !checkConcertParameters(concertInfo, this.setConcertErrorModel)) {
 				putRentedVenue(venue.id, {
 					userInfo,
 					concert: concertInfo,
@@ -217,6 +219,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 					concertErrorModel={concertErrorModel}
 					handleSetConcertInfo={this.handleSetConcertInfo}
 					disabledDates={venue.disabledDates}
+					venueCapacity={venue.capacity}
 				/>
 			);
 		case 3:

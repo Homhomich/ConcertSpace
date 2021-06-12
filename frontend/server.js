@@ -19,11 +19,6 @@ app.use(express.static(__dirname));
 // eslint-disable-next-line
 app.use(express.static(path.join(__dirname, 'build')));
 
-//простой тест сервера
-app.get('/ping', function (req, res) {
-	return res.send('pong');
-});
-
 //обслуживание html
 app.get('/*', function (req, res) {
 	// eslint-disable-next-line
