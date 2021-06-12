@@ -41,7 +41,6 @@ public class ConcertDTO {
     }
 
     public ConcertDTO(Concert concert, Venue venue, List<TicketSettingsDTO> tickets){
-
         this.id = concert.getId();
         this.date = concert.getDate();
         this.name = concert.getConcertName();
