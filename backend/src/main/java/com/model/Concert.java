@@ -125,11 +125,10 @@ public class Concert {
     @Override
     public String toString() {
         return "Concert{" +
-                "id=" + id +
-                ", artist=" + artist.toString() +
+                "artist=" + artist.toString() +
                 ", venue=" + venue.toString() +
                 ", concertOrganization=" + concertOrganization.toString() +
-                ", ticketSettings=" + ticketSettings +
+                ", ticketSettings=" + ticketSettings.toString() +
                 ", concertName='" + concertName + '\'' +
                 ", description='" + description + '\'' +
                 ", imgPath='" + imgPath + '\'' +

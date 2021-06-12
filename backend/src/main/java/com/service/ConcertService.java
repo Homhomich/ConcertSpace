@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ import java.util.List;
 
 @Service
 public class ConcertService {
+
+    private Logger log = Logger.getLogger(this.getClass());
+
     private ConcertRepository repository;
     private ArtistRepository artistRepository;
     private ConcertOrganizationService concertOrganizationService;
@@ -57,11 +61,12 @@ public class ConcertService {
         return repository.findConcertsByConcertNameContainsOrVenue_LocationContains(string, string);
     }
 
-    public void save(Concert concert) {
-        repository.save(concert);
+    public Concert save(Concert concert) {
+        return repository.save(concert);
     }
 
     public Concert createConcertFromDTO(ConcertDTO concertDTO, ArtistDTO artistDTO, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketSettingsDTO){
+        log.info("creating user from DTO " + concertDTO.toString());
         Concert concert = new Concert();
         concert.setConcertName(concertDTO.getName());
         concert.setDescription(concertDTO.getDescription());
@@ -70,7 +75,8 @@ public class ConcertService {
         concert.setConcertOrganization(concertOrganizationService.save(new ConcertOrganization(organizationDTO)));
         concert.setVenue(venue);
         concert.setTicketSettings(ticketSettingsService.saveAll(ticketSettingsDTO));
-        save(concert);
+        log.info("saving user " + concert);
+        log.info("user saved " + save(concert).toString());
         return concert;
     }
 

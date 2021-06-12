@@ -25,6 +25,14 @@ public class ArtistDTO {
     public ArtistDTO() {
     }
 
+    @Override
+    public String toString() {
+        return "ArtistDTO{" +
+                "name='" + name + '\'' +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

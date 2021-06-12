@@ -87,4 +87,17 @@ public class ConcertDTO {
     public String getDateToString(Date date){
         return format.format(date);
     }
+
+    @Override
+    public String toString() {
+        return "ConcertDTO{" +
+                "name='" + name + '\'' +
+                ", artist=" + artist.toString() +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", tickets=" + tickets.toString() +
+                ", imgPath='" + imgPath + '\'' +
+                '}';
+    }
 }

@@ -52,8 +52,7 @@ public class VenueSchedule {
     @Override
     public String toString() {
         return "VenueSchedule{" +
-                "id=" + id +
-                ", date=" + date +
+                "date=" + date +
                 '}';
     }
 }

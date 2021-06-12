@@ -5,6 +5,7 @@ import com.dto.VenueDTO;
 import com.dto.VenueRentDTO;
 import com.model.Concert;
 import com.model.User;
+import com.model.Venue;
 import com.service.*;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ public class VenueController {
 
     @GetMapping("/all")
     public List<VenueDTO> readAllVenues(){
+        log.info("get request from /all");
         List<VenueDTO> dtoList = new ArrayList<>();
         venueService.findAll()
                 .forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
@@ -46,7 +48,14 @@ public class VenueController {
             path = "/venue/{id}"
     )
     public VenueDTO readVenue(@PathVariable Integer id){
-        return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
+        log.info("get request from /venue/id");
+        Venue venue = venueService.getById(id);
+        if (venue!=null) {
+            log.info("get venue " + venue.toString());
+            return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
+        }
+        log.info("venue is null");
+        return null;
     }
 
     @GetMapping("/search")
