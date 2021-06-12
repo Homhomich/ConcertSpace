@@ -26,6 +26,16 @@ public class TicketSettingsDTO {
     public TicketSettingsDTO() {
     }
 
+    @Override
+    public String toString() {
+        return "TicketSettingsDTO{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", price=" + price +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

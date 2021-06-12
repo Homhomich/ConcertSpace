@@ -5,7 +5,6 @@ import com.model.Venue;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConcertDTO {
@@ -46,7 +45,7 @@ public class ConcertDTO {
         this.name = concert.getConcertName();
         this.description = concert.getDescription();
         this.location = venue.getLocation();
-        this.imgPath = concert.getConcertName();
+        this.imgPath = concert.getImgPath();
         this.artist = new ArtistDTO(concert.getArtist());
         this.tickets = tickets;
     }
@@ -86,5 +85,18 @@ public class ConcertDTO {
 
     public String getDateToString(Date date){
         return format.format(date);
+    }
+
+    @Override
+    public String toString() {
+        return "ConcertDTO{" +
+                "name='" + name + '\'' +
+                ", artist=" + artist.toString() +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", tickets=" + tickets.toString() +
+                ", imgPath='" + imgPath + '\'' +
+                '}';
     }
 }

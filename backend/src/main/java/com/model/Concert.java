@@ -3,7 +3,6 @@ package com.model;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,8 +32,10 @@ public class Concert {
 
     @Column(name = "concert_name")
     private String concertName;
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
+    @Column
+    private String imgPath;
     @Column
     private Date date;
 
@@ -105,6 +106,14 @@ public class Concert {
         this.tickets = tickets;
     }
 
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
     public List<TicketSettings> getTicketSettings() {
         return ticketSettings;
     }
@@ -116,12 +125,13 @@ public class Concert {
     @Override
     public String toString() {
         return "Concert{" +
-                "id=" + id +
-                ", artist=" + artist +
-                ", venue=" + venue +
-                ", concertOrganization=" + concertOrganization +
+                "artist=" + artist.toString() +
+                ", venue=" + venue.toString() +
+                ", concertOrganization=" + concertOrganization.toString() +
+                ", ticketSettings=" + ticketSettings.toString() +
                 ", concertName='" + concertName + '\'' +
                 ", description='" + description + '\'' +
+                ", imgPath='" + imgPath + '\'' +
                 ", date=" + date +
                 '}';
     }

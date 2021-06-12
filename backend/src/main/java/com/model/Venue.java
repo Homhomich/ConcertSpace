@@ -34,7 +34,7 @@ public class Venue {
     private int square;
     @Column
     private String ownerPhone;
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     
 
@@ -149,6 +149,7 @@ public class Venue {
     public String toString() {
         return "Venue{" +
                 "id=" + id +
+                ", disabledDates=" + disabledDates +
                 ", venueName='" + venueName + '\'' +
                 ", location='" + location + '\'' +
                 ", type='" + type + '\'' +

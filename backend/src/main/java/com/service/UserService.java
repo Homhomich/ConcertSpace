@@ -45,6 +45,7 @@ public class UserService {
             return currUser;
         }
         else {
+            log.info("create new user");
             User user = new User();
             user.setEmail(dto.getEmail());
             user.setName(dto.getName());

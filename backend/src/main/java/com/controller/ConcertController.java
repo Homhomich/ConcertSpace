@@ -39,6 +39,7 @@ public class ConcertController {
 
     @GetMapping("/all")
     public List<ConcertDTO> readAllConcerts() {
+        log.info("get request from /all");
         List<ConcertDTO> dtoList = new ArrayList<>();
         concertService.findAll()
                 .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));
@@ -49,15 +50,20 @@ public class ConcertController {
             path = "/concert/{id}"
     )
     public ConcertDTO readConcert(@PathVariable Integer id) {
+        log.info("get request from /concert/id");
         Concert concert = concertService.getById(id);
         if (concert != null) {
+            log.info("get concert " + concert.toString());
             return new ConcertDTO(concert, concert.getVenue(), concertService.getTypeOfTickets(concert));
         }
+        log.info("concert is null");
         return null;
     }
 
     @GetMapping("/search")
     public List<ConcertDTO> searchConcerts(@RequestParam String search) {
+        log.info("get request from /search");
+        log.info("search by " + search);
         List<ConcertDTO> dtoList = new ArrayList<>();
         concertService.findAllByNameOrLocation(search)
                 .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));

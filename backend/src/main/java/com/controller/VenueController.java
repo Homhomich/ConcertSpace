@@ -5,6 +5,7 @@ import com.dto.VenueDTO;
 import com.dto.VenueRentDTO;
 import com.model.Concert;
 import com.model.User;
+import com.model.Venue;
 import com.service.*;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
@@ -26,36 +27,43 @@ public class VenueController {
     private final ConcertService concertService;
     private final ConcertOrganizationService orgService;
     private final UserService userService;
-    private final TicketService ticketService;
 
-    public VenueController(VenueService venueService, VenueScheduleService venueScheduleService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
+    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
         this.venueService = venueService;
         this.concertService = concertService;
         this.orgService = orgService;
         this.userService = userService;
-        this.ticketService = ticketService;
     }
 
     @GetMapping("/all")
-    public List<VenueDTO> readAllVenues() {
+    public List<VenueDTO> readAllVenues(){
+        log.info("get request from /all");
         List<VenueDTO> dtoList = new ArrayList<>();
         venueService.findAll()
-                .forEach(x -> dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
+                .forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
     @PostMapping(
             path = "/venue/{id}"
     )
-    public VenueDTO readVenue(@PathVariable Integer id) {
-        return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
+    public VenueDTO readVenue(@PathVariable Integer id){
+        log.info("get request from /venue/id");
+        Venue venue = venueService.getById(id);
+        if (venue!=null) {
+            log.info("get venue " + venue.toString());
+            return venueService.getVenueDTOWithCorrectDate(venueService.getById(id));
+        }
+        log.info("venue is null");
+        return null;
     }
 
     @GetMapping("/search")
-    public List<VenueDTO> searchVenues(@RequestParam String search) {
-        log.info("search: "+search);
+    public List<VenueDTO> searchVenues(@RequestParam String search){
+        log.info("get request from /search");
+        log.info("search by " + search);
         List<VenueDTO> dtoList = new ArrayList<>();
-        venueService.findAllByVenueNameOrLocation(search).forEach(x -> dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
+        venueService.findAllByVenueNameOrLocation(search).forEach(x->dtoList.add(venueService.getVenueDTOWithCorrectDate(x)));
         return dtoList;
     }
 
