@@ -3,6 +3,7 @@ package com.controller;
 import com.dto.ConcertDTO;
 import com.dto.VenueDTO;
 import com.dto.VenueRentDTO;
+import com.model.Artist;
 import com.model.Concert;
 import com.model.User;
 import com.model.Venue;
@@ -23,16 +24,18 @@ public class VenueController {
 
     private Logger log = Logger.getLogger(this.getClass());
 
+    private final ArtistService artistService;
     private final VenueService venueService;
     private final ConcertService concertService;
     private final ConcertOrganizationService orgService;
     private final UserService userService;
 
-    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService) {
+    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService, ArtistService artistService) {
         this.venueService = venueService;
         this.concertService = concertService;
         this.orgService = orgService;
         this.userService = userService;
+        this.artistService = artistService;
     }
 
     @GetMapping("/all")
@@ -76,7 +79,8 @@ public class VenueController {
         log.info("get ConcertDTO from VenueRentDTO");
         venueService.addDisabledDataForVenue(venueId, concertDTO.getDate());
         log.info("add disabled data for Venue");
-        Concert concert = concertService.createConcertFromDTO(concertDTO, concertDTO.getArtist(), venueService.getById(venueId), dto.getVenueRentParameters(), concertDTO.getTickets());
+        Artist artist = artistService.createArtistFromDTO(concertDTO.getArtist());
+        Concert concert = concertService.createConcertFromDTO(concertDTO, artist, venueService.getById(venueId), dto.getVenueRentParameters(), concertDTO.getTickets());
         log.info("add " + concert.toString());
 //        ticketService.addTickets(concert);
 //        log.info("Get request from /buy");
@@ -84,6 +88,7 @@ public class VenueController {
         User user = userService.createUserFromDTO(dto.getUserInfo());
         log.info("get " + user.toString());
         orgService.addUser(user, concert);
+        log.info("venue rented!");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

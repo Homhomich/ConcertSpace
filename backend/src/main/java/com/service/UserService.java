@@ -23,7 +23,7 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
-    public User getCurrentUserByColumns(String name, String number, String email) {return repository.findUserByNameContainsAndPhoneNumberContainsAndEmailContains(name, number, email);}
+    public User getCurrentUserByColumns(String first, String last, String number, String email) {return repository.findUserByFirstNameContainsAndLastNameContainsAndPhoneNumberContainsAndEmailContains(first, last, number, email);}
 
     public void delete(Integer id) {
         repository.deleteById(id);
@@ -48,7 +48,8 @@ public class UserService {
             log.info("create new user");
             User user = new User();
             user.setEmail(dto.getEmail());
-            user.setName(dto.getName());
+            user.setFirstName(dto.getFirstName());
+            user.setLastName(dto.getLastName());
             user.setPhoneNumber(dto.getPhoneNumber());
             log.info("saving user " + user);
             log.info("user saved " + save(user).toString());
@@ -59,8 +60,9 @@ public class UserService {
     public User isAlreadyCreate(UserDTO dto){
         log.info("check user");
         String dtoEmail = dto.getEmail();
-        String dtoName = dto.getName();
+        String dtoFirst = dto.getFirstName();
+        String dtoLast = dto.getLastName();
         String dtoNumber = dto.getPhoneNumber();
-        return getCurrentUserByColumns(dtoName, dtoNumber, dtoEmail);
+        return getCurrentUserByColumns(dtoFirst, dtoLast, dtoNumber, dtoEmail);
     }
 }
