@@ -25,8 +25,9 @@ public class User {
     @Column
     private String phoneNumber;
 
-    public User(String firstName, String email, String phoneNumber) {
+    public User(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
