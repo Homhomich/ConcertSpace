@@ -13,6 +13,7 @@ export async function getSearchedVenues(search: string): Promise<VenueModel[]> {
 }
 
 export async function putRentedVenue(venueId: number, venueRent: VenueRentModel): Promise<VenueModel> {
+	console.log(JSON.stringify(venueRent));
 	return await axios.post('http://localhost:8080/venues/venue/rent', venueRent, {
 		params: {venueId: venueId}
 	}).then((response) => response.data);

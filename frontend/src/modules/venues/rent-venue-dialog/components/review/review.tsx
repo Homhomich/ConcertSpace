@@ -4,8 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {UserModel} from '../../../../../models/user-model';
 import {VenueParametersModel} from '../../../../../models/venue-parameters';
+import {ConcertModel} from '../../../../../models/concert-model';
+import moment from 'moment';
 
 interface InternalProps {
+	concert: Partial<ConcertModel>;
 	userInfo: Partial<UserModel>;
 	venueParameters: VenueParametersModel;
 }
@@ -15,24 +18,56 @@ export type Props = Style & InternalProps;
 export class Review extends React.PureComponent<Props> {
 
 	public render(): ReactNode {
-		const {classes, venueParameters, userInfo} = this.props;
+		const {classes, venueParameters, userInfo, concert} = this.props;
 
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
 					Итог аренды
 				</Typography>
-				<Grid container spacing={2}>
-					<Grid item xs={12} sm={6}>
+				<Grid container spacing={1}>
+					<Grid item container direction="column" xs={12} sm={6}>
 						<Typography variant="h6" gutterBottom className={classes.title}>
-							Арендатор
+							Параметры концерта
 						</Typography>
-						<Typography gutterBottom>{userInfo.firstName} {' '} {userInfo.lastName}</Typography>
-						<Typography gutterBottom>{userInfo.phoneNumber}</Typography>
+						<Grid container>
+							<React.Fragment>
+								<Grid item xs={6}>
+									<Typography gutterBottom>Название концерта: </Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography gutterBottom>{concert.name}</Typography>
+								</Grid>
+							</React.Fragment>
+							<React.Fragment >
+								<Grid item xs={6}>
+									<Typography gutterBottom>Артист: </Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography gutterBottom>{concert.artist?.name}</Typography>
+								</Grid>
+							</React.Fragment>
+							<React.Fragment >
+								<Grid item xs={6}>
+									<Typography gutterBottom>Жанр: </Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography gutterBottom>{concert.artist?.genre}</Typography>
+								</Grid>
+							</React.Fragment>
+							<React.Fragment>
+								<Grid item xs={6}>
+									<Typography gutterBottom>Дата бронирования: </Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography gutterBottom>{moment(concert.date).format('DD.MM.YYYY')}</Typography>
+								</Grid>
+							</React.Fragment>
+						</Grid>
 					</Grid>
 					<Grid item container direction="column" xs={12} sm={6}>
 						<Typography variant="h6" gutterBottom className={classes.title}>
-							Детали оплаты
+							Параметры аренды
 						</Typography>
 						<Grid container>
 							<React.Fragment>
@@ -86,6 +121,12 @@ export class Review extends React.PureComponent<Props> {
 								</Grid>
 							</React.Fragment>
 						</Grid>
+					</Grid>
+					<Grid item xs={12} sm={10}>
+						<Typography variant="h6" gutterBottom className={classes.title}>
+							Арендатор
+						</Typography>
+						<Typography gutterBottom>{userInfo.firstName} {' '} {userInfo.lastName} {' '}{userInfo.phoneNumber}</Typography>
 					</Grid>
 				</Grid>
 			</React.Fragment>

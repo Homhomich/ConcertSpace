@@ -8,11 +8,11 @@ export async function getAllConcerts(): Promise<ConcertModel[]> {
 }
 
 export async function getSearchedConcerts(search: string): Promise<ConcertModel[]> {
-	console.log(search);
 	return await axios.get(`http://localhost:8080/concerts/search?search=${search}`, {params: search}).then((response) => response.data);
 }
 
 export async function putNewBoughtTicket(ticketId: number, user: Partial<UserModel>, concertId?: number): Promise<TicketModel> {
+	console.log(JSON.stringify(user));
 	return await axios.post('http://localhost:8080/concerts/buy', user, {
 		params: {
 			concertId: concertId,

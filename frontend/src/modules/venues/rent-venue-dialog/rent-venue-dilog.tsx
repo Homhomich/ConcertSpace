@@ -45,7 +45,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			activeStep: 0,
+			activeStep: 2,
 			rentComment: '',
 			userInfo: {},
 			userErrorModel: {},
@@ -224,6 +224,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 			);
 		case 3:
 			return <Review
+				concert={concertInfo}
 				venueParameters={venueParameters}
 				userInfo={userInfo}
 			/>;

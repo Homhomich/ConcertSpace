@@ -100,7 +100,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<DatePicker
 							required
-							value={concert.date ? concert.date : ''}
+							value={concert.date ? concert.date : null}
 							error={concertErrorModel.date}
 							helperText={concertErrorModel.date ? 'Обязательное поле' : undefined}
 							label="Дата бронирования"

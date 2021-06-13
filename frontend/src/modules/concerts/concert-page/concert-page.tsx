@@ -9,6 +9,7 @@ import {useNewsInfoStyles} from '@mui-treasury/styles/info/news';
 import CloseIcon from '@material-ui/icons/Close';
 import BuyTicketPage from '../buy-ticket-dialog/index';
 import {ConcertModel} from '../../../models/concert-model';
+import {TicketModel} from '../../../models/ticket-model';
 
 export type Props = Styles & InternalProps;
 
@@ -102,17 +103,25 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						Купить {'\n'}
 						{ticket.price}
 					</Button>
+					{isBuyTicketDialogOpen ? this.getTicketDialog(ticket) : null}
 				</div>
 				<Divider/>
-				<BuyTicketPage
-					concertId={concert.id}
-					ticket={ticket}
-					isOpen={isBuyTicketDialogOpen}
-					onClose={() => this.setState({isBuyTicketDialogOpen: false})}
-				/>
+			
 			</div>
 		);
 	};
+	
+	private getTicketDialog = (ticket: TicketModel) =>{
+		const {isBuyTicketDialogOpen} = this.state;
+		const {concert} = this.props;
+
+		return 	<BuyTicketPage
+			concertId={concert.id}
+			ticket={ticket}
+			isOpen={isBuyTicketDialogOpen}
+			onClose={() => this.setState({isBuyTicketDialogOpen: false})}
+		/>;
+	}
 }
 
 
