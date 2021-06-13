@@ -43,7 +43,7 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 							componentToShow={
 								<CustomizedSearch
 									getSearchedContent={this.getSearchedConcerts}
-									title={'Наити концерт'}
+									title={'Найти концерт'}
 								/>}
 							backGroundStyle={classes.background}
 						/>
