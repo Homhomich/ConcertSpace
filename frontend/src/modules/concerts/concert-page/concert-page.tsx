@@ -21,14 +21,14 @@ interface InternalProps{
 }
 
 interface State{
-	isBuyTicketDialogOpen: boolean;
+	isBuyTicketDialogOpen: number | undefined;
 }
 
 export class ConcertPage extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			isBuyTicketDialogOpen: false,
+			isBuyTicketDialogOpen: undefined,
 		};
 	}
 	public render(): ReactNode {
@@ -96,7 +96,7 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						<InfoSubtitle variant="h2">{ticket.description}</InfoSubtitle>
 					</Info>
 					<Button
-						onClick={() => this.setState({isBuyTicketDialogOpen: true})}
+						onClick={() => this.setState({isBuyTicketDialogOpen: ticket.id})}
 						className={classes.button}
 						color={'secondary'}
 						variant={'contained'}
@@ -104,14 +104,13 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						Купить {'\n'}
 						{ticket.price}
 					</Button>
-					{isBuyTicketDialogOpen ? this.getTicketDialog(ticket) : null}
+					{isBuyTicketDialogOpen === ticket.id ? this.getTicketDialog(ticket) : null}
 				</div>
 				<Divider/>
-			
 			</div>
 		);
 	};
-	
+
 	private getTicketDialog = (ticket: TicketModel) =>{
 		const {isBuyTicketDialogOpen} = this.state;
 		const {concert} = this.props;
@@ -119,8 +118,8 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 		return 	<BuyTicketPage
 			concertId={concert.id}
 			ticket={ticket}
-			isOpen={isBuyTicketDialogOpen}
-			onClose={() => this.setState({isBuyTicketDialogOpen: false})}
+			isOpen={isBuyTicketDialogOpen === ticket.id}
+			onClose={() => this.setState({isBuyTicketDialogOpen: undefined})}
 		/>;
 	}
 }

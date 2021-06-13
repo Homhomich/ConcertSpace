@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => createStyles({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignContent: 'center',
-		minHeight: '600px',
+		minHeight: '700px',
 		minWidth: '1200px',
 	},
 	cardMedia:{
@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => createStyles({
 	},
 	description:{
 		margin: theme.spacing(3),
-		width: '500px',
+		width: '700px',
 		fontSize: 20,
 	},
 	descriptionContainer:{

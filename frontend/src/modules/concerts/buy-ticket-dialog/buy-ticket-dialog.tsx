@@ -43,8 +43,8 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 	private steps = ['Данные покупателя', 'Детали оплаты', 'Ваша покупка'];
 
 	public render(): ReactNode {
-		const {classes, isOpen, onClose} = this.props;
-
+		const {classes, isOpen, onClose, ticket} = this.props;
+		console.log(ticket);
 		return (
 			<div>
 				<Dialog maxWidth={'xl'} aria-labelledby="simple-dialog-title" open={isOpen} onClose={onClose}>
