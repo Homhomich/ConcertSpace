@@ -74,10 +74,9 @@ const theme = {
 			fontFamily:'\'Roboto Condensed\', sans-serif',
 		},
 		h4: {
-			...rawTheme.typography.h4,
-			...fontHeader,
-			fontSize: 36,
-			fontFamily:'\'Roboto Condensed\', sans-serif',
+			fontWeight: rawTheme.typography.fontWeightRegular,
+			fontSize: 10,
+			letterSpacing: 1,
 		},
 		h5: {
 			...rawTheme.typography.h5,
@@ -94,12 +93,12 @@ const theme = {
 			fontSize: 18,
 		},
 		body1: {
-			...rawTheme.typography.body2,
+			...rawTheme.typography.body1,
 			fontWeight: rawTheme.typography.fontWeightRegular,
 			fontSize: 16,
 		},
 		body2: {
-			...rawTheme.typography.body1,
+			...rawTheme.typography.body2,
 			fontSize: 14,
 			letterSpacing: 1,
 		},

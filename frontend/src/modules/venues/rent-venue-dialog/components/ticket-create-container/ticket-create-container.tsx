@@ -94,6 +94,7 @@ export class TicketsCreateContainer extends React.PureComponent<Props, State> {
 						</div>
 					)}
 				</div>
+				<Typography variant={'h4'} >{'Максимальное количество билетов: '+ max}</Typography>
 				<Snackbar
 					open={snackBarOpen}
 					autoHideDuration={3000}

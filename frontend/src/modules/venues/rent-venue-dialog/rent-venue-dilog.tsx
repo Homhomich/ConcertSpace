@@ -84,7 +84,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 						<main className={classes.layout}>
 							<Paper className={classes.paper}>
 								<Typography component="h1" variant="h4" color={'primary'} align="center">
-									Покупка билета
+									Аренда площадки
 								</Typography>
 								<Stepper activeStep={this.state.activeStep} className={classes.stepper}>
 									{this.steps.map((label) => (

@@ -30,6 +30,9 @@ export const styles = (theme: Theme) => createStyles({
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginBottom: theme.spacing(2),
+	},
+	title:{
+		marginLeft: theme.spacing(1),
 	}
 
 });

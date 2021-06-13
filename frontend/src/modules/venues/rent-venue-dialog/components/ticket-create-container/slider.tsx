@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		margin: {
 			height: theme.spacing(3),
 		},
+		title:{
+			marginLeft: theme.spacing(1),
+		}
 	}),
 );
 

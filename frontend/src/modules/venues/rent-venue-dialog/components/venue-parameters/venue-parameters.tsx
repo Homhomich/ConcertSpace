@@ -22,7 +22,7 @@ export class VenueParameters extends React.PureComponent<Props> {
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
-					Введите данные владельца билета
+					Выберите необходимые параметры бронирования
 				</Typography>
 				<Grid container spacing={3}>
 					<Grid container item>

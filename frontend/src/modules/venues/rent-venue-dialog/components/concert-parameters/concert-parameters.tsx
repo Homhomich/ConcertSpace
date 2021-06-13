@@ -53,7 +53,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 							helperText={concertErrorModel.imgPath ? 'Обязательное поле' : undefined}
 							id="img"
 							name="img"
-							label="Постер концерта"
+							label="Постер концерта (ссылка)"
 							fullWidth
 							onChange={this.handleConcertImgChange}
 						/>
@@ -100,6 +100,7 @@ export class ConcertParameters extends React.PureComponent<Props> {
 					<Grid item xs={12}>
 						<DatePicker
 							required
+							autoOk
 							value={concert.date ? concert.date : null}
 							error={concertErrorModel.date}
 							helperText={concertErrorModel.date ? 'Обязательное поле' : undefined}
@@ -107,7 +108,6 @@ export class ConcertParameters extends React.PureComponent<Props> {
 							disablePast={true}
 							shouldDisableDate={this.shouldDisableDate}
 							onChange={this.handleDateChange}
-							animateYearScrolling
 							variant={'inline'}
 						/>
 					</Grid>

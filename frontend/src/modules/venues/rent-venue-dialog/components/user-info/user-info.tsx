@@ -20,7 +20,7 @@ export class UserInfo extends React.PureComponent<Props> {
 		return (
 			<React.Fragment>
 				<Typography variant="h6" gutterBottom>
-					Введите данные владельца билета
+					Введите данные арендатора
 				</Typography>
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={6}>
