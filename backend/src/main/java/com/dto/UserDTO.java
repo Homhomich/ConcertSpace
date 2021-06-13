@@ -1,23 +1,19 @@
 package com.dto;
 
-import com.model.User;
 
 public class UserDTO {
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
     private String  phoneNumber;
 
-    public UserDTO(User user){
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.phoneNumber = user.getPhoneNumber();
-    }
-
-    public UserDTO(Integer id, String name, String email, String phoneNumber) {
-        this.name = name;
+    public UserDTO(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -28,15 +24,19 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
-                ", name='" + name + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {

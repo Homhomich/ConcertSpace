@@ -89,9 +89,11 @@ public class ConcertController {
         log.info("send email");
         try {
             concertService.sendEmailForUser(ticket, user);
+            log.info("email was send");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        log.info("ticket was bought");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

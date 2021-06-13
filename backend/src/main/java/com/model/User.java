@@ -17,14 +17,17 @@ public class User {
     private List<CustomerTickets> customerTickets;
 
     @Column
-    private String name;
+    private String firstName;
+    @Column
+    private String lastName;
     @Column
     private String email;
     @Column
     private String phoneNumber;
 
-    public User(String name, String email, String phoneNumber) {
-        this.name = name;
+    public User(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -36,11 +39,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", concertOrganizations=" + concertOrganizations +
-                ", customerTickets=" + customerTickets +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 
@@ -52,12 +54,24 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

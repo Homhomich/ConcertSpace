@@ -65,18 +65,17 @@ public class ConcertService {
         return repository.save(concert);
     }
 
-    public Concert createConcertFromDTO(ConcertDTO concertDTO, ArtistDTO artistDTO, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketSettingsDTO){
+    public Concert createConcertFromDTO(ConcertDTO concertDTO, Artist artist, Venue venue, ConcertOrganizationDTO organizationDTO, List<TicketSettingsDTO> ticketSettingsDTO){
         log.info("creating user from DTO " + concertDTO.toString());
         Concert concert = new Concert();
         concert.setConcertName(concertDTO.getName());
         concert.setDescription(concertDTO.getDescription());
         concert.setDate(concertDTO.getDate());
-        concert.setArtist(artistRepository.findArtistByArtistName(artistDTO.getName()));
+        concert.setArtist(artist);
         concert.setConcertOrganization(concertOrganizationService.save(new ConcertOrganization(organizationDTO)));
         concert.setVenue(venue);
         concert.setTicketSettings(ticketSettingsService.saveAll(ticketSettingsDTO));
-        log.info("saving user " + concert);
-        log.info("user saved " + save(concert).toString());
+        log.info("concert saved " + save(concert).toString());
         return concert;
     }
 
@@ -101,7 +100,7 @@ public class ConcertService {
                         "Price:  %s; \n" +
                         "Type:  %s; \n" +
                         "Description %s; \n",
-                user.getName(), concert.getDate(), concert.getVenue().getLocation(), concert.getArtist().getArtistName(), ticket.getSerialNumber(),
+                user.getFirstName(), concert.getDate(), concert.getVenue().getLocation(), concert.getArtist().getArtistName(), ticket.getSerialNumber(),
                 ts.getPrice(), ts.getType(),ts.getDescription()
         );
         String s1 = "Data: " + concert.getDate();

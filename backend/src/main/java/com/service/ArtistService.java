@@ -3,6 +3,7 @@ package com.service;
 import com.dto.ArtistDTO;
 import com.model.Artist;
 import com.repository.ArtistRepository;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class ArtistService {
+
+    private Logger log = Logger.getLogger(this.getClass());
     private ArtistRepository repository;
 
     @Autowired
@@ -27,8 +30,8 @@ public class ArtistService {
         return repository.findAll();
     }
 
-    public void save(Artist artist) {
-        repository.save(artist);
+    public Artist save(Artist artist) {
+        return repository.save(artist);
     }
 
     public void update(Integer id, Artist artist){
@@ -39,5 +42,29 @@ public class ArtistService {
             updated.setConcerts(artist.getConcerts());
             repository.save(updated);
         }
+    }
+
+    public Artist createArtistFromDTO(ArtistDTO dto){
+        log.info("creating user artist DTO " + dto.toString());
+        Artist artist = isAlreadyCreate(dto);
+        if (artist!=null){
+            log.info("artist " + artist.toString() + " is already created");
+            return artist;
+        }
+        else {
+            log.info("create new artist");
+            artist = new Artist();
+            artist.setArtistName(dto.getName());
+            artist.setGenre(dto.getGenre());
+            log.info("saving artist " + artist);
+            log.info("artist saved " + save(artist).toString());
+            return artist;
+        }
+    }
+
+    public Artist isAlreadyCreate(ArtistDTO dto){
+        log.info("check artist");
+        String dtoName = dto.getName();
+        return repository.findArtistByArtistName(dtoName);
     }
 }
