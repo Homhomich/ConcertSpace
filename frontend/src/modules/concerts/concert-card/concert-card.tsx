@@ -8,6 +8,7 @@ import {Card} from '@material-ui/core';
 import {Style} from './styles';
 import {ConcertModel} from '../../../models/concert-model';
 import ConcertPage from '../concert-page/index';
+import moment from 'moment';
 
 interface InternalProps {
 	concert: ConcertModel;
@@ -55,7 +56,7 @@ export class ConcertCard extends React.PureComponent<Props, State> {
 						<Info position={'middle'} useStyles={useNewsInfoStyles}>
 							<InfoTitle>{concert.artist.name}</InfoTitle>
 							<div className={classes.divider}/>
-							<InfoSubtitle>{concert.date}</InfoSubtitle>
+							<InfoSubtitle>{moment(concert.date).format('DD MMM')}</InfoSubtitle>
 							<InfoSubtitle variant="h3">{concert.location}</InfoSubtitle>
 
 						</Info>
