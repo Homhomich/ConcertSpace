@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import BuyTicketPage from '../buy-ticket-dialog/index';
 import {ConcertModel} from '../../../models/concert-model';
 import {TicketModel} from '../../../models/ticket-model';
+import moment from 'moment';
 
 export type Props = Styles & InternalProps;
 
@@ -54,7 +55,7 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						bgcolor={'common.white'}
 					>
 						<Info position={'middle'} useStyles={useNewsInfoStyles}>
-							<InfoTitle variant="h2">{concert.date}</InfoTitle>
+							<InfoTitle variant="h2">{moment(concert.date).format('DD MMM')}</InfoTitle>
 							<InfoSubtitle variant="h2">{concert.location}</InfoSubtitle>
 						</Info>
 					</Row>
