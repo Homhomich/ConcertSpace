@@ -33,7 +33,6 @@ export class PaymentForm extends React.PureComponent<Props> {
 							id="cardName"
 							label="Держатель карты"
 							fullWidth
-							autoComplete="cc-name"
 							onChange={this.handleNameOnCardChange}
 						/>
 					</Grid>
@@ -46,7 +45,6 @@ export class PaymentForm extends React.PureComponent<Props> {
 							id="cardNumber"
 							label="Номер карты"
 							fullWidth
-							autoComplete="cc-number"
 							onChange={this.handleCardNumberChange}
 						/>
 					</Grid>
@@ -58,7 +56,7 @@ export class PaymentForm extends React.PureComponent<Props> {
 							error={errorFormModel.expireDate}
 							helperText={errorFormModel.expireDate ? 'Обязательное поле' : undefined}
 							label="Дата окончания действия"
-							fullWidth autoComplete="cc-exp"
+							fullWidth
 							onChange={this.handleExpireDateChange}
 						/>
 					</Grid>
@@ -71,7 +69,6 @@ export class PaymentForm extends React.PureComponent<Props> {
 							id="cvv"
 							label="CVV"
 							fullWidth
-							autoComplete="cc-csc"
 							onChange={this.handleCVVChange}
 						/>
 					</Grid>
