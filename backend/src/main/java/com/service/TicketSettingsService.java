@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dto.TicketSettingsDTO;
+import com.model.Concert;
 import com.model.Ticket;
 import com.model.TicketSettings;
 import com.repository.TicketRepository;
@@ -55,5 +56,12 @@ public class TicketSettingsService {
         ticket.setTicket_settings(ts);
         ticketRepository.save(ticket);
         return ticket;
+    }
+
+    public void setConcert(Concert concert) {
+        for (TicketSettings ts: concert.getTicketSettings()) {
+            ts.setConcert(concert);
+            save(ts);
+        }
     }
 }
