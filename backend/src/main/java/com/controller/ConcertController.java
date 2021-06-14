@@ -10,7 +10,6 @@ import com.service.*;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class ConcertController {
         log.info("get request from /search");
         log.info("search by " + search);
         List<ConcertDTO> dtoList = new ArrayList<>();
-        concertService.findAllByNameOrLocation(search)
+        concertService.findAllByNameOrLocationOrArtist(search)
                 .forEach((x) -> dtoList.add(new ConcertDTO(x, x.getVenue(), concertService.getTypeOfTickets(x))));
         return dtoList;
     }

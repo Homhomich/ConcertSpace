@@ -57,8 +57,8 @@ public class ConcertService {
         return repository.findAll();
     }
 
-    public List<Concert> findAllByNameOrLocation(String string) {
-        return repository.findConcertsByConcertNameContainsOrVenue_LocationContains(string, string);
+    public List<Concert> findAllByNameOrLocationOrArtist(String string) {
+        return repository.findConcertsByConcertNameContainsOrVenue_LocationContainsOrArtist_ArtistNameContains(string,string,string);
     }
 
     public Concert save(Concert concert) {
@@ -72,6 +72,7 @@ public class ConcertService {
         concert.setDescription(concertDTO.getDescription());
         concert.setDate(concertDTO.getDate());
         concert.setArtist(artist);
+        concert.setImgPath(concertDTO.getImgPath());
         concert.setConcertOrganization(concertOrganizationService.save(new ConcertOrganization(organizationDTO)));
         concert.setVenue(venue);
         concert.setTicketSettings(ticketSettingsService.saveAll(ticketSettingsDTO));
