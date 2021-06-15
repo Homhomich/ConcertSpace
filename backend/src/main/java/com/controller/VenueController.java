@@ -3,10 +3,7 @@ package com.controller;
 import com.dto.ConcertDTO;
 import com.dto.VenueDTO;
 import com.dto.VenueRentDTO;
-import com.model.Artist;
-import com.model.Concert;
-import com.model.User;
-import com.model.Venue;
+import com.model.*;
 import com.service.*;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
@@ -27,15 +24,17 @@ public class VenueController {
     private final ArtistService artistService;
     private final VenueService venueService;
     private final ConcertService concertService;
+    private final TicketSettingsService ticketSettingsService;
     private final ConcertOrganizationService orgService;
     private final UserService userService;
 
-    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService, ArtistService artistService) {
+    public VenueController(VenueService venueService, ConcertService concertService, ConcertOrganizationService orgService, UserService userService, TicketService ticketService, ArtistService artistService, TicketSettingsService ticketSettingsService) {
         this.venueService = venueService;
         this.concertService = concertService;
         this.orgService = orgService;
         this.userService = userService;
         this.artistService = artistService;
+        this.ticketSettingsService = ticketSettingsService;
     }
 
     @GetMapping("/all")
@@ -80,6 +79,7 @@ public class VenueController {
         Artist artist = artistService.createArtistFromDTO(concertDTO.getArtist());
         Concert concert = concertService.createConcertFromDTO(concertDTO, artist, venueService.getById(venueId), dto.getVenueRentParameters(), concertDTO.getTickets());
         log.info("add " + concert.toString());
+        ticketSettingsService.setConcert(concert);
 //        ticketService.addTickets(concert);
 //        log.info("Get request from /buy");
         log.info("create or get user");
