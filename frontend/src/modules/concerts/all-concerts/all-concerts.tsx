@@ -58,7 +58,7 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 											if (typeof window['ym'] !== 'undefined') {
 												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 												// @ts-ignore
-												window['ym'](79795747,'reachGoal','buy_venue_click');
+												window['ym'](79795747,'reachGoal','concert_click');
 											}
 										}}>
 											<CustomizedCard concert={concert}/>

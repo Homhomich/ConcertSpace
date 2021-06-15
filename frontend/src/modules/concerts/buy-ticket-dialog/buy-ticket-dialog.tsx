@@ -93,14 +93,24 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 														Назад
 													</Button>
 												)}
-												<Button
-													variant="contained"
-													color="primary"
-													onClick={this.handleNext}
-													className={classes.button}
-												>
-													{this.state.activeStep === this.steps.length - 1 ? 'Купить' : 'Далее'}
-												</Button>
+												<div onClick={() => {
+													// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+													// @ts-ignore
+													if (typeof window['ym'] !== 'undefined' && this.state.activeStep === this.steps.length - 1) {
+														// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+														// @ts-ignore
+														window['ym'](79795747,'reachGoal','buy_concert_click');
+													}
+												}}>
+													<Button
+														variant="contained"
+														color="primary"
+														onClick={this.handleNext}
+														className={classes.button}
+													>
+														{this.state.activeStep === this.steps.length - 1 ? 'Купить' : 'Далее'}
+													</Button>
+												</div>
 											</div>
 										</React.Fragment>
 									)}
