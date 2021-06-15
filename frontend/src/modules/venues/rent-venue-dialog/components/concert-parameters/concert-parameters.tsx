@@ -79,7 +79,6 @@ export class ConcertParameters extends React.PureComponent<Props> {
 							value={concert.artist?.name ? concert.artist.name : ''}
 							error={concertErrorModel.artistName}
 							helperText={concertErrorModel.artistName ? 'Обязательное поле' : undefined}
-							id="address"
 							name="address"
 							label="Артист"
 							fullWidth

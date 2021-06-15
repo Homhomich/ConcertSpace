@@ -14,7 +14,7 @@ export class HomePage extends React.PureComponent<Props> {
 			<div>
 				<MainBackground
 					backgroundImage="http://kudago.com/media/images/event/42/95/4295d87e9dc23dfc1b027d1959025474.jpg"
-					title="АПРГРЕЙДНИ СВОИ ВЕЧЕРА"
+					title="АПГРЕЙДНИ СВОИ ВЕЧЕРА"
 					subtitle="Стань участником или организатором атмосферного концерта в своем городе."
 					middleText="Создавай настроение"
 					componentToShow={<div className={classes.divider}/>}

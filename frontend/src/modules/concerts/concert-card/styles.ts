@@ -106,7 +106,7 @@ export const styles = (theme: Theme) => createStyles({
 	divider:{
 		borderTop: '3px dotted',
 		borderColor: theme.palette.secondary.main,
-		width: '120%',
+		width: '100%',
 		marginTop: theme.spacing(5),
 		marginBottom: theme.spacing(1),
 	}

@@ -63,7 +63,7 @@ export function checkTicketsAmount(tickets: TicketModel[] | undefined, maxAmount
 			remainder -= ticket.amount;
 		}
 	});
-	return remainder <= 0;
+	return remainder < 0;
 }
 
 export function checkPhoneNumber(phoneNumber: string | undefined): ErrorModel {
