@@ -45,7 +45,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			activeStep: 2,
+			activeStep: 0,
 			rentComment: '',
 			userInfo: {},
 			userErrorModel: {},
@@ -83,7 +83,7 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 						</AppBar>
 						<main className={classes.layout}>
 							<Paper className={classes.paper}>
-								<Typography component="h1" variant="h4" color={'primary'} align="center">
+								<Typography component="h1" variant="h5" color={'primary'} align="center">
 									Аренда площадки
 								</Typography>
 								<Stepper activeStep={this.state.activeStep} className={classes.stepper}>

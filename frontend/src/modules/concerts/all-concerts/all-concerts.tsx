@@ -52,7 +52,17 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 							{concerts.map((concert) => {
 								return (
 									<div className={classes.cardItem} key={concert.id}>
-										<CustomizedCard concert={concert}/>
+										<div onClick={() => {
+											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+											// @ts-ignore
+											if (typeof window['ym'] !== 'undefined') {
+												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+												// @ts-ignore
+												window['ym'](79795747,'reachGoal','buy_venue_click');
+											}
+										}}>
+											<CustomizedCard concert={concert}/>
+										</div>
 									</div>
 								);
 							})}

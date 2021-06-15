@@ -96,7 +96,10 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						<InfoSubtitle variant="h2">{ticket.description}</InfoSubtitle>
 					</Info>
 					<Button
-						onClick={() => this.setState({isBuyTicketDialogOpen: ticket.id})}
+						disabled={ticket.amount === 0}
+						onClick={() => {
+							this.setState({isBuyTicketDialogOpen: ticket.id});
+						}}
 						className={classes.button}
 						color={'secondary'}
 						variant={'contained'}

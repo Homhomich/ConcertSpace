@@ -59,7 +59,7 @@ export class BuyTicketPage extends React.PureComponent<Props, State> {
 						</AppBar>
 						<main className={classes.layout}>
 							<Paper className={classes.paper}>
-								<Typography component="h1" variant="h4" color={'primary'} align="center">
+								<Typography component="h1" variant="h5" color={'primary'} align="center">
 									Покупка билета
 								</Typography>
 								<Stepper activeStep={this.state.activeStep} className={classes.stepper}>
