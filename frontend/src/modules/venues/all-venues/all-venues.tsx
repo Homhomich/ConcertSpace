@@ -53,7 +53,17 @@ export class AllVenuesPage extends React.PureComponent<Props, State> {
 							{venues.map((venue, index) => {
 								return (
 									<div className={classes.cardItem} key={index}>
-										<VenueCard venue={venue}/>
+										<div onClick={() => {
+											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+											// @ts-ignore
+											if (typeof window['ym'] !== 'undefined') {
+												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+												// @ts-ignore
+												window['ym'](79795747,'reachGoal','venue_click');
+											}
+										}}>
+											<VenueCard venue={venue}/>
+										</div>
 									</div>
 								);
 							})}

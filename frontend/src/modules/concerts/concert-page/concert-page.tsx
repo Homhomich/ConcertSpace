@@ -107,9 +107,9 @@ export class ConcertPage extends React.PureComponent<Props, State> {
 						Купить {'\n'}
 						{ticket.price}
 					</Button>
-					{isBuyTicketDialogOpen === ticket.id ? this.getTicketDialog(ticket) : null}
 				</div>
 				<Divider/>
+				{isBuyTicketDialogOpen === ticket.id ? this.getTicketDialog(ticket) : null}
 			</div>
 		);
 	};

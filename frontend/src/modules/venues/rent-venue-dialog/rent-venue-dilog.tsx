@@ -115,14 +115,24 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 														Назад
 													</Button>
 												)}
-												<Button
-													variant="contained"
-													color="primary"
-													onClick={this.handleNext}
-													className={classes.button}
-												>
-													{this.state.activeStep === this.steps.length - 1 ? 'Забронировать' : 'Дальше'}
-												</Button>
+												<div onClick={() => {
+													// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+													// @ts-ignore
+													if (typeof window['ym'] !== 'undefined' && this.state.activeStep === this.steps.length - 1) {
+														// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+														// @ts-ignore
+														window['ym'](79795747,'reachGoal','rent_venue_click');
+													}
+												}}>
+													<Button
+														variant="contained"
+														color="primary"
+														onClick={this.handleNext}
+														className={classes.button}
+													>
+														{this.state.activeStep === this.steps.length - 1 ? 'Забронировать' : 'Дальше'}
+													</Button>
+												</div>
 											</div>
 										</React.Fragment>
 									)}
@@ -143,7 +153,6 @@ export class RentVenueDialog extends React.PureComponent<Props, State> {
 			this.setState({activeStep: this.state.activeStep + 1});
 		}
 
-		console.log( !checkTicketsAmount(concertInfo.tickets, venue.capacity));
 		if (this.state.activeStep === 2 && !checkConcertParameters(concertInfo, this.setConcertErrorModel)
 			&& !checkTicketsAmount(concertInfo.tickets, venue.capacity)) {
 			this.setState({activeStep: this.state.activeStep + 1});
