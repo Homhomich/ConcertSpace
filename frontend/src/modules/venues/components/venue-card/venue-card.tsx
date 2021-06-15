@@ -41,7 +41,7 @@ export class VenueCard extends React.PureComponent<Props, State> {
 							image={venue.imgPath}
 						/>
 						<div className={classes.content}>
-							<div className={classes.tag}>Loft</div>
+							<div className={classes.tag}>{venue.type}</div>
 						</div>
 					</Box>
 					<Row
