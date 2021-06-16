@@ -6,6 +6,7 @@ import {Button} from '@material-ui/core';
 import {Style} from './styles';
 
 export interface InternalProps {
+	type: 'concert' | 'venue';
 	title: string;
 	getSearchedContent: (search: string) => void;
 }
@@ -53,9 +54,17 @@ export class CustomizedSearch extends React.PureComponent<Props, State> {
 	};
 
 	private handleSearch = () => {
-		const {getSearchedContent} = this.props;
+		const {getSearchedContent, type} = this.props;
 		const {inputSearch} = this.state;
 		getSearchedContent(inputSearch);
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		if (typeof window['ym'] !== 'undefined') {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			type === 'venue'? window['ym'](79795747,'reachGoal','venue_search_click') : window['ym'](79795747,'reachGoal','search_concert_click');
+		}
 	};
 }
 

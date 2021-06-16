@@ -42,20 +42,11 @@ export class AllVenuesPage extends React.PureComponent<Props, State> {
 							middleText="Бронируй площадку, продавай билеты, стань кузнецом своей зажигательной пятницы."
 							backGroundStyle={classes.background}
 							componentToShow={
-								<div onClick={() => {
-									// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-									// @ts-ignore
-									if (typeof window['ym'] !== 'undefined') {
-										// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-										// @ts-ignore
-										window['ym'](79795747,'reachGoal','venue_search_click');
-									}
-								}}>
-									<CustomizedSearch
-										getSearchedContent={this.getSearchedVenues}
-										title={'Найти площадку'}
-									/>
-								</div>
+								<CustomizedSearch
+									getSearchedContent={this.getSearchedVenues}
+									title={'Найти площадку'}
+									type={'venue'}
+								/>
 							}
 						/>
 
