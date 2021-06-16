@@ -41,10 +41,21 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 							subtitle="Стань самым преданным фанатом"
 							middleText="Окунись в атмосферу ламповых лофт-концертов."
 							componentToShow={
-								<CustomizedSearch
-									getSearchedContent={this.getSearchedConcerts}
-									title={'Найти концерт'}
-								/>}
+								<div onClick={() => {
+									// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+									// @ts-ignore
+									if (typeof window['ym'] !== 'undefined') {
+										// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+										// @ts-ignore
+										window['ym'](79795747,'reachGoal','search_concert_click');
+									}
+								}}>
+									<CustomizedSearch
+										getSearchedContent={this.getSearchedConcerts}
+										title={'Найти концерт'}
+									/>
+								</div>
+							}
 							backGroundStyle={classes.background}
 						/>
 
@@ -59,6 +70,9 @@ export class AllConcertsPage extends React.PureComponent<Props, State> {
 												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 												// @ts-ignore
 												window['ym'](79795747,'reachGoal','concert_click');
+												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+												// @ts-ignore
+												window['ym'](79795747,'reachGoal','searched_concert_click');
 											}
 										}}>
 											<CustomizedCard concert={concert}/>

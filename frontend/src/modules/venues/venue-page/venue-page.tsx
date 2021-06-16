@@ -76,17 +76,17 @@ export class VenuePage extends React.PureComponent<Props, State> {
 								<div className={classes.mainInfo}>
 									<div className={classes.iconWithText}>
 										<PeopleIcon/>
-										<Typography> {venue.capacity}</Typography>
+										<Typography> {venue.capacity} {' '} чел</Typography>
 									</div>
 
 									<div className={classes.iconWithText}>
 										<LocalOfferIcon/>
-										<Typography> {venue.rentPerHour} </Typography>
+										<Typography> {venue.rentPerHour} руб/ч </Typography>
 									</div>
 
 									<div className={classes.iconWithText}>
 										<ZoomOutMapIcon/>
-										<Typography> {venue.square} </Typography>
+										<Typography> {venue.square} (м.кв)</Typography>
 									</div>
 								</div>
 								<div className={classes.contacts}>
