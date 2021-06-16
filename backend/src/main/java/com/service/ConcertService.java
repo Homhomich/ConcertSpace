@@ -1,22 +1,36 @@
 package com.service;
 
 import com.config.SendEmail;
-import com.dto.ArtistDTO;
 import com.dto.ConcertDTO;
 import com.dto.ConcertOrganizationDTO;
 import com.dto.TicketSettingsDTO;
+import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
 import com.model.*;
-import com.repository.ArtistRepository;
 import com.repository.ConcertRepository;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,27 +38,20 @@ import java.util.List;
 public class ConcertService {
 
     private Logger log = Logger.getLogger(this.getClass());
+    private final SimpleDateFormat format = new SimpleDateFormat("dd MMM");
 
     private ConcertRepository repository;
-    private ArtistRepository artistRepository;
     private ConcertOrganizationService concertOrganizationService;
     private TicketSettingsService ticketSettingsService;
+    private SendEmail sendEmail;
 
-    @Autowired
-    SendEmail sendEmail;
+    public ConcertService(ConcertRepository repository, ConcertOrganizationService concertOrganizationService, TicketSettingsService ticketSettingsService, SendEmail sendEmail) {
+        this.repository = repository;
+        this.concertOrganizationService = concertOrganizationService;
+        this.ticketSettingsService = ticketSettingsService;
+        this.sendEmail = sendEmail;
+    }
 
-    @Autowired
-    public void setRepository(ConcertRepository repository){this.repository = repository;}
-
-    @Autowired
-    public void setArtistRepository(ArtistRepository artistRepository){this.artistRepository = artistRepository;}
-
-    @Autowired
-    public void setConcertOrganizationService(ConcertOrganizationService concertOrganizationService){this.concertOrganizationService = concertOrganizationService;}
-
-    @Autowired
-    public void setTicketSettingsService(TicketSettingsService ticketSettingsService){this.ticketSettingsService = ticketSettingsService;};
-    
     public Concert getById(Integer id) {
         return repository.findById(id).orElse(null);
     }
@@ -88,58 +95,99 @@ public class ConcertService {
         return dtoList;
     }
 
-    public void sendEmailForUser(Ticket ticket, User user) throws IOException {
+    public void sendEmailForUser(Ticket ticket, User user) throws Exception {
         Concert concert = ticket.getConcert();
         TicketSettings ts = ticket.getTicket_settings();
         String text = String.format(
-                "Hello, %s! \n" +
-                        "Here is your ticket!\n" +
-                        "Data: %s; \n " +
-                        "Location: %s; \n" +
-                        "Artist:  %s; \n" +
-                        "Serial number:  %s; \n" +
-                        "Price:  %s; \n" +
-                        "Type:  %s; \n" +
-                        "Description %s; \n",
-                user.getFirstName(), concert.getDate(), concert.getVenue().getLocation(), concert.getArtist().getArtistName(), ticket.getSerialNumber(),
-                ts.getPrice(), ts.getType(),ts.getDescription()
+                "Привет, %s! \n" +
+                        "Вот твой билет!\n",
+                user.getFirstName());
+        String s1 = format.format(concert.getDate());
+        String s2 = concert.getVenue().getVenueName() + ", " + concert.getVenue().getLocation();
+        String s3 = concert.getArtist().getArtistName();
+        String s4 = String.valueOf(ts.getPrice());
+        String s5 = ts.getType();
+        String s6 = user.getFirstName() + " " + user.getLastName();
+
+        PdfWriter writer = new PdfWriter("src/main/resources/file/ticket.pdf");
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        pdfDoc.addNewPage();
+        Document document = new Document(pdfDoc);
+        String FONT_FILENAME = "src/main/resources/file/7454.ttf";
+        PdfFont font = PdfFontFactory.createFont(FONT_FILENAME, PdfEncodings.IDENTITY_H);
+        document.setFont(font);
+
+
+
+        pdfDoc.setDefaultPageSize(PageSize.B6);
+        float[] colWidth = {450f, 110f};
+        Table header = new Table(colWidth);
+        header.setBackgroundColor(new DeviceRgb(255,200,200));
+        header.addCell(new Cell().add("ConcertSpace")
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setMarginTop(30f)
+                .setMarginBottom(30f)
+                .setFontSize(30f)
+                .setBorder(Border.NO_BORDER)
         );
-        String s1 = "Data: " + concert.getDate();
-        String s2 = "Location: " + concert.getVenue().getLocation();
-        String s3 = "Artist: " +  concert.getArtist().getArtistName();
-        String s4 = "Price: " + ts.getPrice();
-        String s5 = "Type: " + ts.getType();
-        String s6 = "Description: " + ts.getDescription();
+        String imgPath = "src/main/resources/file/logo.jpg";
+        ImageData imageData = ImageDataFactory.create(imgPath);
+        header.addCell(new Cell().add(new Image(imageData))
+            .setTextAlignment(TextAlignment.RIGHT)
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                .setBorder(Border.NO_BORDER));
+        document.add(header);
+
+        colWidth = new float[]{80, 300, 100, 80};
+        Table concertTable = new Table(colWidth);
+        concertTable.addCell(new Cell(0,4).add(s3)
+            .setBold()
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setFontSize(24f)
+                .setBorder(Border.NO_BORDER));
+        concertTable.addCell(new Cell().add(s1)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        concertTable.addCell(new Cell().add(s2)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        concertTable.addCell(new Cell().add(s5)
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        concertTable.addCell(new Cell().add(s4)
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        document.add(concertTable);
 
 
-        System.out.println(text);
-        PDDocument pdf = new PDDocument();
-        pdf.addPage(new PDPage());
-        PDPage page = pdf.getPage(0);
-        PDPageContentStream contentStream = new PDPageContentStream(pdf, page);
-        /*PDImageXObject pdImage = PDImageXObject.createFromFile("src/main/resources/file/dog.jpg",pdf);
-        contentStream.drawImage(pdImage, 0, 0);*/
-        contentStream.beginText();
-        contentStream.setFont(PDType1Font.TIMES_ROMAN, 16);
-        contentStream.setLeading(14.5f);
-        contentStream.newLineAtOffset(50, 550);
-        contentStream.showText(s1);
-        contentStream.newLine();
-//        contentStream.tex(s2);
-//        contentStream.newLine();
-//        contentStream.drawString(s3);
-//        contentStream.newLine();
-//        contentStream.drawString(s4);
-//        contentStream.newLine();
-//        contentStream.drawString(s5);
-//        contentStream.newLine();
-//        contentStream.drawString(s6);
+        colWidth = new float[]{460, 100};
+        Table userTable = new Table(colWidth);
+        userTable.setBackgroundColor(new DeviceRgb(255,200,200));
+        userTable.addCell(new Cell().add(s6)
+                .setBorder(Border.NO_BORDER)
+                .setVerticalAlignment(VerticalAlignment.BOTTOM));
+        ImageData imageData1 = ImageDataFactory.create(generateEAN13BarcodeImage("1234567890128"));
+        userTable.addCell(new Cell().add(new Image(imageData1)).setBorder(Border.NO_BORDER));
+        document.add(userTable);
+        document.close();
 
-        contentStream.endText();
-        contentStream.close();
-        pdf.save("src/main/resources/file/ticket.pdf");
-        pdf.close();
+
         sendEmail.sendAttach(user.getEmail(), text, concert.getConcertName());
 
+    }
+
+    public String generateEAN13BarcodeImage(String barcodeText) throws Exception {
+        EAN13Bean barcodeGenerator = new EAN13Bean();
+        BitmapCanvasProvider canvas =
+                new BitmapCanvasProvider(80, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        barcodeGenerator.generateBarcode(canvas, barcodeText);
+        String filePath = "src/main/resources/file/code.jpg";
+        File outputfile = new File(filePath);
+        ImageIO.write(canvas.getBufferedImage(), "jpg", outputfile);
+        return filePath;
     }
 }

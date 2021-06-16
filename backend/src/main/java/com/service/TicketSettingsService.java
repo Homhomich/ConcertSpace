@@ -33,19 +33,21 @@ public class TicketSettingsService {
         return repository.findAll();
     }
 
-    public void save(TicketSettings ticketSettings) {
-        repository.save(ticketSettings);
+    public TicketSettings save(TicketSettings ticketSettings) {
+        return repository.save(ticketSettings);
     }
 
     public List<TicketSettings> saveAll(List<TicketSettingsDTO> ticketSettingsDTO) {
         return repository.saveAll(ticketSettingsDTO.stream().map(TicketSettings::new).collect(Collectors.toList()));
     }
 
-    public void decreaseAmount(TicketSettings ts){
+    public TicketSettings decreaseAmount(TicketSettings ts){
         int amount = ts.getAmount();
         if (amount>0) {
             ts.setAmount(--amount);
-            save(ts);
+            return save(ts);
+        }else {
+            return null;
         }
     }
 

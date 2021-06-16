@@ -6,7 +6,10 @@ import com.model.Concert;
 import com.model.Ticket;
 import com.model.TicketSettings;
 import com.model.User;
-import com.service.*;
+import com.service.ConcertService;
+import com.service.CustomerTicketsService;
+import com.service.TicketSettingsService;
+import com.service.UserService;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,24 +78,27 @@ public class ConcertController {
     public ResponseEntity buyTicket(@RequestParam Integer concertId, @RequestParam Integer ticketSettingsId, @RequestBody UserDTO dto) {
         log.info("Get request from /buy");
         Concert concert = concertService.getById(concertId);
+        log.info("Concert " + concert.toString());
         TicketSettings ts = ticketSettingsService.getById(ticketSettingsId);
-
-        ts.setConcert(concert);
-        ticketSettingsService.save(ts);
-
-        ticketSettingsService.decreaseAmount(ts);
-        log.info("decrease amount of tickets");
-        User user = userService.createUserFromDTO(dto);
-        Ticket ticket = ticketSettingsService.getBySettings(ts);
-        customerTicketsService.addLinkBetweenTicketsAndUsers(ticket, user);
-        log.info("send email");
-        try {
-            concertService.sendEmailForUser(ticket, user);
-            log.info("email was send");
-        } catch (IOException e) {
-            e.printStackTrace();
+        log.info("Concert " + concert.toString());
+        TicketSettings newTS = ticketSettingsService.decreaseAmount(ts);
+        if (newTS==null){
+            log.info("amount of tickets less than 1");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            log.info("decrease amount of tickets");
+            User user = userService.createUserFromDTO(dto);
+            Ticket ticket = ticketSettingsService.getBySettings(ts);
+            customerTicketsService.addLinkBetweenTicketsAndUsers(ticket, user);
+            log.info("send email");
+            try {
+                concertService.sendEmailForUser(ticket, user);
+                log.info("email was send");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("ticket was bought");
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
-        log.info("ticket was bought");
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
