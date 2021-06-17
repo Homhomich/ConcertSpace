@@ -34,16 +34,6 @@ public class ArtistService {
         return repository.save(artist);
     }
 
-    public void update(Integer id, Artist artist){
-        Artist updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setArtistName(artist.getArtistName());
-            updated.setGenre(artist.getGenre());
-            updated.setConcerts(artist.getConcerts());
-            repository.save(updated);
-        }
-    }
-
     public Artist createArtistFromDTO(ArtistDTO dto){
         log.info("creating user artist DTO " + dto.toString());
         Artist artist = isAlreadyCreate(dto);

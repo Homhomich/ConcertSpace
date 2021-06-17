@@ -1,7 +1,6 @@
 package com.dto;
 
 import com.model.Venue;
-import com.model.VenueSchedule;
 
 import java.sql.Date;
 

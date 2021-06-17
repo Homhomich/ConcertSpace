@@ -30,13 +30,4 @@ public class VenueScheduleService {
         repository.save(venueSchedule);
     }
 
-    public void update(Integer id, VenueSchedule venueSchedule){
-        VenueSchedule updated = repository.findById(id).orElse(null);
-        if (updated != null){
-            updated.setDate(venueSchedule.getDate());
-            updated.setVenueSch(venueSchedule.getVenueSch());
-            repository.save(updated);
-        }
-    }
-
 }

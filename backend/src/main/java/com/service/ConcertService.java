@@ -102,12 +102,6 @@ public class ConcertService {
                 "Привет, %s! \n" +
                         "Вот твой билет!\n",
                 user.getFirstName());
-        String s1 = format.format(concert.getDate());
-        String s2 = concert.getVenue().getVenueName() + ", " + concert.getVenue().getLocation();
-        String s3 = concert.getArtist().getArtistName();
-        String s4 = String.valueOf(ts.getPrice());
-        String s5 = ts.getType();
-        String s6 = user.getFirstName() + " " + user.getLastName();
 
         PdfWriter writer = new PdfWriter("src/main/resources/file/ticket.pdf");
         PdfDocument pdfDoc = new PdfDocument(writer);
@@ -116,8 +110,6 @@ public class ConcertService {
         String FONT_FILENAME = "src/main/resources/file/7454.ttf";
         PdfFont font = PdfFontFactory.createFont(FONT_FILENAME, PdfEncodings.IDENTITY_H);
         document.setFont(font);
-
-
 
         pdfDoc.setDefaultPageSize(PageSize.B6);
         float[] colWidth = {450f, 110f};
@@ -141,53 +133,55 @@ public class ConcertService {
 
         colWidth = new float[]{80, 300, 100, 80};
         Table concertTable = new Table(colWidth);
-        concertTable.addCell(new Cell(0,4).add(s3)
+        concertTable.addCell(new Cell(0,4).add(concert.getArtist().getArtistName())
             .setBold()
                 .setVerticalAlignment(VerticalAlignment.MIDDLE)
                 .setTextAlignment(TextAlignment.CENTER)
                 .setFontSize(24f)
                 .setBorder(Border.NO_BORDER));
-        concertTable.addCell(new Cell().add(s1)
+        concertTable.addCell(new Cell().add(format.format(concert.getDate()))
                 .setBorder(Border.NO_BORDER)
                 .setItalic());
-        concertTable.addCell(new Cell().add(s2)
+        concertTable.addCell(new Cell().add(concert.getVenue().getVenueName() + ", " + concert.getVenue().getLocation())
                 .setBorder(Border.NO_BORDER)
                 .setItalic());
-        concertTable.addCell(new Cell().add(s5)
+        concertTable.addCell(new Cell().add(String.valueOf(ts.getType()))
                 .setTextAlignment(TextAlignment.RIGHT)
                 .setBorder(Border.NO_BORDER)
                 .setItalic());
-        concertTable.addCell(new Cell().add(s4)
+        concertTable.addCell(new Cell().add(String.valueOf(ts.getPrice()))
                 .setTextAlignment(TextAlignment.RIGHT)
                 .setBorder(Border.NO_BORDER)
                 .setItalic());
         document.add(concertTable);
 
 
-        colWidth = new float[]{460, 100};
+        colWidth = new float[]{280, 280};
         Table userTable = new Table(colWidth);
         userTable.setBackgroundColor(new DeviceRgb(255,200,200));
-        userTable.addCell(new Cell().add(s6)
+        userTable.addCell(new Cell(0,2).add("По всем вопросам обращаться:")
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setFontSize(18f)
+                .setBorder(Border.NO_BORDER));
+        userTable.addCell(new Cell().add(ticket.getSerialNumber())
                 .setBorder(Border.NO_BORDER)
-                .setVerticalAlignment(VerticalAlignment.BOTTOM));
-        ImageData imageData1 = ImageDataFactory.create(generateEAN13BarcodeImage("1234567890128"));
-        userTable.addCell(new Cell().add(new Image(imageData1)).setBorder(Border.NO_BORDER));
+                .setItalic());
+        userTable.addCell(new Cell().add(concert.getVenue().getOwnerEmail())
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        userTable.addCell(new Cell().add(user.getFirstName() + " " +user.getLastName())
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
+        userTable.addCell(new Cell().add(concert.getVenue().getOwnerPhone())
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBorder(Border.NO_BORDER)
+                .setItalic());
         document.add(userTable);
         document.close();
 
 
         sendEmail.sendAttach(user.getEmail(), text, concert.getConcertName());
 
-    }
-
-    public String generateEAN13BarcodeImage(String barcodeText) throws Exception {
-        EAN13Bean barcodeGenerator = new EAN13Bean();
-        BitmapCanvasProvider canvas =
-                new BitmapCanvasProvider(80, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-        barcodeGenerator.generateBarcode(canvas, barcodeText);
-        String filePath = "src/main/resources/file/code.jpg";
-        File outputfile = new File(filePath);
-        ImageIO.write(canvas.getBufferedImage(), "jpg", outputfile);
-        return filePath;
     }
 }

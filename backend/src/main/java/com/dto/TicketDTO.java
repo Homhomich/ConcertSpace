@@ -1,6 +1,5 @@
 package com.dto;
 
-import com.model.Ticket;
 import com.model.TicketSettings;
 
 public class TicketDTO {

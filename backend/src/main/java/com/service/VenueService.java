@@ -5,7 +5,6 @@ import com.model.Venue;
 import com.model.VenueSchedule;
 import com.repository.VenueRepository;
 import com.repository.VenueScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -22,15 +21,10 @@ public class VenueService {
 
     private final VenueScheduleRepository venueScheduleRepository;
 
-    public VenueService(VenueScheduleRepository venueScheduleRepository) {
+    public VenueService(VenueRepository repository, VenueScheduleRepository venueScheduleRepository) {
+        this.repository = repository;
         this.venueScheduleRepository = venueScheduleRepository;
     }
-
-    @Autowired
-    public void setRepository(VenueRepository repository){this.repository = repository;}
-
-//    @Autowired
-//    public void setVenueScheduleRepository(VenueScheduleRepository venueScheduleRepository){this.venueScheduleRepository =venueScheduleRepository;}
 
     public Venue getById(Integer id) {
         return repository.findById(id).orElse(null);

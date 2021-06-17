@@ -2,7 +2,6 @@ package com.dto;
 
 import com.model.Venue;
 
-import java.sql.Date;
 import java.util.List;
 
 public class VenueDTO {

@@ -53,7 +53,12 @@ public class TicketSettingsService {
 
     public Ticket getBySettings(TicketSettings ts){
         Ticket ticket = new Ticket();
-        ticket.setSerialNumber(ts.getId() + ts.getDescription().toUpperCase() + ts.getAmount());
+        char[] ch = ts.getDescription().toUpperCase().toCharArray();
+        StringBuilder desc = new StringBuilder();
+        for (int i = 0; i<3; i++){
+            desc.append(ch[i]);
+        }
+        ticket.setSerialNumber(ts.getId() + desc.toString() + ts.getAmount());
         ticket.setConcert(ts.getConcert());
         ticket.setTicket_settings(ts);
         ticketRepository.save(ticket);
