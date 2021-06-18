@@ -25,8 +25,9 @@ Web-application for renting space for the concerts and buying tickets, that allo
 - [Trello](https://trello.com/oncertspace)
 - [Miro](https://miro.com/app/board/o9J_lPP0-_c=/)
 - [Яндекс.Метрика](https://metrika.yandex.ru/dashboard?id=79795747)
+- [Swagger](https://app.swaggerhub.com/apis-docs/entrenadorcilo/ConcertSpace/1.0.0)
 
 ## Video resources
 - [Демо-видео](https://youtu.be/05kp8Z0wV_8)
-- [Видео презентация](https://youtu.be/M7auu5KAHgo)
+- [Видео-презентация](https://youtu.be/M7auu5KAHgo)
 
