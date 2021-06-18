@@ -18,7 +18,7 @@ Web-application for renting space for the concerts and buying tickets, that allo
 - [Курсовой проект docx](https://github.com/Homhomich/ConcertSpace/blob/main/documents/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82.docx)
 - [Курсовой проект pdf](https://github.com/Homhomich/ConcertSpace/blob/main/documents/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82.pdf)
 - [Отчёт по ролям pdf](https://github.com/Homhomich/ConcertSpace/blob/main/documents/%D0%9E%D1%82%D1%87%D1%91%D1%82%20%D0%BF%D0%BE%20%D1%80%D0%BE%D0%BB%D1%8F%D0%BC.pdf)
-- [Презентация](https://docs.google.com/presentation/d/1g3eU3JIshNZz0q-fGQuvwtlsvKk2CTInHvfZyud_hCY/edit?usp=sharing)
+
 
 
 ## Resources
