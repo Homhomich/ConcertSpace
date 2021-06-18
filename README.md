@@ -27,6 +27,6 @@ Web-application for renting space for the concerts and buying tickets, that allo
 - [Яндекс.Метрика](https://metrika.yandex.ru/dashboard?id=79795747)
 
 ## Video resources
-- [Демо-видео]()
-- [Видое презентация]()
+- [Демо-видео](https://youtu.be/05kp8Z0wV_8)
+- [Видео презентация](https://youtu.be/M7auu5KAHgo)
 
