@@ -31,3 +31,6 @@ Web-application for renting space for the concerts and buying tickets, that allo
 - [Демо-видео](https://youtu.be/05kp8Z0wV_8)
 - [Видео-презентация](https://youtu.be/M7auu5KAHgo)
 
+## Application
+- [ConcertSpace](https://concertspace.herokuapp.com/)
+
